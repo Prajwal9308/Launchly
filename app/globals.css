@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. One accent color, neutral surfaces, restrained semantic colors.
+ * Components use these tokens via Tailwind utilities (bg-accent, text-muted, ...).
+ */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Neutrals */
+  --color-background: #ffffff;
+  --color-canvas: #f8f8f9;
+  --color-subtle: #f3f3f5;
+  --color-border: #e5e5e8;
+  --color-border-strong: #d4d4d9;
+  --color-foreground: #17171c;
+  --color-muted: #55555f;
+  --color-faint: #71717b;
+
+  /* Brand accent */
+  --color-accent: #2f54d9;
+  --color-accent-hover: #2445bd;
+  --color-accent-subtle: #eef2fd;
+  --color-accent-border: #c9d4f7;
+  --color-accent-foreground: #ffffff;
+
+  /* Semantic (subtle) */
+  --color-success: #177245;
+  --color-success-subtle: #edf8f1;
+  --color-success-border: #c5e8d3;
+  --color-warning: #95560b;
+  --color-warning-subtle: #fdf6e9;
+  --color-warning-border: #f1dcb3;
+  --color-danger: #b42323;
+  --color-danger-subtle: #fdf0f0;
+  --color-danger-border: #f3c9c9;
+  --color-info: #245a9c;
+  --color-info-subtle: #eef4fb;
+  --color-info-border: #cadcf1;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgb(16 16 24 / 0.05);
+  --shadow-card: 0 1px 2px rgb(16 16 24 / 0.04), 0 1px 3px rgb(16 16 24 / 0.03);
+  --shadow-popover: 0 4px 16px rgb(16 16 24 / 0.08), 0 1px 3px rgb(16 16 24 / 0.06);
+  --shadow-dialog: 0 16px 48px rgb(16 16 24 / 0.14), 0 2px 6px rgb(16 16 24 / 0.06);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-fade-in: fade-in 150ms var(--ease-out-soft);
+  --animate-fade-out: fade-out 120ms ease-in;
+  --animate-pop-in: pop-in 160ms var(--ease-out-soft);
+  --animate-slide-in-right: slide-in-right 200ms var(--ease-out-soft);
+  --animate-slide-in-left: slide-in-left 200ms var(--ease-out-soft);
+  --animate-slide-up: slide-up 220ms var(--ease-out-soft);
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(4px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@utility focus-ring {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-accent-subtle);
+  }
+  h1, h2, h3, h4 {
+    @apply tracking-tight text-foreground;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

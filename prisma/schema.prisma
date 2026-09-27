@@ -1,0 +1,654 @@
+// Launchly database schema.
+// See docs/database.md for an overview of models and relationships.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../db/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum OrganizationRole {
+  OWNER
+  MEMBER
+}
+
+/// DRAFT is the pre-submission state used while a client completes the
+/// questionnaire. All other values follow the documented project workflow.
+enum ProjectStatus {
+  DRAFT
+  NEW
+  INFORMATION_REQUIRED
+  REQUIREMENTS_REVIEW
+  DISCOVERY
+  DESIGN
+  CLIENT_REVIEW
+  REVISION
+  DEVELOPMENT
+  TESTING
+  CLIENT_APPROVAL
+  READY_TO_LAUNCH
+  LAUNCHED
+  MAINTENANCE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  BLOCKED
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum FileCategory {
+  LOGO
+  PHOTO
+  DOCUMENT
+  BRAND
+  CONTENT
+  DESIGN
+  ATTACHMENT
+  OTHER
+}
+
+enum DesignReviewStatus {
+  DRAFT
+  IN_REVIEW
+  CHANGES_REQUESTED
+  APPROVED
+  SUPERSEDED
+}
+
+enum RevisionStatus {
+  OPEN
+  RESOLVED
+}
+
+enum ApprovalType {
+  DESIGN_APPROVAL
+  FINAL_APPROVAL
+  LAUNCH_APPROVAL
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  CHANGES_REQUESTED
+  CANCELLED
+}
+
+enum ActivityType {
+  USER_REGISTERED
+  LEAD_CREATED
+  LEAD_CONVERTED
+  PROJECT_CREATED
+  PROJECT_SUBMITTED
+  PROJECT_UPDATED
+  REQUIREMENTS_APPROVED
+  INFORMATION_REQUESTED
+  TASK_CREATED
+  TASK_COMPLETED
+  FILE_UPLOADED
+  MESSAGE_SENT
+  DESIGN_UPLOADED
+  DESIGN_REVIEW_REQUESTED
+  REVISION_REQUESTED
+  DESIGN_APPROVED
+  APPROVAL_REQUESTED
+  APPROVAL_GRANTED
+  APPROVAL_CHANGES_REQUESTED
+  STATUS_CHANGED
+  NOTE_ADDED
+  CLIENT_LOGIN
+  ADMIN_LOGIN
+}
+
+enum ActivityVisibility {
+  CLIENT
+  INTERNAL
+}
+
+enum NotificationType {
+  PROJECT_SUBMITTED
+  NEW_MESSAGE
+  DESIGN_READY
+  REVISION_REQUESTED
+  APPROVAL_REQUESTED
+  APPROVAL_RECEIVED
+  STATUS_CHANGED
+  LEAD_CREATED
+  USER_REGISTERED
+  INFORMATION_REQUESTED
+}
+
+// ---------------------------------------------------------------------------
+// Identity & access
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  email        String    @unique
+  passwordHash String?
+  firstName    String
+  lastName     String
+  role         Role      @default(CLIENT)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  accounts           Account[]
+  sessions           Session[]
+  clientProfile      ClientProfile?
+  memberships        OrganizationMember[]
+  createdProjects    Project[]            @relation("ProjectCreatedBy")
+  assignedTasks      ProjectTask[]        @relation("TaskAssignee")
+  createdTasks       ProjectTask[]        @relation("TaskCreatedBy")
+  files              ProjectFile[]
+  messages           ProjectMessage[]
+  designReviews      DesignReview[]
+  revisionRequests   RevisionRequest[]
+  approvalsGiven     Approval[]           @relation("ApprovalDecidedBy")
+  approvalsRequested Approval[]           @relation("ApprovalRequestedBy")
+  notifications      Notification[]
+  activities         ActivityEvent[]
+  internalNotes      InternalNote[]
+
+  @@index([role])
+}
+
+/// Reserved for Auth.js OAuth providers. Credentials login uses JWT sessions.
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+/// Reserved for Auth.js database sessions.
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionToken String   @unique
+  userId       String   @db.Uuid
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// A client account. Projects belong to organizations; users access projects
+/// through organization membership.
+model Organization {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  /// Email of a client invited via lead conversion who has not signed up yet.
+  inviteEmail String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members    OrganizationMember[]
+  businesses Business[]
+  projects   Project[]
+  leads      Lead[]
+
+  @@index([inviteEmail])
+}
+
+model OrganizationMember {
+  id             String           @id @default(uuid()) @db.Uuid
+  organizationId String           @db.Uuid
+  userId         String           @db.Uuid
+  role           OrganizationRole @default(OWNER)
+  createdAt      DateTime         @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+}
+
+model ClientProfile {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @db.Uuid
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Business {
+  id              String   @id @default(uuid()) @db.Uuid
+  organizationId  String   @db.Uuid
+  name            String
+  businessType    String?
+  industry        String?
+  description     String?
+  address         String?
+  phone           String?
+  email           String?
+  existingWebsite String?
+  domain          String?
+  socialLinks     String[] @default([])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  projects     Project[]
+
+  @@index([organizationId])
+  @@index([name])
+}
+
+// ---------------------------------------------------------------------------
+// Sales
+// ---------------------------------------------------------------------------
+
+model Lead {
+  id             String     @id @default(uuid()) @db.Uuid
+  name           String
+  businessName   String?
+  email          String
+  phone          String?
+  service        String?
+  message        String
+  status         LeadStatus @default(NEW)
+  source         String     @default("contact_form")
+  organizationId String?    @db.Uuid
+  projectId      String?    @db.Uuid
+  convertedAt    DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  project      Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+// ---------------------------------------------------------------------------
+// Projects
+// ---------------------------------------------------------------------------
+
+model Project {
+  id                     String         @id @default(uuid()) @db.Uuid
+  /// Human-friendly sequential project number.
+  number                 Int            @unique @default(autoincrement())
+  organizationId         String         @db.Uuid
+  businessId             String?        @db.Uuid
+  createdById            String?        @db.Uuid
+  name                   String
+  status                 ProjectStatus  @default(DRAFT)
+  /// Status to resume when a project comes off hold.
+  statusBeforeHold       ProjectStatus?
+  /// Raw questionnaire answers (validated with Zod in domain/questionnaire.ts).
+  questionnaire          Json           @default("{}")
+  questionnaireStep      String         @default("business")
+  budgetRange            String?
+  timeframe              String?
+  submittedAt            DateTime?
+  requirementsApprovedAt DateTime?
+  launchedAt             DateTime?
+  completedAt            DateTime?
+  lastActivityAt         DateTime       @default(now())
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  organization     Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  business         Business?            @relation(fields: [businessId], references: [id], onDelete: SetNull)
+  createdBy        User?                @relation("ProjectCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  requirements     ProjectRequirement[]
+  services         ProjectService[]
+  tasks            ProjectTask[]
+  files            ProjectFile[]
+  messages         ProjectMessage[]
+  designReviews    DesignReview[]
+  revisionRequests RevisionRequest[]
+  approvals        Approval[]
+  activities       ActivityEvent[]
+  notes            InternalNote[]
+  briefs           ProjectBrief[]
+  leads            Lead[]
+
+  @@index([organizationId])
+  @@index([status, lastActivityAt])
+  @@index([createdAt])
+}
+
+model ProjectRequirement {
+  id        String   @id @default(uuid()) @db.Uuid
+  projectId String   @db.Uuid
+  section   String
+  label     String
+  value     String
+  /// "questionnaire" for client-supplied answers, "admin" for items added later.
+  source    String   @default("questionnaire")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, sortOrder])
+}
+
+model ProjectService {
+  id        String   @id @default(uuid()) @db.Uuid
+  projectId String   @db.Uuid
+  serviceId String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, serviceId])
+}
+
+model ProjectTask {
+  id            String       @id @default(uuid()) @db.Uuid
+  projectId     String       @db.Uuid
+  title         String
+  description   String?
+  status        TaskStatus   @default(TODO)
+  priority      TaskPriority @default(MEDIUM)
+  dueDate       DateTime?
+  assigneeId    String?      @db.Uuid
+  createdById   String?      @db.Uuid
+  /// Key of the template this task came from, if any (see domain/task-templates.ts).
+  templateKey   String?
+  clientVisible Boolean      @default(true)
+  sortOrder     Int          @default(0)
+  completedAt   DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee  User?   @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdBy User?   @relation("TaskCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([projectId, sortOrder])
+  @@index([status, dueDate])
+}
+
+model ProjectFile {
+  id           String       @id @default(uuid()) @db.Uuid
+  projectId    String       @db.Uuid
+  uploadedById String?      @db.Uuid
+  messageId    String?      @db.Uuid
+  category     FileCategory @default(OTHER)
+  originalName String
+  storageKey   String       @unique
+  mimeType     String
+  size         Int
+  createdAt    DateTime     @default(now())
+
+  project      Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  uploadedBy   User?           @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  message      ProjectMessage? @relation(fields: [messageId], references: [id], onDelete: SetNull)
+  designReview DesignReview?
+
+  @@index([projectId, createdAt])
+}
+
+model ProjectMessage {
+  id        String    @id @default(uuid()) @db.Uuid
+  projectId String    @db.Uuid
+  senderId  String?   @db.Uuid
+  body      String
+  /// Set when the other side (client or studio) has read the message.
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sender      User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  attachments ProjectFile[]
+
+  @@index([projectId, createdAt])
+}
+
+model DesignReview {
+  id          String             @id @default(uuid()) @db.Uuid
+  projectId   String             @db.Uuid
+  /// e.g. "Homepage". Versions are numbered per title.
+  title       String
+  version     Int
+  fileId      String?            @unique @db.Uuid
+  previewUrl  String?
+  notes       String?
+  status      DesignReviewStatus @default(DRAFT)
+  createdById String?            @db.Uuid
+  requestedAt DateTime?
+  decidedAt   DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  file             ProjectFile?      @relation(fields: [fileId], references: [id], onDelete: SetNull)
+  createdBy        User?             @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  revisionRequests RevisionRequest[]
+  approvals        Approval[]
+
+  @@unique([projectId, title, version])
+  @@index([projectId, status])
+}
+
+model RevisionRequest {
+  id             String         @id @default(uuid()) @db.Uuid
+  projectId      String         @db.Uuid
+  designReviewId String?        @db.Uuid
+  requestedById  String?        @db.Uuid
+  body           String
+  status         RevisionStatus @default(OPEN)
+  resolvedAt     DateTime?
+  createdAt      DateTime       @default(now())
+
+  project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  designReview DesignReview? @relation(fields: [designReviewId], references: [id], onDelete: SetNull)
+  requestedBy  User?         @relation(fields: [requestedById], references: [id], onDelete: SetNull)
+
+  @@index([projectId, status])
+}
+
+model Approval {
+  id             String         @id @default(uuid()) @db.Uuid
+  projectId      String         @db.Uuid
+  type           ApprovalType
+  status         ApprovalStatus @default(PENDING)
+  designReviewId String?        @db.Uuid
+  /// Version label captured at decision time (e.g. "Homepage v2").
+  version        String?
+  requestMessage String?
+  comment        String?
+  requestedById  String?        @db.Uuid
+  approvedById   String?        @db.Uuid
+  decidedAt      DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  project      Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  designReview DesignReview? @relation(fields: [designReviewId], references: [id], onDelete: SetNull)
+  requestedBy  User?         @relation("ApprovalRequestedBy", fields: [requestedById], references: [id], onDelete: SetNull)
+  approvedBy   User?         @relation("ApprovalDecidedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+
+  @@index([projectId, status])
+}
+
+/// Internal project summaries. `aiGenerated` marks content produced by an AI
+/// provider; the system summary is assembled only from client answers.
+model ProjectBrief {
+  id          String   @id @default(uuid()) @db.Uuid
+  projectId   String   @db.Uuid
+  aiGenerated Boolean  @default(false)
+  generator   String
+  content     Json
+  createdAt   DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+}
+
+model InternalNote {
+  id        String   @id @default(uuid()) @db.Uuid
+  projectId String   @db.Uuid
+  authorId  String?  @db.Uuid
+  body      String
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  author  User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([projectId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Activity & notifications
+// ---------------------------------------------------------------------------
+
+model ActivityEvent {
+  id         String             @id @default(uuid()) @db.Uuid
+  type       ActivityType
+  visibility ActivityVisibility @default(CLIENT)
+  projectId  String?            @db.Uuid
+  actorId    String?            @db.Uuid
+  message    String
+  metadata   Json?
+  createdAt  DateTime           @default(now())
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  actor   User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([projectId, createdAt])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String           @id @default(uuid()) @db.Uuid
+  userId    String           @db.Uuid
+  type      NotificationType
+  title     String
+  body      String?
+  href      String?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Public site content
+// ---------------------------------------------------------------------------
+
+model Service {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  name        String
+  summary     String
+  description String?
+  features    String[] @default([])
+  pricingText String?
+  /// Lucide icon key (see components/marketing/service-icon.tsx).
+  icon        String   @default("layout")
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projects ProjectService[]
+
+  @@index([published, sortOrder])
+}
+
+model PricingPackage {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String
+  /// Price in whole cents. Null means "Let's discuss your project".
+  priceCents  Int?
+  /// Optional qualifier shown next to the price, e.g. "starting at".
+  pricePrefix String?
+  features    String[] @default([])
+  highlighted Boolean  @default(false)
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, sortOrder])
+}
+
+model PortfolioItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  title       String
+  description String
+  industry    String
+  services    String[] @default([])
+  imageUrl    String?
+  url         String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  /// Demo/sample work is always labelled as such on the public site.
+  isDemo      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, featured, sortOrder])
+}
+
+/// Singleton row (id = "default") holding editable studio details.
+model SiteSettings {
+  id           String   @id @default("default")
+  businessName String   @default("Launchly")
+  tagline      String   @default("Websites for small businesses")
+  contactEmail String   @default("hello@example.com")
+  contactPhone String?
+  serviceArea  String?
+  updatedAt    DateTime @updatedAt
+}
