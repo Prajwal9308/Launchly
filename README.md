@@ -18,7 +18,7 @@ The core workflow is: lead → account → questionnaire → project created (re
 | Language | TypeScript (strict) |
 | UI | Tailwind CSS v4 with design tokens, shadcn-style components on Radix primitives, lucide icons, Inter |
 | Database | PostgreSQL + Prisma 7 (`@prisma/adapter-pg`) |
-| Auth | Auth.js v5 (credentials, bcrypt, JWT session cookie) |
+| Auth | Auth.js v5: Google sign-in + email/password (bcrypt), JWT session cookie |
 | Validation | Zod 4 |
 | Tests | Vitest (unit + integration against a real database), Playwright (E2E) |
 | Optional AI | Anthropic SDK behind a provider interface (off by default) |
@@ -59,9 +59,10 @@ openssl rand -base64 32   # paste into AUTH_SECRET
 | `DATABASE_URL` | yes | PostgreSQL connection string |
 | `AUTH_SECRET` | yes | Secret used to sign session cookies |
 | `AUTH_URL`, `APP_URL` | yes | Public URL of the app (used for auth and email links) |
+| `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | no | Enables "Continue with Google" (see `docs/deployment.md`) |
 | `AI_PROVIDER` | no | `none` (default) or `anthropic` |
 | `AI_API_KEY`, `AI_MODEL` | no | API key and optional model override for the AI provider |
-| `STORAGE_PROVIDER` | no | `local` (default). See `docs/deployment.md` |
+| `STORAGE_PROVIDER` | no | `local` (default) or `vercel-blob` (private Vercel Blob; needs `BLOB_READ_WRITE_TOKEN`) |
 | `STORAGE_LOCAL_DIR` | no | Upload directory for local storage (default `./storage/uploads`) |
 | `STORAGE_BUCKET`, `STORAGE_ENDPOINT` | no | Reserved for S3-compatible providers |
 | `EMAIL_PROVIDER` | no | `console` (default): emails are written to the server log |
@@ -111,6 +112,10 @@ npm run test:e2e     # Playwright: migrates and seeds launchly_e2e, builds, star
 
 First run: `npx playwright install chromium`.
 
+## Deploying
+
+Vercel + Neon + Vercel Blob with Google sign-in: step by step in [`docs/deployment.md`](docs/deployment.md).
+
 ## Production build
 
 ```bash
@@ -137,5 +142,5 @@ These are labelled "Coming soon" in the app or documented in the roadmap. None a
 
 - Payments and invoices: only a `PaymentProvider` interface exists.
 - Real email delivery: only the console provider exists.
-- S3/R2/Supabase storage: only local storage exists.
+- S3/R2/Supabase storage: local disk and private Vercel Blob are implemented.
 - AI website generation.

@@ -107,7 +107,8 @@ export async function startDraftProject(actor: Actor) {
   const businessName = business?.name ?? membership.organization.name;
   const prefill: QuestionnaireDraft = {
     business: {
-      businessName,
+      // Accounts created via Google have no business yet; don't prefill the person's name.
+      businessName: business?.name ?? "",
       businessType: business?.businessType ?? "",
       industry: undefined,
       description: business?.description ?? "",
@@ -232,9 +233,15 @@ export async function submitProject(actor: Actor, projectId: string) {
         .map((s) => s.trim())
         .filter(Boolean),
     };
-    const business = access.businessId
-      ? await tx.business.update({ where: { id: access.businessId }, data: businessData })
-      : await tx.business.create({ data: { ...businessData, organizationId: access.organizationId } });
+    let business;
+    if (access.businessId) {
+      business = await tx.business.update({ where: { id: access.businessId }, data: businessData });
+    } else {
+      const firstBusiness = (await tx.business.count({ where: { organizationId: access.organizationId } })) === 0;
+      business = await tx.business.create({ data: { ...businessData, organizationId: access.organizationId } });
+      // The account was named after the person until the business was known.
+      if (firstBusiness) await tx.organization.update({ where: { id: access.organizationId }, data: { name: b.businessName } });
+    }
 
     // Guard against double submission inside the transaction.
     const { count } = await tx.project.updateMany({

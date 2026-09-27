@@ -72,3 +72,7 @@ export async function loginAction(_prev: ActionResult | null, form: FormData): P
 export async function logoutAction() {
   await signOut({ redirectTo: "/" });
 }
+
+export async function googleSignInAction(form: FormData) {
+  await signIn("google", { redirectTo: safeRedirectPath(text(form, "callbackUrl"), "/post-login") });
+}

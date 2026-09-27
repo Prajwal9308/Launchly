@@ -23,8 +23,13 @@ export default async function AccountPage() {
           <FormSection title="Business" description="The business linked to your account.">
             <p className="text-sm">{account.memberships.map((m) => m.organization.name).join(", ") || "—"}</p>
           </FormSection>
-          <FormSection title="Password" description="Use a unique password you don't use elsewhere.">
-            <PasswordForm />
+          <FormSection title="Sign-in" description="How you log in to your account.">
+            {account.providers.includes("google") && <p className="text-sm">Connected to Google ({account.email}).</p>}
+            {account.hasPassword ? (
+              <PasswordForm />
+            ) : (
+              <p className="text-sm text-muted">You sign in with Google, so there&apos;s no password to manage here.</p>
+            )}
           </FormSection>
         </CardContent>
       </Card>

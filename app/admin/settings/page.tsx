@@ -50,7 +50,7 @@ export default async function SettingsPage() {
             <ProfileForm firstName={account.firstName} lastName={account.lastName} email={account.email} phone="" showPhone={false} />
           </FormSection>
           <FormSection title="Password">
-            <PasswordForm />
+            {account.hasPassword ? <PasswordForm /> : <p className="text-sm text-muted">You sign in with Google.</p>}
           </FormSection>
         </CardContent>
       </Card>

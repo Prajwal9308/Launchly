@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { GoogleButton, OrDivider } from "@/components/auth/google-button";
 import { SignupForm } from "@/components/auth/signup-form";
+import { googleEnabled } from "@/server/auth";
 import { safeRedirectPath } from "@/lib/utils";
 import { getActor } from "@/server/session";
 
@@ -17,7 +19,13 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
       <div className="rounded-xl border border-border bg-background p-6 shadow-card sm:p-8">
         <h1 className="text-xl font-semibold">Create your client account</h1>
         <p className="mt-1 text-sm text-muted">Start your project and track its progress in one place.</p>
-        <div className="mt-6">
+        <div className="mt-6 space-y-4">
+          {googleEnabled && (
+            <>
+              <GoogleButton callbackUrl={safeCallback} />
+              <OrDivider />
+            </>
+          )}
           <SignupForm callbackUrl={safeCallback} email={typeof email === "string" ? email.slice(0, 254) : undefined} />
         </div>
       </div>

@@ -173,13 +173,14 @@ export async function changePassword(actor: Actor, input: z.input<typeof changeP
   const parsed = changePasswordSchema.safeParse(input);
   if (!parsed.success) throw validation(undefined, fieldErrorsOf(parsed.error));
   const user = await db.user.findUniqueOrThrow({ where: { id: actor.id } });
+  if (!user.passwordHash) throw validation("Your account signs in with Google, so there is no password to change.");
   const valid = user.passwordHash && (await bcrypt.compare(parsed.data.currentPassword, user.passwordHash));
   if (!valid) throw validation("Your current password is incorrect.", { currentPassword: ["Incorrect password."] });
   await db.user.update({ where: { id: actor.id }, data: { passwordHash: await hashPassword(parsed.data.newPassword) } });
 }
 
 export async function getAccount(actor: Actor) {
-  return db.user.findUniqueOrThrow({
+  const { passwordHash, accounts, ...user } = await db.user.findUniqueOrThrow({
     where: { id: actor.id },
     select: {
       id: true,
@@ -190,6 +191,131 @@ export async function getAccount(actor: Actor) {
       createdAt: true,
       clientProfile: { select: { phone: true } },
       memberships: { select: { organization: { select: { id: true, name: true } } } },
+      passwordHash: true,
+      accounts: { select: { provider: true } },
     },
   });
+  // Never return the hash itself — only whether password login is available.
+  return { ...user, hasPassword: Boolean(passwordHash), providers: accounts.map((a) => a.provider) };
+}
+
+// ---------------------------------------------------------------------------
+// OAuth sign-in (e.g. Google)
+// ---------------------------------------------------------------------------
+
+export interface OAuthProfile {
+  provider: string;
+  providerAccountId: string;
+  email: string;
+  emailVerified: boolean;
+  firstName: string;
+  lastName: string;
+}
+
+async function recordLogin(userId: string, role: "ADMIN" | "CLIENT", name: string, provider: string) {
+  await db.$transaction(async (tx) => {
+    await tx.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
+    await recordActivity(tx, {
+      type: role === "ADMIN" ? "ADMIN_LOGIN" : "CLIENT_LOGIN",
+      actorId: userId,
+      visibility: "INTERNAL",
+      message: `${name} logged in`,
+      metadata: { provider },
+    });
+  });
+}
+
+/**
+ * Signs a user in with an OAuth provider. Returns null when sign-in must be refused.
+ *
+ * 1. A known provider account signs in as its linked user.
+ * 2. Otherwise the provider must have verified the email address. An existing
+ *    user with that email gets the provider linked. For client accounts, any
+ *    password is removed: passwords were set without email verification, so
+ *    keeping one would let someone who registered this email first keep access.
+ * 3. Otherwise a new client account is created (joining an invited
+ *    organization from a converted lead when one exists).
+ */
+export async function signInWithOAuth(profile: OAuthProfile) {
+  const email = profile.email.trim().toLowerCase();
+  const linked = await db.account.findUnique({
+    where: { provider_providerAccountId: { provider: profile.provider, providerAccountId: profile.providerAccountId } },
+    include: { user: true },
+  });
+  if (linked) {
+    const u = linked.user;
+    await recordLogin(u.id, u.role, `${u.firstName} ${u.lastName}`, profile.provider);
+    return { id: u.id, role: u.role, email: u.email };
+  }
+
+  if (!profile.emailVerified || !z.email().safeParse(email).success) return null;
+
+  const firstName = profile.firstName.trim().slice(0, 60) || email.split("@")[0];
+  const lastName = profile.lastName.trim().slice(0, 60);
+  let welcome = false;
+
+  const user = await db.$transaction(async (tx) => {
+    const existing = await tx.user.findUnique({ where: { email } });
+    if (existing) {
+      await tx.account.create({
+        data: { userId: existing.id, type: "oidc", provider: profile.provider, providerAccountId: profile.providerAccountId },
+      });
+      if (existing.role === "CLIENT" && existing.passwordHash) {
+        await tx.user.update({ where: { id: existing.id }, data: { passwordHash: null } });
+      }
+      return existing;
+    }
+
+    const created = await tx.user.create({
+      data: {
+        email,
+        firstName,
+        lastName,
+        role: "CLIENT",
+        clientProfile: { create: {} },
+        accounts: { create: { type: "oidc", provider: profile.provider, providerAccountId: profile.providerAccountId } },
+      },
+    });
+    const invitedOrg = await tx.organization.findFirst({
+      where: { inviteEmail: email, members: { none: {} } },
+      orderBy: { createdAt: "desc" },
+    });
+    if (invitedOrg) {
+      await tx.organizationMember.create({ data: { organizationId: invitedOrg.id, userId: created.id, role: "OWNER" } });
+      await tx.organization.update({ where: { id: invitedOrg.id }, data: { inviteEmail: null } });
+    } else {
+      // The business is created from the questionnaire; until then the account is named after the person.
+      await tx.organization.create({
+        data: { name: `${firstName} ${lastName}`.trim(), members: { create: { userId: created.id, role: "OWNER" } } },
+      });
+    }
+    await recordActivity(tx, {
+      type: "USER_REGISTERED",
+      actorId: created.id,
+      visibility: "INTERNAL",
+      message: `${firstName} ${lastName} created a client account`.replace(/\s+/g, " "),
+      metadata: { provider: profile.provider },
+    });
+    await notifyAdmins(tx, {
+      type: "USER_REGISTERED",
+      title: "New client account",
+      body: `${firstName} ${lastName} · signed up with ${profile.provider}`,
+      href: "/admin/clients",
+    });
+    welcome = true;
+    return created;
+  });
+
+  if (welcome) await sendEmail(emailTemplates.welcome(user.email, user.firstName));
+  await recordLogin(user.id, user.role, `${user.firstName} ${user.lastName}`, profile.provider);
+  return { id: user.id, role: user.role, email: user.email };
+}
+
+/** Resolves the app user linked to a provider account (used when issuing the session token). */
+export async function findOAuthUser(provider: string, providerAccountId: string) {
+  const account = await db.account.findUnique({
+    where: { provider_providerAccountId: { provider, providerAccountId } },
+    select: { user: { select: { id: true, role: true } } },
+  });
+  return account?.user ?? null;
 }

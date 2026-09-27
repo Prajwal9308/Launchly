@@ -5,8 +5,14 @@ import type { FileCategory } from "@/db/enums";
  * the file's leading bytes must match the type implied by its extension.
  */
 
-export const MAX_UPLOAD_BYTES = 15 * 1024 * 1024; // 15 MB
-export const MAX_DESIGN_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB
+/**
+ * Vercel functions accept request bodies up to ~4.5 MB, so uploads are capped
+ * at 4 MB there. NEXT_PUBLIC_VERCEL_ENV is set automatically on Vercel and is
+ * inlined at build time, so the browser and server agree on the limit.
+ */
+const ON_VERCEL = Boolean(process.env.NEXT_PUBLIC_VERCEL_ENV);
+export const MAX_UPLOAD_BYTES = (ON_VERCEL ? 4 : 15) * 1024 * 1024;
+export const MAX_DESIGN_UPLOAD_BYTES = (ON_VERCEL ? 4 : 25) * 1024 * 1024;
 
 type Signature = (bytes: Uint8Array) => boolean;
 

@@ -2,18 +2,29 @@
 
 ## Authentication
 
-- Auth.js v5 **Credentials** provider (`server/auth.ts`). Passwords are hashed with bcrypt (cost 12). The password policy is at least 10 characters with a letter and a number.
+- Auth.js v5 with two sign-in methods: **Google** (enabled when `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET` are set) and email + password (**Credentials**, `server/auth.ts`). Passwords are hashed with bcrypt (cost 12). The password policy is at least 10 characters with a letter and a number.
 - Sessions are signed, HTTP-only JWT cookies with a 7-day lifetime. They are `SameSite=Lax`, and `Secure` with the `__Secure-` prefix when served over HTTPS.
 - Login verification is timing-equalized. A bcrypt comparison runs even for unknown emails, and error messages don't reveal whether an account exists.
 - Login is rate-limited per email and per IP inside `authorize()`, so it covers direct calls to the Auth.js endpoint too. Signups and contact submissions are rate-limited per IP.
 - Successful logins update `lastLoginAt` and record a `CLIENT_LOGIN` or `ADMIN_LOGIN` activity event.
 - Redirect targets (`callbackUrl`) are restricted to same-site relative paths (`safeRedirectPath`).
 
+### Google sign-in and account linking
+
+`signInWithOAuth()` (`services/accounts.ts`):
+
+1. A Google account that's already linked signs in as its user.
+2. Otherwise Google must report the email as **verified**, or sign-in is refused.
+3. If a user with that email already exists, Google is linked to it. For **client** accounts, any existing password is removed. Password signups don't verify email ownership, so this stops someone who registered a victim's email in advance from keeping access (pre-hijacking). Admin passwords are kept, because admins are created only by the owner (`npm run create-admin`).
+4. Otherwise a new client account is created with no password. It joins the organization of a converted lead with the same email if one exists. The account is renamed to the business name when the first questionnaire is submitted.
+
+Google-only users have no password. Their Account page says so, and password change is disabled for them.
+
 ### Accounts
 
 - Clients sign up at `/signup`. Registration creates `User`, `ClientProfile`, `Organization` (owner membership) and `Business`.
 - If the studio converted a lead for that email, the new user joins the existing organization and inherits its draft project.
-- Admin accounts are created by the seed or directly in the database. There is no public admin signup.
+- Admin accounts are created with `npm run create-admin` (or the seed in development). There is no public admin signup.
 
 ## Authorization
 
