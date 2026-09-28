@@ -10,11 +10,11 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
 export const MAIN_NAV = [
-  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/process", label: "Process" },
-  { href: "/solutions", label: "Solutions" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -52,7 +52,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
             <Link href={signedInHref ?? "/login"}>{signedInHref ? "Dashboard" : "Log in"}</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/contact">Start a Project</Link>
+            <Link href="/contact">Start a project</Link>
           </Button>
         </div>
 
@@ -87,7 +87,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
             </nav>
             <div className="space-y-2 border-t border-border p-4">
               <Button asChild size="lg" className="w-full" onClick={() => setOpen(false)}>
-                <Link href="/contact">Start a Project</Link>
+                <Link href="/contact">Start a project</Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="w-full" onClick={() => setOpen(false)}>
                 <Link href={signedInHref ?? "/login"}>{signedInHref ? "Dashboard" : "Log in"}</Link>

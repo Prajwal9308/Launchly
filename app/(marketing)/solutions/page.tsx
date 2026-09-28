@@ -5,7 +5,7 @@ import { WhatWeBuild } from "@/components/marketing/what-we-build";
 
 export const metadata: Metadata = {
   title: "Solutions",
-  description: "Business websites, custom web applications, iOS and Android apps, and e-commerce stores.",
+  description: "Business websites, web applications, iOS and Android apps and e-commerce stores, designed and built by PrimeTechLabs for businesses and entrepreneurs.",
   alternates: { canonical: "/solutions" },
 };
 

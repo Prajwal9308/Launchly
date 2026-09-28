@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { useFormAction } from "@/components/forms/use-form-action";
@@ -77,6 +78,13 @@ export function ContactForm() {
       <SubmitButton pending={pending} className="w-full sm:w-auto" pendingText="Sending…">
         Send project details
       </SubmitButton>
+      <p className="text-xs text-faint">
+        We only use these details to reply to your enquiry. See our{" "}
+        <Link href="/privacy" className="underline hover:text-foreground">
+          privacy policy
+        </Link>
+        .
+      </p>
     </form>
   );
 }

@@ -25,7 +25,7 @@ export function SignupForm({ callbackUrl, email }: { callbackUrl?: string; email
       <Field id="email" label="Email" error={err("email")}>
         {(p) => <Input {...p} name="email" type="email" autoComplete="email" defaultValue={email} required />}
       </Field>
-      <Field id="businessName" label="Business name" error={err("businessName")}>
+      <Field id="businessName" label="Business or project name" error={err("businessName")}>
         {(p) => <Input {...p} name="businessName" autoComplete="organization" required />}
       </Field>
       <Field id="phone" label="Phone" optional error={err("phone")}>

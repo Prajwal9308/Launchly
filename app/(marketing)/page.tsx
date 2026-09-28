@@ -6,14 +6,13 @@ import { HeroVisual } from "@/components/marketing/hero-visual";
 import { ProcessSteps } from "@/components/marketing/process-steps";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { ServicesOverview } from "@/components/marketing/services-overview";
-import { WhatWeBuild } from "@/components/marketing/what-we-build";
 import { WhyGrid } from "@/components/marketing/why-grid";
 import { Reveal } from "@/components/motion/reveal";
 import { ArrowLink } from "@/components/marketing/arrow-link";
 import { Button } from "@/components/ui/button";
 import { getSiteSettings, listPublishedServices } from "@/services/catalog";
 
-const HERO_POINTS = ["Written scope", "Direct communication", "Your approval before launch"];
+const HERO_POINTS = ["Written scope and quote", "Talk directly to your developers", "Nothing goes live without your approval"];
 
 const ABOUT_POINTS = [
   "You talk directly to the people designing and building your product.",
@@ -35,20 +34,21 @@ export default async function HomePage() {
         <div className="container-page grid items-center gap-12 pb-16 pt-12 sm:gap-14 sm:pb-20 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:pb-24 lg:pt-24">
           <div className="max-w-xl animate-rise">
             <h1 className="text-[2.25rem] font-semibold leading-[1.06] sm:text-5xl sm:leading-[1.04] lg:text-[3.5rem]">
-              Websites and mobile apps, built for your business.
+              Websites and mobile apps for your business, scoped in writing and built to last.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
-              {settings.businessName} designs and builds websites, web applications and iOS &amp; Android apps for businesses
-              and entrepreneurs — with a clear plan, honest communication and clean, maintainable code.
+              We design and build websites, web apps and iOS &amp; Android apps for businesses and founders. You talk directly
+              to the people building it, get a written scope and quote before work starts, and approve everything before it
+              goes live.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/contact">
-                  Start a Project <ArrowRight aria-hidden />
+                  Get a free quote <ArrowRight aria-hidden />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link href="/services">Explore Services</Link>
+                <Link href="/services">See our services</Link>
               </Button>
             </div>
             <ul className="mt-8 grid gap-2 text-sm text-muted sm:flex sm:flex-wrap sm:gap-x-5">
@@ -78,22 +78,9 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* What We Build */}
-      <Section id="what-we-build" tone="muted">
-        <SectionHeader
-          eyebrow="What We Build"
-          title="Websites, web apps and mobile apps"
-          description="The kinds of products we design and develop for businesses and entrepreneurs."
-          action={{ href: "/solutions", label: "See solutions" }}
-        />
-        <div className="mt-10 sm:mt-12">
-          <WhatWeBuild />
-        </div>
-      </Section>
-
       {/* Why */}
       <Section>
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="Built around your business needs" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="What you can expect from us" />
         <div className="mt-10 sm:mt-12">
           <WhyGrid />
         </div>

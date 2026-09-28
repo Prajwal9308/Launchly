@@ -9,8 +9,8 @@ import { startProjectAction } from "@/server/actions/client";
 import { getActor } from "@/server/session";
 
 export const metadata: Metadata = {
-  title: "Project questionnaire",
-  description: "Create an account and tell us about your project. Your answers are saved as you go.",
+  title: "Website questionnaire",
+  description: "Create an account and tell us about your website project. Your answers are saved as you go.",
   alternates: { canonical: "/start-project" },
 };
 
@@ -22,11 +22,18 @@ export default async function StartProjectPage() {
     <div className="border-b border-border bg-canvas">
       <div className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div>
-          <p className="text-sm font-medium text-accent">Project questionnaire</p>
+          <p className="text-sm font-medium text-accent">Website questionnaire</p>
           <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Tell us about your project</h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
             We&apos;ll use your answers to scope and plan your project. The questionnaire takes about 10 minutes, you can
             upload your logo and files as you go, and your answers are saved automatically.
+          </p>
+          <p className="mt-3 max-w-xl text-sm text-muted">
+            Planning a web or mobile app? Use the{" "}
+            <Link href="/contact" className="font-medium text-accent hover:underline">
+              contact form
+            </Link>{" "}
+            instead and we&apos;ll send you the right questions.
           </p>
 
           <div className="mt-8 max-w-md surface-raised rounded-2xl p-6 shadow-card">
@@ -35,11 +42,11 @@ export default async function StartProjectPage() {
                 <p className="text-sm font-semibold">Create an account to get started</p>
                 <p className="mt-1 text-sm text-muted">Your account keeps your answers, files and messages in one private place.</p>
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-                  <Button asChild className="flex-1">
-                    <Link href="/signup?callbackUrl=/start-project">Create Account</Link>
+                  <Button asChild className="sm:flex-1">
+                    <Link href="/signup?callbackUrl=/start-project">Create account</Link>
                   </Button>
-                  <Button asChild variant="secondary" className="flex-1">
-                    <Link href="/login?callbackUrl=/start-project">Log In</Link>
+                  <Button asChild variant="secondary" className="sm:flex-1">
+                    <Link href="/login?callbackUrl=/start-project">Log in</Link>
                   </Button>
                 </div>
               </>

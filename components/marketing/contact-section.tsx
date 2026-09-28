@@ -1,5 +1,6 @@
 import { Mail } from "lucide-react";
 import Link from "next/link";
+import { isPlaceholderEmail } from "@/lib/site";
 import { ContactForm } from "./contact-form";
 
 const NEXT_STEPS = [
@@ -39,13 +40,15 @@ export function ContactSection({ contactEmail, heading = true }: { contactEmail:
           ))}
         </ol>
         <div className="mt-8 space-y-2 text-sm">
-          <a href={`mailto:${contactEmail}`} className="inline-flex min-h-11 items-center gap-2 text-muted hover:text-foreground sm:min-h-0">
-            <Mail className="size-4 text-accent" aria-hidden /> {contactEmail}
-          </a>
+          {!isPlaceholderEmail(contactEmail) && (
+            <a href={`mailto:${contactEmail}`} className="inline-flex min-h-11 items-center gap-2 text-muted hover:text-foreground sm:min-h-0">
+              <Mail className="size-4 text-accent" aria-hidden /> {contactEmail}
+            </a>
+          )}
           <p className="text-muted">
-            Prefer a detailed brief?{" "}
+            Planning a website?{" "}
             <Link href="/start-project" className="font-medium text-accent hover:underline">
-              Use the project questionnaire
+              Use the detailed website questionnaire
             </Link>
             .
           </p>

@@ -38,12 +38,12 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
               </p>
             ) : (
               <>
-                <p className="text-2xl font-semibold tracking-tight">Custom quote</p>
-                <p className="mt-1 text-xs text-faint">Let&apos;s discuss your project</p>
+                <p className="text-2xl font-semibold tracking-tight">Quoted per project</p>
+                <p className="mt-1 text-xs text-faint">Written quote before work starts</p>
               </>
             )}
           </div>
-          <ul className="mt-6 space-y-2.5 border-t border-border pt-6">
+          <ul className="mt-6 flex-1 space-y-2.5 border-t border-border pt-6">
             {pkg.features.map((feature) => (
               <li key={feature} className="flex gap-2.5 text-sm text-muted">
                 <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
@@ -52,7 +52,7 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
             ))}
           </ul>
           <Button asChild variant={pkg.highlighted ? "primary" : "secondary"} className="mt-8 w-full">
-            <Link href="/contact">Start a Project</Link>
+            <Link href="/contact">Get a quote</Link>
           </Button>
         </article>
         </HoverLift>

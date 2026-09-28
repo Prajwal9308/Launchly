@@ -6,7 +6,7 @@ import { E2E_PASSWORD } from "./global-setup";
 test("client portal works on a phone", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Open menu" }).click();
-  await expect(page.getByRole("dialog").getByRole("link", { name: "Solutions" })).toBeVisible();
+  await expect(page.getByRole("dialog").getByRole("link", { name: "Pricing" })).toBeVisible();
   await page.keyboard.press("Escape");
 
   await login(page, "client@example.com", E2E_PASSWORD);

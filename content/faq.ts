@@ -33,6 +33,11 @@ export const FAQS = [
     question: "What happens after launch?",
     answer: "We hand over the finished product and can continue with maintenance, updates and new features if you need them.",
   },
+  {
+    question: "What do you need from me to get started?",
+    answer:
+      "A short description of what you want to build and who it's for. If you have them, send your logo, examples you like and any existing content; we'll help with the rest.",
+  },
 ] as const;
 
 export const PROJECT_TYPES = ["Website", "Web Application", "Mobile Application", "E-commerce", "Other"] as const;

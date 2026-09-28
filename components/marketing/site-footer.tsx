@@ -1,5 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
+import { isPlaceholderEmail } from "@/lib/site";
 import { Logo } from "./logo";
 
 const COMPANY = [
@@ -36,7 +37,7 @@ export function SiteFooter({
           <ul className="mt-4 space-y-2.5">
             {COMPANY.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-muted transition-colors hover:text-foreground">
+                <Link href={link.href} className="inline-flex min-h-10 items-center text-sm text-muted transition-colors hover:text-foreground sm:min-h-0">
                   {link.label}
                 </Link>
               </li>
@@ -48,7 +49,7 @@ export function SiteFooter({
           <ul className="mt-4 space-y-2.5">
             {services.map((s) => (
               <li key={s.slug}>
-                <Link href={`/services#${s.slug}`} className="text-sm text-muted transition-colors hover:text-foreground">
+                <Link href={`/services#${s.slug}`} className="inline-flex min-h-10 items-center text-sm text-muted transition-colors hover:text-foreground sm:min-h-0">
                   {s.name}
                 </Link>
               </li>
@@ -58,27 +59,29 @@ export function SiteFooter({
         <div className="col-span-2 sm:col-span-1">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Contact</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li>
-              <a href={`mailto:${contactEmail}`} className="inline-flex items-center gap-2 break-all text-muted transition-colors hover:text-foreground">
-                <Mail className="size-4 shrink-0 text-accent" aria-hidden />
-                {contactEmail}
-              </a>
-            </li>
+            {!isPlaceholderEmail(contactEmail) && (
+              <li>
+                <a href={`mailto:${contactEmail}`} className="inline-flex min-h-10 items-center gap-2 break-all text-muted transition-colors hover:text-foreground sm:min-h-0">
+                  <Mail className="size-4 shrink-0 text-accent" aria-hidden />
+                  {contactEmail}
+                </a>
+              </li>
+            )}
             {contactPhone && (
               <li>
-                <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground">
+                <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="inline-flex min-h-10 items-center gap-2 text-muted transition-colors hover:text-foreground sm:min-h-0">
                   <Phone className="size-4 shrink-0 text-accent" aria-hidden />
                   {contactPhone}
                 </a>
               </li>
             )}
             <li>
-              <Link href="/contact" className="font-medium text-accent hover:underline">
-                Start a Project
+              <Link href="/contact" className="inline-flex min-h-10 items-center font-medium text-accent hover:underline sm:min-h-0">
+                Start a project
               </Link>
             </li>
             <li>
-              <Link href="/login" className="text-muted hover:text-foreground">
+              <Link href="/login" className="inline-flex min-h-10 items-center text-muted hover:text-foreground sm:min-h-0">
                 Client login
               </Link>
             </li>

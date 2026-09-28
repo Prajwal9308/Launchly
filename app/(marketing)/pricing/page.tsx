@@ -18,8 +18,8 @@ export default async function PricingPage() {
     <>
       <PageHero
         eyebrow="Pricing"
-        title="Project types"
-        description="Use these as a starting point. We'll confirm scope and price once we've reviewed your project details."
+        title="Clear, written quotes for every project"
+        description="Every project is quoted in writing after we've reviewed your requirements, before any work starts and with no obligation. Here's what each type of project includes."
       />
       <Section>
         <PricingCards packages={packages} />

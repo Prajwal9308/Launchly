@@ -5,7 +5,7 @@ import { PortfolioCard } from "@/components/marketing/portfolio-card";
 import { PageHero, Section } from "@/components/marketing/section";
 import { listPublishedPortfolio } from "@/services/catalog";
 
-export const metadata: Metadata = { title: "Work", alternates: { canonical: "/portfolio" } };
+export const metadata: Metadata = { title: "Recent projects", alternates: { canonical: "/portfolio" } };
 
 /**
  * Only real, delivered projects are ever shown. Until at least one exists
