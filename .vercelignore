@@ -1,0 +1,12 @@
+# Never upload local secrets, data or build artifacts to Vercel.
+# Patterns are anchored to the project root ("/storage" must not match "providers/storage").
+/.env
+/.env.*
+!/.env.example
+/storage
+/node_modules
+/.next
+/db/generated
+/test-results
+/playwright-report
+/.idea
