@@ -51,6 +51,7 @@ import {
   ListChecks,
   ListPlus,
   LoaderCircle,
+  Lock,
   LogIn,
   LogOut,
   Mail,
@@ -172,6 +173,8 @@ export const Icons = {
   process: Workflow,
   business: BuildingComplex,
   privacy: ShieldCheck,
+  /** Padlock in browser address bars and secure-checkout hints. */
+  secure: Lock,
   terms: Scale,
   website: Globe,
   pipeline: ChartNoAxesColumn,

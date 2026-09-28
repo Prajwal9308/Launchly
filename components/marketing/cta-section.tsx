@@ -1,11 +1,11 @@
-import { IconTile, Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 
 const POINTS = [
-  { label: "Written quote", icon: Icons.scope },
+  { label: "Written scope and quote", icon: Icons.scope },
   { label: "No obligation", icon: Icons.success },
-  { label: "Reply by email", icon: Icons.time },
+  { label: "Reply by email", icon: Icons.email },
 ];
 
 /** Closing call to action. On the homepage it points at the contact form below it. */
@@ -13,32 +13,31 @@ export function CtaSection({ href = "/contact" }: { href?: string }) {
   return (
     <section className="py-16 sm:py-24">
       <div className="container-page">
-        <div className="relative isolate overflow-hidden rounded-3xl bg-inverse px-6 py-12 text-center sm:px-12 sm:py-20">
+        <div className="relative isolate overflow-hidden rounded-2xl bg-inverse px-6 py-12 sm:px-12 sm:py-16">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(36rem_20rem_at_50%_-10%,rgb(77_107_240/0.45),transparent_70%),radial-gradient(28rem_18rem_at_100%_100%,rgb(124_77_255/0.25),transparent_70%)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(40rem_18rem_at_0%_0%,rgb(77_107_240/0.22),transparent_70%)]"
           />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.05)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
-          />
-          <IconTile icon={Icons.launch} size="lg" tone="inverse" className="mx-auto" />
-          <h2 className="mx-auto mt-6 max-w-2xl text-[1.75rem] font-bold leading-tight text-inverse-foreground sm:text-4xl">Tell us what you want to build.</h2>
-          <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-inverse-foreground/70">
-            Send a few details. We&apos;ll reply with questions, a plan and a written quote — no obligation.
-          </p>
-          <Button asChild size="lg" className="mt-8 w-full rounded-full bg-white text-foreground shadow-xs hover:bg-white/90 focus-visible:outline-white sm:w-auto">
-            <Link href={href}>
-              Get a free quote <Icons.forward aria-hidden />
-            </Link>
-          </Button>
-          <ul className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-inverse-foreground/70">
-            {POINTS.map(({ label, icon: Icon }) => (
-              <li key={label} className="flex items-center gap-1.5">
-                <Icon className="text-white/80" aria-hidden /> {label}
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <h2 className="text-[1.75rem] font-semibold leading-tight text-inverse-foreground sm:text-[2.25rem]">Tell us what you want to build.</h2>
+              <p className="mt-4 text-base leading-relaxed text-inverse-foreground/70">
+                Send a few details. We&apos;ll reply with questions, a plan and a written quote.
+              </p>
+              <ul className="mt-6 flex flex-col gap-2.5 text-sm text-inverse-foreground/75 sm:flex-row sm:flex-wrap sm:gap-x-6">
+                {POINTS.map(({ label, icon: Icon }) => (
+                  <li key={label} className="flex items-center gap-2">
+                    <Icon className="text-white/70" aria-hidden /> {label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Button asChild size="lg" className="w-full shrink-0 bg-white text-foreground shadow-xs hover:bg-white/90 focus-visible:outline-white sm:w-auto">
+              <Link href={href}>
+                Start a project <Icons.forward aria-hidden />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

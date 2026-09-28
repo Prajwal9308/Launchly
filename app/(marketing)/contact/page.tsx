@@ -13,7 +13,7 @@ export default async function ContactPage() {
   const settings = await getSiteSettings();
   return (
     <>
-      <PageHero eyebrow="Contact" eyebrowIcon="mail" title="Start a project" description="Share a few details about what you want to build. There's no obligation — we'll reply with next steps." />
+      <PageHero eyebrow="Contact" title="Start a project" description="Share a few details about what you want to build. There's no obligation — we'll reply with next steps." />
       <Section>
         <ContactSection contactEmail={settings.contactEmail} heading={false} />
       </Section>

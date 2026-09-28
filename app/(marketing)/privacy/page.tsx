@@ -11,7 +11,7 @@ export default async function PrivacyPage() {
   const settings = await getSiteSettings();
   return (
     <>
-      <PageHero eyebrow="Legal" eyebrowIcon="shield-check" title="Privacy policy" description="How we collect, use and protect your information." />
+      <PageHero eyebrow="Legal" title="Privacy policy" description="How we collect, use and protect your information." />
       <Section>
         <LegalBody>
           <p className="rounded-lg border border-warning-border bg-warning-subtle p-4 text-sm text-foreground">

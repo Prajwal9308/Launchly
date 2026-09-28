@@ -1,17 +1,16 @@
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { WHY } from "@/content/why";
-import { IconBadge } from "./icons";
+import { NamedIcon } from "./icons";
 
+/** Four working principles as quiet columns: a small icon, a title, one sentence. */
 export function WhyGrid() {
   return (
-    <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <RevealGroup className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
       {WHY.map((item) => (
-        <RevealItem key={item.title} className="surface flex gap-4 rounded-2xl p-5 sm:block sm:p-6">
-          <IconBadge name={item.icon} />
-          <div>
-            <h3 className="text-base font-semibold sm:mt-5">{item.title}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted sm:mt-2">{item.body}</p>
-          </div>
+        <RevealItem key={item.title} className="border-t border-border pt-5">
+          <NamedIcon name={item.icon} className="text-accent" />
+          <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
         </RevealItem>
       ))}
     </RevealGroup>

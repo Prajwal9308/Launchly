@@ -1,8 +1,9 @@
-import { IconTile, Icons } from "@/components/ui/icons";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { ContactSection } from "@/components/marketing/contact-section";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { HeroVisual } from "@/components/marketing/hero-visual";
+import { PortalPreview } from "@/components/marketing/mockups/compositions";
 import { ProcessSteps } from "@/components/marketing/process-steps";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { ServicesOverview } from "@/components/marketing/services-overview";
@@ -12,10 +13,12 @@ import { ArrowLink } from "@/components/marketing/arrow-link";
 import { Button } from "@/components/ui/button";
 import { getSiteSettings, listPublishedServices } from "@/services/catalog";
 
-const HERO_POINTS = [
-  { label: "Written scope and quote", icon: Icons.scope },
-  { label: "Talk directly to your developers", icon: Icons.messages },
-  { label: "Nothing goes live without your approval", icon: Icons.approved },
+/** Operating principles, stated as facts about how we work — not badges. */
+const PRINCIPLES = [
+  { label: "Written scope first", icon: Icons.scope },
+  { label: "Pricing agreed up front", icon: Icons.pricing },
+  { label: "Direct developer contact", icon: Icons.messages },
+  { label: "Your approval before launch", icon: Icons.approved },
 ];
 
 const ABOUT_POINTS = [
@@ -30,46 +33,43 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate overflow-hidden border-b border-border bg-canvas">
+      <section className="relative isolate overflow-hidden border-b border-border bg-background">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-glow" />
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-70" />
-        <div className="container-page grid items-center gap-12 pb-16 pt-12 sm:gap-14 sm:pb-20 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:pb-24 lg:pt-24">
-          <div className="max-w-xl animate-rise">
-            <p className="eyebrow">
-              <Icons.crossPlatform aria-hidden /> Web &amp; mobile studio
-            </p>
-            <h1 className="mt-5 text-[2.25rem] font-bold leading-[1.06] sm:text-5xl sm:leading-[1.04] lg:text-[3.5rem]">
-              Websites and mobile apps for your business, <span className="text-gradient">scoped in writing and built to last.</span>
+        <div className="container-page grid gap-10 pb-14 pt-10 sm:gap-12 sm:pb-20 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0 lg:pb-24 lg:pt-20">
+          <div className="max-w-[34rem] animate-rise lg:self-end">
+            <p className="text-sm font-medium text-accent">Web &amp; mobile development studio</p>
+            <h1 className="mt-4 text-[1.875rem] font-semibold leading-[1.15] sm:text-[2.5rem] sm:leading-[1.1] lg:text-[2.875rem]">
+              Websites and mobile apps, built around your business.
             </h1>
-            <p className="mt-5 text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
-              We design and build websites, web apps and iOS &amp; Android apps for businesses and founders. You talk directly
-              to the people building it, get a written scope and quote before work starts, and approve everything before it
-              goes live.
+            <p className="mt-5 text-base leading-relaxed text-muted sm:text-[17px]">
+              We design and build websites, web applications and iOS &amp; Android apps for businesses and founders. Every
+              project starts with a written scope and quote, and nothing launches until you approve it.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/contact">
-                  Get a free quote <Icons.forward aria-hidden />
+                  Start a project <Icons.forward aria-hidden />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link href="/services">
-                  <Icons.services aria-hidden /> See our services
-                </Link>
+                <Link href="/process">How we work</Link>
               </Button>
             </div>
-            <ul className="mt-8 grid gap-2.5 text-sm text-muted sm:flex sm:flex-wrap sm:gap-x-5">
-              {HERO_POINTS.map(({ label, icon: Icon }) => (
-                <li key={label} className="flex items-center gap-2">
-                  <Icon className="text-accent" aria-hidden />
-                  {label}
-                </li>
-              ))}
-            </ul>
           </div>
-          <div className="animate-rise [animation-delay:100ms]">
+          <div className="animate-rise self-center [animation-delay:120ms] lg:col-start-2 lg:row-span-2 lg:row-start-1">
             <HeroVisual />
           </div>
+          <ul
+            aria-label="How we work with clients"
+            className="grid max-w-[34rem] animate-rise gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-muted [animation-delay:200ms] sm:grid-cols-2 lg:mt-9 lg:self-start"
+          >
+            {PRINCIPLES.map(({ label, icon: Icon }) => (
+              <li key={label} className="flex items-center gap-2.5">
+                <Icon className="text-accent" aria-hidden />
+                {label}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -77,7 +77,6 @@ export default async function HomePage() {
       <Section id="services">
         <SectionHeader
           eyebrow="Services"
-          eyebrowIcon="layers"
           title="What we do"
           description="From a first website to a custom app, we design and build around how your business actually works."
           action={{ href: "/services", label: "All services" }}
@@ -89,7 +88,7 @@ export default async function HomePage() {
 
       {/* Why */}
       <Section>
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="quality" title="What you can expect from us" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="What you can expect from us" />
         <div className="mt-10 sm:mt-12">
           <WhyGrid />
         </div>
@@ -99,7 +98,6 @@ export default async function HomePage() {
       <Section id="process" tone="muted">
         <SectionHeader
           eyebrow="Process"
-          eyebrowIcon="workflow"
           title="From idea to launch"
           description="Five clear steps, with updates at each one."
           action={{ href: "/process", label: "How we work" }}
@@ -112,17 +110,25 @@ export default async function HomePage() {
       {/* About */}
       <Section id="about">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <SectionHeader eyebrow="About" eyebrowIcon="users" title="A small studio, focused on doing it properly" />
+          <div>
+            <SectionHeader eyebrow="About" title="A small studio, focused on doing it properly" />
+            <Reveal className="mt-10 hidden lg:block">
+              <PortalPreview />
+              <p className="mt-3 flex items-center gap-2 text-xs text-faint">
+                <Icons.info aria-hidden /> Your project portal: status updates, files, messages and design reviews in one place.
+              </p>
+            </Reveal>
+          </div>
           <Reveal>
             <p className="text-base leading-relaxed text-muted sm:text-[17px]">
               {settings.businessName} helps businesses and entrepreneurs turn ideas into practical digital products — from a
               professional website to a custom web application or mobile app. We care about clean design, solid engineering and
               keeping you informed, so you always know what&apos;s being built and why.
             </p>
-            <ul className="mt-7 space-y-3">
+            <ul className="mt-7 divide-y divide-border border-y border-border">
               {ABOUT_POINTS.map(({ text, icon: Icon }) => (
-                <li key={text} className="surface flex items-center gap-4 rounded-xl p-4 text-[15px] text-foreground">
-                  <IconTile icon={Icon} />
+                <li key={text} className="flex items-start gap-3.5 py-4 text-[15px] text-foreground">
+                  <Icon className="mt-0.5 text-accent" aria-hidden />
                   {text}
                 </li>
               ))}

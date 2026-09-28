@@ -13,7 +13,7 @@ import { Logo } from "./logo";
 export const MAIN_NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/services", label: "Services", icon: Icons.services },
   { href: "/process", label: "Process", icon: Icons.process },
-  { href: "/pricing", label: "Pricing", icon: Icons.pricing },
+  { href: "/solutions", label: "Solutions", icon: Icons.dashboard },
   { href: "/about", label: "About", icon: Icons.info },
   { href: "/faq", label: "FAQ", icon: Icons.help },
   { href: "/contact", label: "Contact", icon: Icons.email },
@@ -26,20 +26,22 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75">
-      <div className="container-page flex h-16 items-center justify-between gap-6">
+    <header className="sticky top-0 z-40 border-b border-border bg-background">
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
         <Logo name={businessName} />
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-0.5">
+          <ul className="flex items-center gap-1">
             {MAIN_NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "rounded-full px-3.5 py-2 text-sm transition-colors duration-150",
-                    isActive(item.href) ? "bg-accent-subtle font-medium text-accent" : "text-muted hover:bg-subtle hover:text-foreground",
+                    "relative rounded-md px-3 py-2 text-[15px] transition-colors duration-150",
+                    isActive(item.href)
+                      ? "font-medium text-foreground after:absolute after:inset-x-3 after:-bottom-[1.1rem] after:h-0.5 after:rounded-full after:bg-accent"
+                      : "text-muted hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -50,15 +52,11 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Button asChild variant="ghost" size="sm">
-            <Link href={signedInHref ?? "/login"}>
-              <AccountIcon aria-hidden /> {signedInHref ? "Dashboard" : "Log in"}
-            </Link>
+          <Button asChild variant="ghost" size="sm" className="text-sm">
+            <Link href={signedInHref ?? "/login"}>{signedInHref ? "Dashboard" : "Client login"}</Link>
           </Button>
-          <Button asChild size="sm" className="rounded-full px-4">
-            <Link href="/contact">
-              Start a project <Icons.forward aria-hidden />
-            </Link>
+          <Button asChild className="h-9 px-4">
+            <Link href="/contact">Start a project</Link>
           </Button>
         </div>
 
@@ -82,17 +80,10 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                       aria-current={isActive(item.href) ? "page" : undefined}
                       className={cn(
                         "group flex h-12 items-center gap-3 rounded-lg px-3 text-[15px] transition-colors hover:bg-subtle",
-                        isActive(item.href) ? "bg-accent-subtle font-medium text-accent" : "text-muted hover:text-foreground",
+                        isActive(item.href) ? "bg-subtle font-medium text-foreground" : "text-muted hover:text-foreground",
                       )}
                     >
-                      <span
-                        className={cn(
-                          "flex size-8 items-center justify-center rounded-md",
-                          isActive(item.href) ? "bg-accent text-accent-foreground" : "bg-subtle text-accent group-hover:bg-background",
-                        )}
-                      >
-                        <item.icon aria-hidden />
-                      </span>
+                      <item.icon className={isActive(item.href) ? "text-accent" : "text-faint group-hover:text-muted"} aria-hidden />
                       <span className="flex-1">{item.label}</span>
                       <Icons.chevronRight className="text-faint" aria-hidden />
                     </Link>
@@ -108,7 +99,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
               </Button>
               <Button asChild size="lg" variant="secondary" className="w-full" onClick={() => setOpen(false)}>
                 <Link href={signedInHref ?? "/login"}>
-                  <AccountIcon aria-hidden /> {signedInHref ? "Dashboard" : "Log in"}
+                  <AccountIcon aria-hidden /> {signedInHref ? "Dashboard" : "Client login"}
                 </Link>
               </Button>
             </div>

@@ -20,12 +20,12 @@ const WORKING_TOGETHER = [
 export default function ProcessPage() {
   return (
     <>
-      <PageHero eyebrow="Process" eyebrowIcon="workflow" title="From idea to launch" description="Five clear steps, whether you're building a website, a web application or a mobile app." />
+      <PageHero eyebrow="Process" title="From idea to launch" description="Five clear steps, whether you're building a website, a web application or a mobile app." />
       <Section>
         <ProcessSteps headingLevel="h2" />
       </Section>
       <Section tone="muted">
-        <SectionHeader eyebrow="Working together" eyebrowIcon="messages" title="How we work with you" />
+        <SectionHeader eyebrow="Working together" title="How we work with you" />
         <dl className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {WORKING_TOGETHER.map((item) => (
             <div key={item.title} className="surface rounded-2xl p-6">

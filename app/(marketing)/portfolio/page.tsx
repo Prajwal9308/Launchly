@@ -16,7 +16,7 @@ export default async function PortfolioPage() {
   if (!items.length) notFound();
   return (
     <>
-      <PageHero eyebrow="Work" eyebrowIcon="briefcase" title="Recent projects" />
+      <PageHero eyebrow="Work" title="Recent projects" />
       <Section>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (

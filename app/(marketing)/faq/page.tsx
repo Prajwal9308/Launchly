@@ -22,7 +22,7 @@ export default function FaqPage() {
   };
   return (
     <>
-      <PageHero eyebrow="FAQ" eyebrowIcon="circle-help" title="Frequently asked questions" />
+      <PageHero eyebrow="FAQ" title="Frequently asked questions" />
       <Section>
         <div className="max-w-3xl">
           <FaqList items={FAQS} />

@@ -2,7 +2,6 @@ import { IconTile, Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { isPlaceholderEmail } from "@/lib/site";
 import { ContactForm } from "./contact-form";
-import { NamedIcon } from "./icons";
 
 const NEXT_STEPS = [
   { text: "We read your project details and reply by email, usually with a few questions.", icon: Icons.messages },
@@ -18,10 +17,8 @@ export function ContactSection({ contactEmail, heading = true }: { contactEmail:
     <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-x-16 lg:gap-y-0">
       {heading && (
         <div className="lg:col-start-1 lg:row-start-1">
-          <p className="eyebrow">
-            <NamedIcon name="mail" /> Contact
-          </p>
-          <h2 className="mt-4 text-[1.75rem] font-semibold leading-[1.15] sm:text-4xl">Start a project</h2>
+          <p className="eyebrow">Contact</p>
+          <h2 className="mt-3 text-[1.625rem] font-semibold leading-[1.2] sm:text-[2rem]">Start a project</h2>
           <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
             Share a few details about what you want to build. There&apos;s no obligation — we&apos;ll reply with next steps.
           </p>

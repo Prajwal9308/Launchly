@@ -55,6 +55,7 @@ Size and stroke are set once in `app/globals.css` (`:where(svg.lucide)`):
 | **Default: every inline, button, nav, list and tab icon** | **20px** | No class needed. Don't add `size-4` or `size-3.5`. |
 | Feature icons (feature cards, empty states, hero/CTA tiles) | 24px | `size-6`, or `<IconTile size="lg">`, which sets it |
 | Control glyphs inside form controls (checkbox tick, stepper tick) | sized to the control | `className="size-3 [stroke-width:3]"`. Only for `Icons.check` inside a checkbox, radio or step dot. |
+| Icons drawn *inside* device mockup screens (`components/marketing/mockups/`) | scales with the screen | `em` sizes such as `size-[1.15em]`. These are part of the illustration, not UI; the device scales as one piece. |
 
 - **Stroke is 1.75 everywhere.** Don't pass `strokeWidth`, because the CSS overrides it anyway. Use the `[stroke-width:…]` utility only for control glyphs.
 - **Don't use `!size-*` overrides** or one-off pixel sizes like `size-[18px]`.

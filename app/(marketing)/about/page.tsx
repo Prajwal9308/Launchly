@@ -24,7 +24,6 @@ export default async function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        eyebrowIcon="users"
         title={`About ${settings.businessName}`}
         description="A web and mobile app development studio for businesses and entrepreneurs."
       />
@@ -53,7 +52,7 @@ export default async function AboutPage() {
         </div>
       </Section>
       <Section tone="muted">
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="quality" title="Built around your business needs" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="Built around your business needs" />
         <div className="mt-12">
           <WhyGrid />
         </div>
