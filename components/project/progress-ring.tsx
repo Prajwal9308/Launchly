@@ -15,8 +15,8 @@ export function ProgressRing({ value, label, size = 168, className }: { value: n
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="relative -rotate-90" aria-hidden>
         <defs>
           <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#4d6bf0" />
-            <stop offset="100%" stopColor="#2f4fd6" />
+            <stop offset="0%" stopColor="#ea6a1f" />
+            <stop offset="100%" stopColor="#c2410c" />
           </linearGradient>
         </defs>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--color-subtle)" strokeWidth={stroke} />

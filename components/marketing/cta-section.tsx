@@ -16,7 +16,7 @@ export function CtaSection({ href = "/contact" }: { href?: string }) {
         <div className="relative isolate overflow-hidden rounded-2xl bg-inverse px-6 py-12 sm:px-12 sm:py-16">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(40rem_18rem_at_0%_0%,rgb(77_107_240/0.22),transparent_70%)]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(40rem_18rem_at_0%_0%,rgb(234_106_31/0.16),transparent_70%)]"
           />
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">

@@ -239,7 +239,7 @@ export async function getSiteSettings() {
   return (
     (await db.siteSettings.findUnique({ where: { id: "default" } })) ?? {
       id: "default",
-      businessName: "PrimeTechLabs",
+      businessName: "ViperByte",
       tagline: "Websites and mobile apps for businesses and entrepreneurs.",
       contactEmail: "hello@example.com",
       contactPhone: null,

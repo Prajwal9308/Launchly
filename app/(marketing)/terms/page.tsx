@@ -5,7 +5,7 @@ import { isPlaceholderEmail } from "@/lib/site";
 import { getSiteSettings } from "@/services/catalog";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "Terms", description: "The terms that apply when you use the PrimeTechLabs website and client portal.", alternates: { canonical: "/terms" } };
+export const metadata: Metadata = { title: "Terms", description: "The terms that apply when you use the ViperByte website and client portal.", alternates: { canonical: "/terms" } };
 
 export default async function TermsPage() {
   const settings = await getSiteSettings();

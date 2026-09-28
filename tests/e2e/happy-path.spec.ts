@@ -38,7 +38,7 @@ let projectId = "";
 test("public site → sign up → questionnaire → upload → submit", async ({ page }) => {
   // 1. Visit the public website
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1, name: "Websites and mobile apps, built around your business." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Websites, apps and digital products, built with precision." })).toBeVisible();
   await expect(page.getByText(/progress/i)).toHaveCount(0);
   await page.getByRole("link", { name: "Services", exact: true }).first().click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Web and mobile development");

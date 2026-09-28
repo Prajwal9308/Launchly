@@ -1,4 +1,4 @@
-// PrimeTechLabs database schema.
+// ViperByte database schema.
 // See docs/database.md for an overview of models and relationships.
 
 generator client {
@@ -647,7 +647,7 @@ model PortfolioItem {
 /// Singleton row (id = "default") holding editable studio details.
 model SiteSettings {
   id           String   @id @default("default")
-  businessName String   @default("PrimeTechLabs")
+  businessName String   @default("ViperByte")
   tagline      String   @default("Websites and mobile apps for businesses and entrepreneurs.")
   contactEmail String   @default("hello@example.com")
   contactPhone String?

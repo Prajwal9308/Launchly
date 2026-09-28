@@ -27,7 +27,7 @@ export function MessageBubble({ message, own, studioName }: { message: MessageVi
           className={cn(
             "whitespace-pre-wrap break-words rounded-xl px-3.5 py-2.5 text-sm leading-relaxed",
             own
-              ? "rounded-tr-sm bg-accent text-accent-foreground"
+              ? "rounded-tr-sm bg-primary text-white"
               : "rounded-tl-sm border border-border bg-background text-foreground",
           )}
         >

@@ -130,7 +130,14 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
         </ConceptVisual>
       )}
       {slug === "web-applications" && (
-        <ConceptVisual label="an example web application dashboard on a desktop display" className="w-full max-w-[30rem]">
+        <ConceptVisual label="an example scheduling web application in a browser" className="mb-[6%] w-full max-w-[32rem]">
+          <BrowserWindow url="app.yourbrand.com">
+            <OperationsScreen />
+          </BrowserWindow>
+        </ConceptVisual>
+      )}
+      {slug === "business-dashboards" && (
+        <ConceptVisual label="an example business dashboard on a desktop display" className="w-full max-w-[30rem]">
           <Monitor>
             <DashboardScreen />
           </Monitor>
@@ -147,7 +154,7 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
         </ConceptVisual>
       )}
       {slug === "ecommerce" && (
-        <ConceptVisual label="an example online store on a tablet and a phone" className="relative mb-[5%] w-full max-w-[32rem]">
+        <ConceptVisual label="ShopNext, an example online store, on a tablet and a phone" className="relative mb-[5%] w-full max-w-[32rem]">
           <Tablet className="w-[86%]">
             <StoreScreen columns={3} />
           </Tablet>
@@ -161,13 +168,13 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
 }
 
 /**
- * The PrimeTechLabs client portal — a real feature of the service, shown in a
+ * The ViperByte client portal — a real feature of the service, shown in a
  * simplified form (sample project, not a client's data).
  */
 export function PortalPreview({ className }: { className?: string }) {
   return (
     <Stage className={cn("rounded-2xl border border-border px-[7%] py-[7%]", className)}>
-      <ConceptVisual label="a simplified view of the PrimeTechLabs client portal, showing project progress and a design ready for review">
+      <ConceptVisual label="a simplified view of the ViperByte client portal, showing project progress and a design ready for review">
         <BrowserWindow url="Your project portal">
           <PortalScreen />
         </BrowserWindow>

@@ -1,5 +1,5 @@
 /**
- * "What We Build" — categories of work PrimeTechLabs offers. These are
+ * "What We Build" — categories of work ViperByte offers. These are
  * capabilities, not completed client projects.
  */
 export const SOLUTIONS = [
@@ -13,9 +13,9 @@ export const SOLUTIONS = [
   {
     slug: "web-applications",
     title: "Web Applications",
-    icon: "layout-dashboard",
-    description: "Custom dashboards, portals, booking systems, internal tools and other browser-based products.",
-    examples: ["Client portals", "Admin dashboards", "Booking systems", "Internal tools"],
+    icon: "workflow",
+    description: "Portals, booking systems, internal tools and other browser-based products built around how your team works.",
+    examples: ["Client portals", "Booking systems", "Internal tools", "Workflow automation"],
   },
   {
     slug: "mobile-applications",
@@ -30,5 +30,12 @@ export const SOLUTIONS = [
     icon: "shopping-cart",
     description: "Online stores with product management, checkout, payments and a responsive shopping experience.",
     examples: ["Online stores", "Product catalogs", "Checkout & payments", "Order management"],
+  },
+  {
+    slug: "business-dashboards",
+    title: "Business Dashboards",
+    icon: "layout-dashboard",
+    description: "Clear reporting and operations dashboards that bring your sales, bookings and team data into one place.",
+    examples: ["Sales & KPI reporting", "Operations overviews", "Admin panels", "Data integrations"],
   },
 ] as const;

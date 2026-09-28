@@ -24,7 +24,7 @@ const eslintConfig = defineConfig([
           patterns: [
             {
               group: ["react-icons", "react-icons/*", "@heroicons/*", "@fortawesome/*", "@radix-ui/react-icons", "@tabler/icons-react", "@phosphor-icons/*", "phosphor-react", "react-feather", "@iconify/*"],
-              message: "PrimeTechLabs uses Lucide only. Add the icon to @/components/ui/icons instead.",
+              message: "ViperByte uses Lucide only. Add the icon to @/components/ui/icons instead.",
             },
           ],
         },

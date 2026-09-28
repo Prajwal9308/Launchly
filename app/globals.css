@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /*
- * PrimeTechLabs design system: light, restrained, professional.
- * Neutral surfaces, near-black text, one accent. Hierarchy comes from
+ * ViperByte design system: light, restrained, professional.
+ * Neutral surfaces, charcoal text and primary actions, one warm accent used sparingly. Hierarchy comes from
  * typography, spacing and three surface levels — not effects.
  *   surface-muted  – supporting information
  *   surface        – standard cards
@@ -27,14 +27,20 @@
   --color-muted: #4a4f5c;
   --color-faint: #6a707d;
 
-  /* Single refined accent */
-  --color-accent: #2f4fd6;
-  --color-accent-hover: #2440b8;
-  --color-accent-subtle: #eef1fc;
-  --color-accent-border: #c9d2f6;
+  /* Brand accent: links, icons, small highlights. AA as text on white (5.2:1) and on accent-subtle (4.8:1). */
+  --color-accent: #c2410c;
+  --color-accent-hover: #9a3412;
+  --color-accent-subtle: #fff5ee;
+  --color-accent-border: #fbd3bb;
   --color-accent-foreground: #ffffff;
-  /* Secondary hue used only inside accent gradients and glows */
-  --color-accent-2: #7c4dff;
+  /* Warm companion hue, only inside small gradients and data visuals */
+  --color-accent-2: #f59e0b;
+  /* Brand-graphic oranges for the logo mark and the curve motif. Never for text. */
+  --color-mark: #ea6a1f;
+  --color-mark-light: #f7b58a;
+  /* Primary action: charcoal, so the accent never floods the page */
+  --color-primary: #16181d;
+  --color-primary-hover: #2a2d35;
 
   /* Inverse (charcoal) surfaces: closing CTA, footer */
   --color-inverse: #111318;
@@ -161,7 +167,7 @@
 
 /* Barely-there accent wash at the top of intros and product stages. Decorative only. */
 @utility bg-glow {
-  background: radial-gradient(48rem 22rem at 20% -12%, rgb(47 79 214 / 0.06), transparent 70%);
+  background: radial-gradient(48rem 22rem at 20% -12%, rgb(234 106 31 / 0.05), transparent 70%);
 }
 
 /* Faint technical grid, used only behind product stages (keep opacity low). */

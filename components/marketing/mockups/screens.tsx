@@ -5,18 +5,26 @@ import { Screen } from "./devices";
 
 /**
  * Concept interfaces shown inside the device frames. They illustrate the kinds
- * of products PrimeTechLabs builds — they are not client work, so they use a
+ * of products ViperByte builds — they are not client work, so they use a
  * placeholder brand ("Your Brand") and sample data only. Everything inside is
  * sized in em (see Screen) so it scales with the device.
  */
 
 const ico = "size-[1.15em]";
 
-function Wordmark({ light }: { light?: boolean }) {
+function Wordmark({ light, name = "Your Brand" }: { light?: boolean; name?: string }) {
+  const shop = name === "ShopNext";
   return (
     <span className="flex items-center gap-[0.5em]">
-      <span className={cn("size-[1.5em] rounded-[0.4em]", light ? "bg-white" : "bg-accent")} />
-      <span className={cn("text-[1.05em] font-semibold tracking-tight", light && "text-white")}>Your Brand</span>
+      <span
+        className={cn(
+          "flex size-[1.5em] items-center justify-center rounded-[0.4em] text-[1em] font-bold text-white",
+          light ? "bg-white" : shop ? "bg-primary" : "bg-accent",
+        )}
+      >
+        {shop && <span className="text-[0.7em]">S</span>}
+      </span>
+      <span className={cn("text-[1.05em] font-semibold tracking-tight", light && "text-white")}>{name}</span>
     </span>
   );
 }
@@ -427,7 +435,7 @@ export function StoreScreen({ columns = 4 }: { columns?: 3 | 4 }) {
   return (
     <Screen unit={columns === 4 ? 1.2 : 1.55}>
       <div className="flex h-[4em] items-center justify-between border-b border-border px-[2.4em]">
-        <Wordmark />
+        <Wordmark name="ShopNext" />
         <span className="flex h-[2.2em] w-[30%] items-center gap-[0.5em] rounded-full bg-subtle px-[0.9em] text-faint">
           <Icons.search className={ico} />
           <span className="text-[0.85em]">Search products</span>
@@ -579,11 +587,11 @@ export function DesignScreen() {
 const SHIFTS: { day: number; start: number; len: number; tone: string }[] = [
   { day: 0, start: 0, len: 2, tone: "bg-accent-subtle border-accent/40 text-accent" },
   { day: 0, start: 3, len: 1, tone: "bg-success-subtle border-success/40 text-success" },
-  { day: 1, start: 1, len: 2, tone: "bg-[#efeaff] border-accent-2/40 text-accent-2" },
+  { day: 1, start: 1, len: 2, tone: "bg-info-subtle border-info/40 text-info" },
   { day: 2, start: 0, len: 1, tone: "bg-warning-subtle border-warning/40 text-warning" },
   { day: 2, start: 2, len: 2, tone: "bg-accent-subtle border-accent/40 text-accent" },
   { day: 3, start: 1, len: 1, tone: "bg-success-subtle border-success/40 text-success" },
-  { day: 3, start: 3, len: 1, tone: "bg-[#efeaff] border-accent-2/40 text-accent-2" },
+  { day: 3, start: 3, len: 1, tone: "bg-info-subtle border-info/40 text-info" },
   { day: 4, start: 0, len: 3, tone: "bg-accent-subtle border-accent/40 text-accent" },
 ];
 
@@ -637,7 +645,7 @@ export function OperationsScreen() {
 }
 
 /* ------------------------------------------------------------------ */
-/* PrimeTechLabs client portal (a real feature, simplified)            */
+/* ViperByte client portal (a real feature, simplified)            */
 /* ------------------------------------------------------------------ */
 
 export function PortalScreen() {

@@ -100,7 +100,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * PrimeTechLabs icon registry — the only module that imports from lucide-react
+ * ViperByte icon registry — the only module that imports from lucide-react
  * (enforced by ESLint). Every key is a *concept*, and each concept has exactly
  * one icon, so the same idea always looks the same everywhere.
  *

@@ -1,9 +1,9 @@
 ---
 name: icon-system
-description: PrimeTechLabs icon rules — Lucide only, through the Icons registry, 20/24px, 1.75 stroke, accent colour, one icon per concept, IconTile for containers. Use whenever adding, changing, choosing or reviewing an icon anywhere in this repo (marketing site, client portal, admin), including service icons, activity/notification icons, empty states, buttons and navigation.
+description: ViperByte icon rules — Lucide only, through the Icons registry, 20/24px, 1.75 stroke, accent colour, one icon per concept, IconTile for containers. Use whenever adding, changing, choosing or reviewing an icon anywhere in this repo (marketing site, client portal, admin), including service icons, activity/notification icons, empty states, buttons and navigation.
 ---
 
-# PrimeTechLabs icon system
+# ViperByte icon system
 
 One library, one registry, one visual language. Follow these rules for every icon in this repo. For general placement and hierarchy advice, `ui-ux-pro-max` applies; where it disagrees with this file (for example its `Home` or `Heroicons` examples), this file wins.
 
@@ -62,7 +62,7 @@ Size and stroke are set once in `app/globals.css` (`:where(svg.lucide)`):
 
 ## 4. Colour
 
-- **Feature and decorative icons use the accent**, `text-accent`, which is `#2f4fd6` (the `--color-accent` token). Never hard-code a hex value.
+- **Feature and decorative icons use the accent**, `text-accent`, which is `#c2410c`, the brand accent (the `--color-accent` token). Never hard-code a hex value.
 - **UI-control icons inherit the text colour** (menu, close, chevrons, search, the icons inside buttons), so they follow button, link and hover states.
 - **Nav icons:** idle is `text-faint` (the `ghost` tile), and the active item gets a `solid` accent tile.
 - **Status icons use the semantic tokens:** `text-success`, `text-danger`, `text-warning`, `text-info`. Colour is never the only signal; pair it with text or a distinct glyph.

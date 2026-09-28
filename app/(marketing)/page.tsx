@@ -2,7 +2,9 @@ import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { ContactSection } from "@/components/marketing/contact-section";
 import { CtaSection } from "@/components/marketing/cta-section";
+import { BrandCurve } from "@/components/marketing/brand-curve";
 import { HeroVisual } from "@/components/marketing/hero-visual";
+import { Entrance } from "@/components/motion/entrance";
 import { PortalPreview } from "@/components/marketing/mockups/compositions";
 import { ProcessSteps } from "@/components/marketing/process-steps";
 import { Section, SectionHeader } from "@/components/marketing/section";
@@ -15,10 +17,9 @@ import { getSiteSettings, listPublishedServices } from "@/services/catalog";
 
 /** Operating principles, stated as facts about how we work — not badges. */
 const PRINCIPLES = [
-  { label: "Written scope first", icon: Icons.scope },
-  { label: "Pricing agreed up front", icon: Icons.pricing },
-  { label: "Direct developer contact", icon: Icons.messages },
-  { label: "Your approval before launch", icon: Icons.approved },
+  { label: "Written scope before work begins", icon: Icons.scope },
+  { label: "Direct communication with your developers", icon: Icons.messages },
+  { label: "Nothing launches without your approval", icon: Icons.approved },
 ];
 
 const ABOUT_POINTS = [
@@ -36,14 +37,18 @@ export default async function HomePage() {
       <section className="relative isolate overflow-hidden border-b border-border bg-background">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-glow" />
         <div className="container-page grid gap-10 pb-14 pt-10 sm:gap-12 sm:pb-20 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0 lg:pb-24 lg:pt-20">
-          <div className="max-w-[34rem] animate-rise lg:self-end">
+          <Entrance className="max-w-[35rem] lg:self-end">
             <p className="text-sm font-medium text-accent">Web &amp; mobile development studio</p>
             <h1 className="mt-4 text-[1.875rem] font-semibold leading-[1.15] sm:text-[2.5rem] sm:leading-[1.1] lg:text-[2.875rem]">
-              Websites and mobile apps, built around your business.
+              Websites, apps and digital products, built with{" "}
+              <span className="relative inline-block whitespace-nowrap">
+                precision.
+                <BrandCurve className="absolute -bottom-[0.28em] left-0 h-[0.3em] w-[96%]" />
+              </span>
             </h1>
-            <p className="mt-5 text-base leading-relaxed text-muted sm:text-[17px]">
-              We design and build websites, web applications and iOS &amp; Android apps for businesses and founders. Every
-              project starts with a written scope and quote, and nothing launches until you approve it.
+            <p className="mt-6 text-base leading-relaxed text-muted sm:text-[17px]">
+              We design and build websites, web applications and mobile apps for businesses and founders, with a clear scope,
+              transparent pricing and direct communication.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
@@ -55,13 +60,13 @@ export default async function HomePage() {
                 <Link href="/process">How we work</Link>
               </Button>
             </div>
-          </div>
-          <div className="animate-rise self-center [animation-delay:120ms] lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          </Entrance>
+          <div className="self-center lg:col-start-2 lg:row-span-2 lg:row-start-1">
             <HeroVisual />
           </div>
           <ul
             aria-label="How we work with clients"
-            className="grid max-w-[34rem] animate-rise gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-muted [animation-delay:200ms] sm:grid-cols-2 lg:mt-9 lg:self-start"
+            className="grid max-w-[35rem] animate-rise gap-3 border-t border-border pt-6 text-sm text-muted [animation-delay:300ms] lg:mt-9 lg:self-start"
           >
             {PRINCIPLES.map(({ label, icon: Icon }) => (
               <li key={label} className="flex items-center gap-2.5">

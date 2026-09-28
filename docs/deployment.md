@@ -53,7 +53,7 @@ Real email goes through **Resend** (`EMAIL_PROVIDER=resend`, `RESEND_API_KEY`):
 
 - `STUDIO_NOTIFY_EMAIL`: the inbox for studio emails (new projects, client messages, revisions, approvals, contact-form enquiries). In-app notifications still go to every admin.
 - `EMAIL_REPLY_TO`: replies to any app email land here.
-- `EMAIL_FROM`: must use a domain you've verified in Resend. Until you have one, use `PrimeTechLabs <onboarding@resend.dev>`, but Resend's test sender **only delivers to the email you signed up to Resend with**. Studio emails to that inbox work; client emails don't until a domain is verified.
+- `EMAIL_FROM`: must use a domain you've verified in Resend. Until you have one, use `ViperByte <onboarding@resend.dev>`, but Resend's test sender **only delivers to the email you signed up to Resend with**. Studio emails to that inbox work; client emails don't until a domain is verified.
 - A personal Outlook/Hotmail address can't be the sender. Microsoft no longer allows password-based SMTP for personal accounts, and sending services only send from domains you own. Use it as `EMAIL_REPLY_TO` and `STUDIO_NOTIFY_EMAIL` instead.
 
 ## AI

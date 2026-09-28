@@ -6,7 +6,7 @@ import { NamedIcon } from "./icons";
 import { SolutionShowcase } from "./mockups/compositions";
 
 /**
- * Categories of work PrimeTechLabs builds — capabilities, not past projects.
+ * Categories of work ViperByte builds — capabilities, not past projects.
  * Each category is shown on real-looking devices running a concept interface,
  * tagged "Concept example" so it is never mistaken for client work.
  * `detailed` is the standalone Solutions page (h2 headings, alternating rows).

@@ -307,7 +307,7 @@ These are frequently overlooked issues that make UI look unprofessional:
 
 ### Icons & Visual Elements
 
-> **PrimeTechLabs project rule:** in this repo, icons follow the `icon-system` skill (`.claude/skills/icon-system/SKILL.md`), which overrides the generic rows below. In short: Lucide only, via `Icons.<concept>` from `@/components/ui/icons`; 20px by default and 24px for feature icons; 1.75 stroke; accent colour; `IconTile` for containers. Use `--domain icons` searches to pick a glyph, then use Lucide's current name (for example `House`, not `Home`).
+> **ViperByte project rule:** in this repo, icons follow the `icon-system` skill (`.claude/skills/icon-system/SKILL.md`), which overrides the generic rows below. In short: Lucide only, via `Icons.<concept>` from `@/components/ui/icons`; 20px by default and 24px for feature icons; 1.75 stroke; accent colour; `IconTile` for containers. Use `--domain icons` searches to pick a glyph, then use Lucide's current name (for example `House`, not `Home`).
 
 | Rule | Do | Don't |
 |------|----|----- |

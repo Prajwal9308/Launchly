@@ -1,6 +1,6 @@
-# PrimeTechLabs
+# ViperByte
 
-PrimeTechLabs is a web and mobile app development studio. This repository is its business platform in one Next.js app:
+ViperByte is a web and mobile app development studio. This repository is its business platform in one Next.js app:
 
 - **Public website.** Home, services, solutions, process, about, contact, pricing, FAQ, privacy and terms. A work page (`/portfolio`) appears only once real, non-sample projects are published.
 - **Client portal.** Clients create an account, fill in a multi-step project questionnaire that saves as they go, and upload assets. From there they follow their project, send messages, review designs, request revisions and explicitly approve work.
