@@ -31,6 +31,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // 75 is the default; 85 is used for the hero photograph.
+  images: { qualities: [75, 85] },
   serverExternalPackages: ["@prisma/client", "pg", "bcryptjs"],
   async headers() {
     return [

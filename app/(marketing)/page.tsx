@@ -34,11 +34,7 @@ export default async function HomePage() {
         />
         <div className="container-page grid items-center gap-12 pb-16 pt-12 sm:gap-14 sm:pb-20 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:pb-24 lg:pt-24">
           <div className="max-w-xl animate-rise">
-            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted shadow-xs">
-              <span className="size-1.5 rounded-full bg-accent" aria-hidden />
-              Web &amp; mobile app development studio
-            </p>
-            <h1 className="mt-5 text-[2.25rem] font-semibold leading-[1.06] sm:mt-6 sm:text-5xl sm:leading-[1.04] lg:text-[3.5rem]">
+            <h1 className="text-[2.25rem] font-semibold leading-[1.06] sm:text-5xl sm:leading-[1.04] lg:text-[3.5rem]">
               Websites and mobile apps, built for your business.
             </h1>
             <p className="mt-5 text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
