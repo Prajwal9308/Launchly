@@ -1,5 +1,6 @@
 import type { NotificationType, Tx } from "@/db";
 import { db } from "@/db";
+import { studioEmailOverride } from "@/providers/email";
 import { isUuid } from "./authz";
 import type { Actor } from "./actor";
 
@@ -16,7 +17,10 @@ export interface Recipient {
   firstName: string;
 }
 
-/** Notifies every admin. Returns recipients so callers can send emails after commit. */
+/**
+ * Notifies every admin in-app. Returns who should receive the matching email:
+ * the single studio inbox (STUDIO_NOTIFY_EMAIL) when configured, otherwise each admin.
+ */
 export async function notifyAdmins(tx: Tx, input: NotificationInput, excludeUserId?: string): Promise<Recipient[]> {
   const admins = await tx.user.findMany({
     where: { role: "ADMIN", ...(excludeUserId ? { id: { not: excludeUserId } } : {}) },
@@ -25,7 +29,8 @@ export async function notifyAdmins(tx: Tx, input: NotificationInput, excludeUser
   if (admins.length) {
     await tx.notification.createMany({ data: admins.map((a) => ({ userId: a.id, ...input })) });
   }
-  return admins;
+  const studioInbox = studioEmailOverride();
+  return studioInbox ? [{ id: "studio", email: studioInbox, firstName: "Studio" }] : admins;
 }
 
 /** Notifies every client member of the project's organization. */

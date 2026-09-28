@@ -44,3 +44,20 @@ describe("leads", () => {
     await expect(convertLead(admin, id)).rejects.toMatchObject({ code: "CONFLICT" });
   });
 });
+
+describe("studio inbox", () => {
+  it("routes studio emails to STUDIO_NOTIFY_EMAIL while still notifying each admin in-app", async () => {
+    const { notifyAdmins } = await import("@/services/notifications");
+    const admin = await createAdmin();
+    process.env.STUDIO_NOTIFY_EMAIL = "studio@example.test";
+    try {
+      const recipients = await db.$transaction((tx) => notifyAdmins(tx, { type: "LEAD_CREATED", title: "t" }));
+      expect(recipients.map((r) => r.email)).toEqual(["studio@example.test"]);
+      expect(await db.notification.count({ where: { userId: admin.id } })).toBe(1);
+    } finally {
+      delete process.env.STUDIO_NOTIFY_EMAIL;
+    }
+    const recipients = await db.$transaction((tx) => notifyAdmins(tx, { type: "LEAD_CREATED", title: "t" }));
+    expect(recipients.map((r) => r.email)).toEqual([admin.email]);
+  });
+});

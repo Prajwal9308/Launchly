@@ -47,9 +47,17 @@ If these variables aren't set, the Google button simply doesn't appear and email
 2. `npm ci && npm run db:deploy && npm run build && npm start`.
 3. Use `STORAGE_PROVIDER=local` with `STORAGE_LOCAL_DIR` on a persistent, backed-up volume.
 
-## Email and AI
+## Email
 
-- **Email:** `EMAIL_PROVIDER=console` only logs emails. To send real email, implement `EmailProvider` (Resend, Postmark, SendGrid, SMTP). Templates are in `providers/email/templates.ts`.
+Real email goes through **Resend** (`EMAIL_PROVIDER=resend`, `RESEND_API_KEY`):
+
+- `STUDIO_NOTIFY_EMAIL`: the inbox for studio emails (new projects, client messages, revisions, approvals, contact-form enquiries). In-app notifications still go to every admin.
+- `EMAIL_REPLY_TO`: replies to any app email land here.
+- `EMAIL_FROM`: must use a domain you've verified in Resend. Until you have one, use `Launchly <onboarding@resend.dev>`, but Resend's test sender **only delivers to the email you signed up to Resend with**. Studio emails to that inbox work; client emails don't until a domain is verified.
+- A personal Outlook/Hotmail address can't be the sender. Microsoft no longer allows password-based SMTP for personal accounts, and sending services only send from domains you own. Use it as `EMAIL_REPLY_TO` and `STUDIO_NOTIFY_EMAIL` instead.
+
+## AI
+
 - **AI (optional):** set `AI_PROVIDER=anthropic` and `AI_API_KEY`. `AI_MODEL` defaults to `claude-opus-5`.
 
 ## Operations

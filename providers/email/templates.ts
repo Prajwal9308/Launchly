@@ -44,6 +44,27 @@ export const emailTemplates = {
     subject: `${projectName} is live`,
     text: `Your website has launched.\n\n${appUrl()}/dashboard/project/${projectId}`,
   }),
+  newLead: (
+    to: string,
+    lead: { name: string; businessName?: string; email: string; phone?: string; service?: string; message: string },
+    leadId: string,
+  ): EmailMessage => ({
+    to,
+    subject: `New enquiry from ${lead.name}${lead.businessName ? ` (${lead.businessName})` : ""}`,
+    text: [
+      `Name: ${lead.name}`,
+      lead.businessName ? `Business: ${lead.businessName}` : null,
+      `Email: ${lead.email}`,
+      lead.phone ? `Phone: ${lead.phone}` : null,
+      lead.service ? `Service: ${lead.service}` : null,
+      "",
+      lead.message,
+      "",
+      `${appUrl()}/admin/leads/${leadId}`,
+    ]
+      .filter((line) => line !== null)
+      .join("\n"),
+  }),
   invite: (to: string, businessName: string): EmailMessage => ({
     to,
     subject: `Set up your client account for ${businessName}`,

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { db, type LeadStatus, type Prisma } from "@/db";
 import { conflict, notFound, validation } from "@/lib/errors";
 import { fieldErrorsOf } from "@/lib/validation";
-import { sendEmail } from "@/providers/email";
+import { sendEmail, type EmailMessage } from "@/providers/email";
 import { emailTemplates } from "@/providers/email/templates";
 import type { Actor } from "./actor";
 import { recordActivity } from "./activity";
@@ -34,7 +34,8 @@ export async function createLead(input: LeadInput) {
   if (!parsed.success) throw validation(undefined, fieldErrorsOf(parsed.error));
   const data = parsed.data;
 
-  return db.$transaction(async (tx) => {
+  const emails: EmailMessage[] = [];
+  const result = await db.$transaction(async (tx) => {
     const lead = await tx.lead.create({
       data: {
         name: data.name,
@@ -51,14 +52,17 @@ export async function createLead(input: LeadInput) {
       message: `New lead: ${data.name}${data.businessName ? ` (${data.businessName})` : ""}`,
       metadata: { leadId: lead.id },
     });
-    await notifyAdmins(tx, {
+    const recipients = await notifyAdmins(tx, {
       type: "LEAD_CREATED",
       title: "New lead",
       body: `${data.name}${data.businessName ? ` · ${data.businessName}` : ""}`,
       href: `/admin/leads/${lead.id}`,
     });
+    for (const r of recipients) emails.push(emailTemplates.newLead(r.email, data, lead.id));
     return { id: lead.id };
   });
+  await Promise.all(emails.map(sendEmail));
+  return result;
 }
 
 export interface LeadListParams {
