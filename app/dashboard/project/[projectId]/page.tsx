@@ -1,3 +1,4 @@
+import { Activity, CheckSquare, Info, Milestone } from "lucide-react";
 import Link from "next/link";
 import { SectionTitle } from "@/components/app/page-header";
 import { ActionCenter } from "@/components/project/action-center";
@@ -29,7 +30,7 @@ export default async function ClientProjectOverview({ params }: { params: Promis
       <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Card>
           <CardContent>
-            <SectionTitle>Timeline</SectionTitle>
+            <SectionTitle icon={Milestone}>Timeline</SectionTitle>
             <p className="mb-4 text-sm text-muted">{CLIENT_STATUS_DESCRIPTIONS[project.status]}</p>
             <div className="mb-5 flex items-center gap-3">
               <Progress value={project.progress} className="flex-1" label="Project progress" />
@@ -42,6 +43,7 @@ export default async function ClientProjectOverview({ params }: { params: Promis
           <Card>
             <CardContent>
               <SectionTitle
+                icon={CheckSquare}
                 action={
                   <Link href={`${base}/tasks`} className="text-xs font-medium text-accent hover:underline">
                     All tasks
@@ -63,7 +65,7 @@ export default async function ClientProjectOverview({ params }: { params: Promis
           </Card>
           <Card>
             <CardContent>
-              <SectionTitle>Project details</SectionTitle>
+              <SectionTitle icon={Info}>Project details</SectionTitle>
               <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
                 <div>
                   <dt className="text-faint">Business</dt>
@@ -95,6 +97,7 @@ export default async function ClientProjectOverview({ params }: { params: Promis
       <Card>
         <CardContent>
           <SectionTitle
+            icon={Activity}
             action={
               <Link href={`${base}/activity`} className="text-xs font-medium text-accent hover:underline">
                 View all

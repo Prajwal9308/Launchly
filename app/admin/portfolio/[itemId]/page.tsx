@@ -1,3 +1,4 @@
+import { Briefcase } from "lucide-react";
 import { PageHeader } from "@/components/app/page-header";
 import { PortfolioForm } from "@/components/admin/catalog-forms";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +12,7 @@ export default async function EditPortfolioPage({ params }: { params: Promise<{ 
   const item = await orNotFound(getPortfolioItem(actor, itemId));
   return (
     <div className="max-w-3xl">
-      <PageHeader breadcrumb={[{ label: "Portfolio", href: "/admin/portfolio" }, { label: item.title }]} title={item.title} />
+      <PageHeader icon={Briefcase} breadcrumb={[{ label: "Portfolio", href: "/admin/portfolio" }, { label: item.title }]} title={item.title} />
       <Card>
         <CardContent>
           <PortfolioForm item={item} />

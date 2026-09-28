@@ -22,7 +22,7 @@ export default async function ClientsPage({ searchParams }: { searchParams: Prom
 
   return (
     <div>
-      <PageHeader title="Clients" description={`${total} client${total === 1 ? "" : "s"}`} />
+      <PageHeader icon={Users} title="Clients" description={`${total} client${total === 1 ? "" : "s"}`} />
       <div className="mb-4">
         <FilterBar searchPlaceholder="Search name, email or business" />
       </div>

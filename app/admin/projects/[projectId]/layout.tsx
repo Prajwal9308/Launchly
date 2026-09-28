@@ -1,3 +1,4 @@
+import { Activity, CheckSquare, ClipboardList, FileStack, FolderKanban, LayoutDashboard, MessageSquare, Palette, StickyNote } from "lucide-react";
 import { PageHeader } from "@/components/app/page-header";
 import { StatusControl } from "@/components/admin/status-control";
 import { WorkflowActions } from "@/components/admin/workflow-actions";
@@ -22,6 +23,7 @@ export default async function AdminProjectLayout({ children, params }: { childre
       <PageHeader
         breadcrumb={[{ label: "Projects", href: "/admin/projects" }, { label: project.business?.name ?? project.name }]}
         title={project.business?.name ?? project.name}
+        icon={FolderKanban}
         meta={
           <>
             <span className="text-faint">{formatProjectNumber(project.number)}</span>
@@ -39,14 +41,14 @@ export default async function AdminProjectLayout({ children, params }: { childre
       <NavTabs
         className="mb-6"
         tabs={[
-          { href: base, label: "Overview", exact: true },
-          { href: `${base}/requirements`, label: "Requirements" },
-          { href: `${base}/tasks`, label: "Tasks" },
-          { href: `${base}/files`, label: "Files" },
-          { href: `${base}/messages`, label: "Messages", count: project.unreadMessages },
-          { href: `${base}/reviews`, label: "Design Reviews", count: project._count.revisionRequests },
-          { href: `${base}/activity`, label: "Activity" },
-          { href: `${base}/notes`, label: "Internal Notes" },
+          { href: base, label: "Overview", exact: true, icon: <LayoutDashboard /> },
+          { href: `${base}/requirements`, label: "Requirements", icon: <ClipboardList /> },
+          { href: `${base}/tasks`, label: "Tasks", icon: <CheckSquare /> },
+          { href: `${base}/files`, label: "Files", icon: <FileStack /> },
+          { href: `${base}/messages`, label: "Messages", icon: <MessageSquare />, count: project.unreadMessages },
+          { href: `${base}/reviews`, label: "Design Reviews", icon: <Palette />, count: project._count.revisionRequests },
+          { href: `${base}/activity`, label: "Activity", icon: <Activity /> },
+          { href: `${base}/notes`, label: "Internal Notes", icon: <StickyNote /> },
         ]}
       />
       {children}

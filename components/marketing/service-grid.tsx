@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { CircleCheck, Tag } from "lucide-react";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { ArrowLink } from "./arrow-link";
@@ -24,14 +24,20 @@ export function ServiceGrid({ services }: { services: Service[] }) {
               <ul className="grid gap-3 sm:grid-cols-2">
                 {service.features.map((feature) => (
                   <li key={feature} className="flex gap-2 text-sm text-muted">
-                    <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+                    <CircleCheck className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
                     {feature}
                   </li>
                 ))}
               </ul>
             )}
             <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
-              {service.pricingText ? <p className="text-xs text-faint">{service.pricingText}</p> : <span />}
+              {service.pricingText ? (
+                <p className="flex items-center gap-1.5 text-xs text-faint">
+                  <Tag className="size-3.5 shrink-0" aria-hidden /> {service.pricingText}
+                </p>
+              ) : (
+                <span />
+              )}
               <ArrowLink href="/contact">
                 Start a project<span className="sr-only">: {service.name}</span>
               </ArrowLink>

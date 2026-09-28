@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Palette } from "lucide-react";
+import { BadgeCheck, History, ListChecks, Palette } from "lucide-react";
 import { SectionTitle } from "@/components/app/page-header";
 import { ApprovalCard } from "@/components/project/approval-card";
 import { DesignReviewCard } from "@/components/project/design-review-card";
@@ -28,7 +28,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
     <div className="space-y-8">
       {pendingApprovals.length > 0 && (
         <section>
-          <SectionTitle>Approvals needed</SectionTitle>
+          <SectionTitle icon={BadgeCheck}>Approvals needed</SectionTitle>
           <div className="space-y-4">
             {pendingApprovals.map((a) => (
               <ApprovalCard key={a.id} approval={a} viewer="client" />
@@ -38,7 +38,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
       )}
 
       <section>
-        <SectionTitle>Designs</SectionTitle>
+        <SectionTitle icon={Palette}>Designs</SectionTitle>
         {active.length ? (
           <div className="space-y-6">
             {active.map((r) => (
@@ -54,7 +54,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
 
       {superseded.length > 0 && (
         <section>
-          <SectionTitle>Previous versions</SectionTitle>
+          <SectionTitle icon={History}>Previous versions</SectionTitle>
           <div className="space-y-3">
             {superseded.map((r) => (
               <details key={r.id} className="group">
@@ -72,7 +72,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
 
       {pastApprovals.length > 0 && (
         <section>
-          <SectionTitle>Approval history</SectionTitle>
+          <SectionTitle icon={ListChecks}>Approval history</SectionTitle>
           <div className="space-y-3">
             {pastApprovals.map((a) => (
               <ApprovalCard key={a.id} approval={a} viewer="client" />

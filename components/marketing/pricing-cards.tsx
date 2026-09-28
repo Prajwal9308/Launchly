@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { ArrowRight, CircleCheck, MessagesSquare, Star } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HoverLift } from "@/components/ui/hover-lift";
@@ -10,10 +10,15 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
   if (!packages.length) {
     return (
       <div className="surface rounded-3xl p-8 text-center">
-        <p className="font-medium">Let&apos;s discuss your project</p>
+        <span className="mx-auto flex size-11 items-center justify-center rounded-xl bg-accent-subtle text-accent">
+          <MessagesSquare className="size-5" aria-hidden />
+        </span>
+        <p className="mt-4 font-medium">Let&apos;s discuss your project</p>
         <p className="mt-1 text-sm text-muted">Every business is different. Tell us what you need and we&apos;ll put together a proposal.</p>
         <Button asChild className="mt-5">
-          <Link href="/contact">Contact us</Link>
+          <Link href="/contact">
+            Contact us <ArrowRight aria-hidden />
+          </Link>
         </Button>
       </div>
     );
@@ -25,9 +30,14 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
         <article
           className={cn(
             "relative flex h-full flex-col rounded-2xl p-7",
-            pkg.highlighted ? "surface-raised !border-accent-border" : "surface",
+            pkg.highlighted ? "surface-raised !border-accent ring-1 ring-accent" : "surface",
           )}
         >
+          {pkg.highlighted && (
+            <span className="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-0.5 text-xs font-medium text-accent-foreground shadow-xs">
+              <Star className="size-3 fill-current" aria-hidden /> Recommended
+            </span>
+          )}
           <h2 className="text-base font-semibold">{pkg.name}</h2>
           <p className="mt-1.5 min-h-[4.25rem] text-sm leading-relaxed text-muted">{pkg.description}</p>
           <div className="mt-5">
@@ -46,13 +56,15 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
           <ul className="mt-6 flex-1 space-y-2.5 border-t border-border pt-6">
             {pkg.features.map((feature) => (
               <li key={feature} className="flex gap-2.5 text-sm text-muted">
-                <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+                <CircleCheck className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
                 {feature}
               </li>
             ))}
           </ul>
           <Button asChild variant={pkg.highlighted ? "primary" : "secondary"} className="mt-8 w-full">
-            <Link href="/contact">Get a quote</Link>
+            <Link href="/contact">
+              Get a quote <ArrowRight aria-hidden />
+            </Link>
           </Button>
         </article>
         </HoverLift>

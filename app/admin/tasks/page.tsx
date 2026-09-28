@@ -24,7 +24,7 @@ export default async function AdminTasksPage({ searchParams }: { searchParams: P
 
   return (
     <div>
-      <PageHeader title="Tasks" description="Across all active projects, soonest due first." />
+      <PageHeader icon={CheckSquare} title="Tasks" description="Across all active projects, soonest due first." />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search tasks or projects"

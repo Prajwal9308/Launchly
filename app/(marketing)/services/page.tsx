@@ -16,6 +16,7 @@ export default async function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
+        eyebrowIcon="layers"
         title="Web and mobile development, end to end"
         description="Design, development and launch for websites, web applications and mobile apps — scoped around what your business actually needs."
       />

@@ -11,7 +11,7 @@ export default async function TermsPage() {
   const settings = await getSiteSettings();
   return (
     <>
-      <PageHero title="Terms of use" description="The terms that apply when you use this website and our client portal." />
+      <PageHero eyebrow="Legal" eyebrowIcon="scale" title="Terms of use" description="The terms that apply when you use this website and our client portal." />
       <Section>
         <LegalBody>
           <p className="rounded-lg border border-warning-border bg-warning-subtle p-4 text-sm text-foreground">

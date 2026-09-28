@@ -14,6 +14,7 @@ export default function SolutionsPage() {
     <>
       <PageHero
         eyebrow="Solutions"
+        eyebrowIcon="layout-dashboard"
         title="What we build"
         description="Websites, web applications and mobile apps for businesses and entrepreneurs. Here are the kinds of products we design and develop."
       />

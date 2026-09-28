@@ -27,7 +27,7 @@ export default async function AdminProjectsPage({ searchParams }: { searchParams
 
   return (
     <div>
-      <PageHeader title="Projects" description={`${total} project${total === 1 ? "" : "s"}`} />
+      <PageHeader icon={FolderKanban} title="Projects" description={`${total} project${total === 1 ? "" : "s"}`} />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search client, business or P-number"

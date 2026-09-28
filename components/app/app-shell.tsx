@@ -13,6 +13,7 @@ import {
   Menu,
   MessageSquare,
   Palette,
+  Plus,
   Search,
   Settings,
   Sparkles,
@@ -88,13 +89,20 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => v
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "relative flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-[background-color,color,box-shadow] duration-200",
+                "group relative flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm transition-[background-color,color,box-shadow] duration-200",
                 active
-                  ? "bg-subtle font-medium text-foreground"
+                  ? "bg-accent-subtle font-medium text-accent"
                   : "text-muted hover:bg-subtle hover:text-foreground",
               )}
             >
-              <Icon className={cn("size-4 shrink-0 transition-colors", active ? "text-accent" : "text-faint")} aria-hidden />
+              <span
+                className={cn(
+                  "flex size-7 shrink-0 items-center justify-center rounded-md transition-colors duration-200",
+                  active ? "bg-accent text-accent-foreground shadow-xs" : "text-faint group-hover:bg-background group-hover:text-accent",
+                )}
+              >
+                <Icon className="size-4" aria-hidden />
+              </span>
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge ? (
                 <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">
@@ -167,25 +175,29 @@ export function AppShell({
   );
 
   return (
-    <div className="min-h-dvh">
-      {/* Desktop sidebar */}
+    <div className="relative isolate min-h-dvh">
+      <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-96 bg-glow" />
       {/* Desktop sidebar: a floating surface rail */}
       <aside className="surface fixed inset-y-3 left-3 z-30 hidden w-60 flex-col overflow-hidden rounded-2xl lg:flex">
         <div className="flex h-16 items-center border-b border-border px-5">{brand}</div>
         <nav aria-label={variant === "admin" ? "Studio" : "Client portal"} className="flex-1 overflow-y-auto p-3">
+          <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-faint">{variant === "admin" ? "Studio" : "Workspace"}</p>
           <NavList items={items} />
           {variant === "client" && !projectId && (
             <Link
               href="/start-project"
-              className="mt-4 flex items-center justify-center rounded-lg border border-dashed border-border px-3 py-2 text-sm font-medium text-muted hover:border-accent/50 hover:text-foreground"
+              className="mt-4 flex items-center justify-center gap-1.5 rounded-lg border border-dashed border-border px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:bg-accent-subtle hover:text-accent"
             >
-              Start a project
+              <Plus className="size-4" aria-hidden /> Start a project
             </Link>
           )}
         </nav>
         <div className="border-t border-border p-3">
-          <Link href="/" className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted hover:bg-subtle hover:text-foreground">
-            <Home className="size-4 text-faint" aria-hidden /> Website
+          <Link href="/" className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm text-muted transition-colors hover:bg-subtle hover:text-foreground">
+            <span className="flex size-7 items-center justify-center rounded-md text-faint transition-colors group-hover:bg-background group-hover:text-accent">
+              <Home className="size-4" aria-hidden />
+            </span>
+            Website
           </Link>
         </div>
       </aside>

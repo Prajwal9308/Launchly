@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Building2, Mail, Phone, Users } from "lucide-react";
 import { PageHeader, SectionTitle } from "@/components/app/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProjectStatusBadge } from "@/components/ui/status-badge";
@@ -16,12 +16,12 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
 
   return (
     <div>
-      <PageHeader breadcrumb={[{ label: "Clients", href: "/admin/clients" }, { label: org.name }]} title={org.name} description={`Client since ${formatDate(org.createdAt)}`} />
+      <PageHeader icon={Building2} breadcrumb={[{ label: "Clients", href: "/admin/clients" }, { label: org.name }]} title={org.name} description={`Client since ${formatDate(org.createdAt)}`} />
       <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr]">
         <div className="space-y-6">
           <Card>
             <CardContent>
-              <SectionTitle>Contacts</SectionTitle>
+              <SectionTitle icon={Users}>Contacts</SectionTitle>
               {org.members.length ? (
                 <ul className="space-y-4">
                   {org.members.map(({ user }) => (
@@ -49,7 +49,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
           {org.businesses.map((b) => (
             <Card key={b.id}>
               <CardContent>
-                <SectionTitle>{b.name}</SectionTitle>
+                <SectionTitle icon={Building2}>{b.name}</SectionTitle>
                 <dl className="space-y-2 text-sm">
                   {[
                     ["Industry", b.industry],

@@ -1,6 +1,19 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronRight,
+  CircleHelp,
+  Info,
+  Layers,
+  LayoutDashboard,
+  LogIn,
+  Mail,
+  Menu,
+  Tag,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -9,18 +22,19 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "@/components/
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
-export const MAIN_NAV = [
-  { href: "/services", label: "Services" },
-  { href: "/process", label: "Process" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+export const MAIN_NAV: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: "/services", label: "Services", icon: Layers },
+  { href: "/process", label: "Process", icon: Workflow },
+  { href: "/pricing", label: "Pricing", icon: Tag },
+  { href: "/about", label: "About", icon: Info },
+  { href: "/faq", label: "FAQ", icon: CircleHelp },
+  { href: "/contact", label: "Contact", icon: Mail },
 ];
 
 export function SiteHeader({ businessName, signedInHref }: { businessName: string; signedInHref: string | null }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const AccountIcon = signedInHref ? LayoutDashboard : LogIn;
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
@@ -36,8 +50,8 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
-                    "rounded-md px-3 py-2 text-sm transition-colors duration-150",
-                    isActive(item.href) ? "bg-subtle font-medium text-foreground" : "text-muted hover:bg-subtle/60 hover:text-foreground",
+                    "rounded-full px-3.5 py-2 text-sm transition-colors duration-150",
+                    isActive(item.href) ? "bg-accent-subtle font-medium text-accent" : "text-muted hover:bg-subtle hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -49,10 +63,14 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
 
         <div className="hidden items-center gap-2 lg:flex">
           <Button asChild variant="ghost" size="sm">
-            <Link href={signedInHref ?? "/login"}>{signedInHref ? "Dashboard" : "Log in"}</Link>
+            <Link href={signedInHref ?? "/login"}>
+              <AccountIcon aria-hidden /> {signedInHref ? "Dashboard" : "Log in"}
+            </Link>
           </Button>
-          <Button asChild size="sm">
-            <Link href="/contact">Start a project</Link>
+          <Button asChild size="sm" className="rounded-full px-4">
+            <Link href="/contact">
+              Start a project <ArrowRight aria-hidden />
+            </Link>
           </Button>
         </div>
 
@@ -75,11 +93,20 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                       onClick={() => setOpen(false)}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       className={cn(
-                        "flex h-11 items-center rounded-md px-3 text-[15px] transition-colors hover:bg-subtle",
-                        isActive(item.href) ? "bg-subtle font-medium text-foreground" : "text-muted hover:text-foreground",
+                        "group flex h-12 items-center gap-3 rounded-lg px-3 text-[15px] transition-colors hover:bg-subtle",
+                        isActive(item.href) ? "bg-accent-subtle font-medium text-accent" : "text-muted hover:text-foreground",
                       )}
                     >
-                      {item.label}
+                      <span
+                        className={cn(
+                          "flex size-8 items-center justify-center rounded-md",
+                          isActive(item.href) ? "bg-accent text-accent-foreground" : "bg-subtle text-accent group-hover:bg-background",
+                        )}
+                      >
+                        <item.icon className="size-4" aria-hidden />
+                      </span>
+                      <span className="flex-1">{item.label}</span>
+                      <ChevronRight className="size-4 text-faint" aria-hidden />
                     </Link>
                   </li>
                 ))}
@@ -87,10 +114,14 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
             </nav>
             <div className="space-y-2 border-t border-border p-4">
               <Button asChild size="lg" className="w-full" onClick={() => setOpen(false)}>
-                <Link href="/contact">Start a project</Link>
+                <Link href="/contact">
+                  Start a project <ArrowRight aria-hidden />
+                </Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="w-full" onClick={() => setOpen(false)}>
-                <Link href={signedInHref ?? "/login"}>{signedInHref ? "Dashboard" : "Log in"}</Link>
+                <Link href={signedInHref ?? "/login"}>
+                  <AccountIcon aria-hidden /> {signedInHref ? "Dashboard" : "Log in"}
+                </Link>
               </Button>
             </div>
           </DrawerContent>

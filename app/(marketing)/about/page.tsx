@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Check } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
 import { WhyGrid } from "@/components/marketing/why-grid";
@@ -24,6 +24,7 @@ export default async function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
+        eyebrowIcon="users"
         title={`About ${settings.businessName}`}
         description="A web and mobile app development studio for businesses and entrepreneurs."
       />
@@ -44,7 +45,7 @@ export default async function AboutPage() {
             <ul className="space-y-3 pt-4">
               {PRINCIPLES.map((p) => (
                 <li key={p} className="flex gap-3 text-[15px] text-foreground">
-                  <Check className="mt-1 size-4 shrink-0 text-accent" aria-hidden /> {p}
+                  <CircleCheck className="mt-1 size-4 shrink-0 text-accent" aria-hidden /> {p}
                 </li>
               ))}
             </ul>
@@ -52,7 +53,7 @@ export default async function AboutPage() {
         </div>
       </Section>
       <Section tone="muted">
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="Built around your business needs" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="sparkles" title="Built around your business needs" />
         <div className="mt-12">
           <WhyGrid />
         </div>

@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { HoverLift } from "@/components/ui/hover-lift";
 import { cn } from "@/lib/utils";
@@ -13,6 +14,7 @@ export function StatCard({
   hint,
   emphasis,
   recessed,
+  icon: Icon,
 }: {
   label: string;
   value: number;
@@ -20,6 +22,7 @@ export function StatCard({
   hint?: string;
   emphasis?: boolean;
   recessed?: boolean;
+  icon?: LucideIcon;
 }) {
   const lit = emphasis && value > 0;
   const content = (
@@ -30,7 +33,19 @@ export function StatCard({
         lit && "!border-accent-border !bg-accent-subtle",
       )}
     >
-      <p className="relative text-xs font-medium text-faint">{label}</p>
+      <div className="relative flex items-center justify-between gap-2">
+        <p className="text-xs font-medium text-faint">{label}</p>
+        {Icon && (
+          <span
+            className={cn(
+              "flex size-8 shrink-0 items-center justify-center rounded-lg",
+              lit ? "bg-accent text-accent-foreground" : "bg-accent-subtle text-accent",
+            )}
+          >
+            <Icon className="size-4" aria-hidden />
+          </span>
+        )}
+      </div>
       <div className="relative mt-3 flex items-end justify-between gap-2">
         <p className={cn("font-semibold tabular-nums tracking-tight", recessed ? "text-2xl" : "text-3xl", lit ? "text-foreground" : "")}>{value}</p>
         {lit && <span className="mb-1.5 size-2 rounded-full bg-accent" aria-hidden />}

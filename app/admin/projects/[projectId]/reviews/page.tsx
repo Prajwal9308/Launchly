@@ -1,4 +1,4 @@
-import { Palette } from "lucide-react";
+import { BadgeCheck, History, Palette } from "lucide-react";
 import { SectionTitle } from "@/components/app/page-header";
 import { ApprovalRequestDialog } from "@/components/admin/approval-request";
 import { DesignUploadDialog } from "@/components/admin/design-upload";
@@ -27,7 +27,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
       </div>
 
       <section>
-        <SectionTitle>Designs</SectionTitle>
+        <SectionTitle icon={Palette}>Designs</SectionTitle>
         {current.length ? (
           <div className="space-y-6">
             {current.map((r) => (
@@ -42,7 +42,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
       </section>
 
       <section>
-        <SectionTitle>Approvals</SectionTitle>
+        <SectionTitle icon={BadgeCheck}>Approvals</SectionTitle>
         {approvals.length ? (
           <div className="space-y-3">
             {approvals.map((a) => (
@@ -56,7 +56,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
 
       {history.length > 0 && (
         <section>
-          <SectionTitle>Version history</SectionTitle>
+          <SectionTitle icon={History}>Version history</SectionTitle>
           <div className="space-y-3">
             {history.map((r) => (
               <DesignReviewCard key={r.id} review={r} viewer="admin" expanded={false} />

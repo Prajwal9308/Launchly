@@ -1,3 +1,4 @@
+import { Activity, CheckSquare, ClipboardList, FileStack, FolderKanban, LayoutDashboard, MessageSquare, Palette } from "lucide-react";
 import { redirect } from "next/navigation";
 import { PageHeader } from "@/components/app/page-header";
 import { NavTabs } from "@/components/ui/tabs";
@@ -19,6 +20,7 @@ export default async function ClientProjectLayout({ children, params }: { childr
       <PageHeader
         breadcrumb={[{ label: "Dashboard", href: "/dashboard" }, { label: project.name }]}
         title={project.name}
+        icon={FolderKanban}
         meta={
           <>
             <span className="text-faint">{formatProjectNumber(project.number)}</span>
@@ -29,13 +31,13 @@ export default async function ClientProjectLayout({ children, params }: { childr
       <NavTabs
         className="mb-6"
         tabs={[
-          { href: base, label: "Overview", exact: true },
-          { href: `${base}/tasks`, label: "Tasks" },
-          { href: `${base}/requirements`, label: "Requirements" },
-          { href: `${base}/files`, label: "Files" },
-          { href: `${base}/messages`, label: "Messages", count: project.unreadMessages },
-          { href: `${base}/reviews`, label: "Design Reviews", count: project.reviewsAwaiting.length + project.approvals.length },
-          { href: `${base}/activity`, label: "Activity" },
+          { href: base, label: "Overview", exact: true, icon: <LayoutDashboard /> },
+          { href: `${base}/tasks`, label: "Tasks", icon: <CheckSquare /> },
+          { href: `${base}/requirements`, label: "Requirements", icon: <ClipboardList /> },
+          { href: `${base}/files`, label: "Files", icon: <FileStack /> },
+          { href: `${base}/messages`, label: "Messages", icon: <MessageSquare />, count: project.unreadMessages },
+          { href: `${base}/reviews`, label: "Design Reviews", icon: <Palette />, count: project.reviewsAwaiting.length + project.approvals.length },
+          { href: `${base}/activity`, label: "Activity", icon: <Activity /> },
         ]}
       />
       {children}

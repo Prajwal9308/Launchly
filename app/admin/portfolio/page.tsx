@@ -17,6 +17,7 @@ export default async function AdminPortfolioPage() {
   return (
     <div>
       <PageHeader
+        icon={Briefcase}
         title="Portfolio"
         description="Sample projects are always labelled as samples on the public site."
         actions={

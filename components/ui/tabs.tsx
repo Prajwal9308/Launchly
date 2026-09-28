@@ -16,7 +16,7 @@ export function TabsTrigger({ className, ...props }: React.ComponentProps<typeof
   return (
     <TabsPrimitive.Trigger
       className={cn(
-        "-mb-px border-b-2 border-transparent px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground data-[state=active]:border-foreground data-[state=active]:text-foreground",
+        "-mb-px border-b-2 border-transparent px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground data-[state=active]:border-accent data-[state=active]:text-foreground",
         className,
       )}
       {...props}
@@ -30,6 +30,8 @@ export interface NavTab {
   href: string;
   label: string;
   count?: number;
+  /** Rendered icon element, e.g. `<ListChecks />` (passed as an element so server layouts can supply it). */
+  icon?: React.ReactNode;
   /** Match only the exact path (for the overview tab). */
   exact?: boolean;
 }
@@ -48,10 +50,11 @@ export function NavTabs({ tabs, className }: { tabs: NavTab[]; className?: strin
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition-colors",
-                  active ? "border-foreground text-foreground" : "border-transparent text-muted hover:text-foreground",
+                  "-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition-colors [&_svg]:size-4 [&_svg]:shrink-0",
+                  active ? "border-accent text-foreground [&_svg]:text-accent" : "border-transparent text-muted hover:text-foreground [&_svg]:text-faint",
                 )}
               >
+                {tab.icon && <span aria-hidden className="contents">{tab.icon}</span>}
                 {tab.label}
                 {tab.count ? (
                   <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">{tab.count}</span>

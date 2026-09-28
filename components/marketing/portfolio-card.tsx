@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { Building2, ExternalLink, ImageOff } from "lucide-react";
 import Image from "next/image";
 import { HoverLift } from "@/components/ui/hover-lift";
 import type { PortfolioItem } from "@/db/types";
@@ -18,11 +18,16 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
             unoptimized={item.imageUrl.endsWith(".svg")}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-faint">No preview</div>
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-sm text-faint">
+            <ImageOff className="size-6" aria-hidden />
+            No preview
+          </div>
         )}
       </div>
       <div className="flex flex-1 flex-col px-5 pb-6 pt-5">
-        <p className="text-xs font-medium text-faint">{item.industry}</p>
+        <p className="flex items-center gap-1.5 text-xs font-medium text-faint">
+          <Building2 className="size-3.5" aria-hidden /> {item.industry}
+        </p>
         <h3 className="mt-1 text-[15px] font-semibold">{item.title}</h3>
         <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-muted">{item.description}</p>
         {item.services.length > 0 && (

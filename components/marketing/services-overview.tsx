@@ -1,4 +1,4 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, CircleCheck } from "lucide-react";
 import Link from "next/link";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
@@ -22,7 +22,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
           <RevealItem key={service.id}>
             <Link
               href={`/services#${service.slug}`}
-              className="surface group flex h-full flex-col rounded-2xl p-6 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-popover motion-reduce:hover:translate-y-0 sm:p-8"
+              className="surface group flex h-full flex-col rounded-2xl p-6 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent-border hover:shadow-popover motion-reduce:hover:translate-y-0 sm:p-8"
             >
               <IconBadge name={service.icon} />
               <h3 className="mt-5 text-xl font-semibold sm:mt-6">{service.name}</h3>
@@ -31,7 +31,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
                 <ul className="mt-5 grid gap-x-4 gap-y-2 sm:grid-cols-2">
                   {service.features.map((f) => (
                     <li key={f} className="flex gap-2 text-sm text-muted">
-                      <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden /> {f}
+                      <CircleCheck className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden /> {f}
                     </li>
                   ))}
                 </ul>

@@ -1,4 +1,4 @@
-import { Mail, Phone } from "lucide-react";
+import { ArrowRight, FileText, LogIn, Mail, Phone, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { isPlaceholderEmail } from "@/lib/site";
 import { Logo } from "./logo";
@@ -76,12 +76,14 @@ export function SiteFooter({
               </li>
             )}
             <li>
-              <Link href="/contact" className="inline-flex min-h-10 items-center font-medium text-accent hover:underline sm:min-h-0">
+              <Link href="/contact" className="group inline-flex min-h-10 items-center gap-2 font-medium text-accent hover:underline sm:min-h-0">
+                <ArrowRight className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
                 Start a project
               </Link>
             </li>
             <li>
-              <Link href="/login" className="inline-flex min-h-10 items-center text-muted hover:text-foreground sm:min-h-0">
+              <Link href="/login" className="inline-flex min-h-10 items-center gap-2 text-muted transition-colors hover:text-foreground sm:min-h-0">
+                <LogIn className="size-4 shrink-0 text-accent" aria-hidden />
                 Client login
               </Link>
             </li>
@@ -94,10 +96,12 @@ export function SiteFooter({
             © {new Date().getFullYear()} {businessName}. All rights reserved.
           </p>
           <p className="flex gap-4">
-            <Link href="/privacy" className="hover:text-foreground">
+            <Link href="/privacy" className="inline-flex items-center gap-1.5 hover:text-foreground">
+              <ShieldCheck className="size-3.5" aria-hidden />
               Privacy
             </Link>
-            <Link href="/terms" className="hover:text-foreground">
+            <Link href="/terms" className="inline-flex items-center gap-1.5 hover:text-foreground">
+              <FileText className="size-3.5" aria-hidden />
               Terms
             </Link>
           </p>

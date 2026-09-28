@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Inbox, Mail, Phone } from "lucide-react";
 import { PageHeader } from "@/components/app/page-header";
 import { ConvertLeadButton, LeadStatusSelect } from "@/components/admin/lead-actions";
 import { Alert } from "@/components/ui/alert";
@@ -19,6 +19,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
   return (
     <div className="max-w-3xl">
       <PageHeader
+        icon={Inbox}
         breadcrumb={[{ label: "Leads", href: "/admin/leads" }, { label: lead.name }]}
         title={lead.name}
         meta={

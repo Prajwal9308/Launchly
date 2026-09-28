@@ -1,6 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  ClipboardCheck,
+  ClipboardList,
+  FileText,
+  Globe,
+  Images,
+  ListChecks,
+  LogIn,
+  Palette,
+  Puzzle,
+  Target,
+  UserPlus,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Button } from "@/components/ui/button";
 import { STEPS } from "@/domain/questionnaire";
@@ -14,16 +30,31 @@ export const metadata: Metadata = {
   alternates: { canonical: "/start-project" },
 };
 
+const STEP_ICONS: Record<string, LucideIcon> = {
+  business: Building2,
+  goals: Target,
+  website: Globe,
+  brand: Palette,
+  content: FileText,
+  inspiration: Images,
+  features: Puzzle,
+  final: ListChecks,
+  review: ClipboardCheck,
+};
+
 export default async function StartProjectPage() {
   const actor = await getActor();
   const draft = actor ? await findDraftProject(actor) : null;
 
   return (
-    <div className="border-b border-border bg-canvas">
+    <div className="relative isolate overflow-hidden border-b border-border bg-canvas">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-glow" />
       <div className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div>
-          <p className="text-sm font-medium text-accent">Website questionnaire</p>
-          <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Tell us about your project</h1>
+          <p className="eyebrow">
+            <ClipboardList className="size-3.5" aria-hidden /> Website questionnaire
+          </p>
+          <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">Tell us about your project</h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
             We&apos;ll use your answers to scope and plan your project. The questionnaire takes about 10 minutes, you can
             upload your logo and files as you go, and your answers are saved automatically.
@@ -43,10 +74,14 @@ export default async function StartProjectPage() {
                 <p className="mt-1 text-sm text-muted">Your account keeps your answers, files and messages in one private place.</p>
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row">
                   <Button asChild className="sm:flex-1">
-                    <Link href="/signup?callbackUrl=/start-project">Create account</Link>
+                    <Link href="/signup?callbackUrl=/start-project">
+                      <UserPlus aria-hidden /> Create account
+                    </Link>
                   </Button>
                   <Button asChild variant="secondary" className="sm:flex-1">
-                    <Link href="/login?callbackUrl=/start-project">Log in</Link>
+                    <Link href="/login?callbackUrl=/start-project">
+                      <LogIn aria-hidden /> Log in
+                    </Link>
                   </Button>
                 </div>
               </>
@@ -57,7 +92,9 @@ export default async function StartProjectPage() {
                   Projects are started by clients. To create one for a prospect, convert a lead from the admin dashboard.
                 </p>
                 <Button asChild variant="secondary" className="mt-5">
-                  <Link href="/admin/leads">Go to leads</Link>
+                  <Link href="/admin/leads">
+                    <Users aria-hidden /> Go to leads
+                  </Link>
                 </Button>
               </>
             ) : (
@@ -76,18 +113,21 @@ export default async function StartProjectPage() {
 
         <div>
           <p className="text-xs font-medium uppercase tracking-wider text-faint">What we&apos;ll ask</p>
-          <ol className="mt-4 space-y-3">
-            {STEPS.map((step, i) => (
-              <li key={step.key} className="flex gap-3">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-background text-xs font-medium text-muted">
-                  {step.key === "review" ? <Check className="size-3" aria-hidden /> : i + 1}
-                </span>
-                <div>
-                  <p className="text-sm font-medium">{step.title}</p>
-                  <p className="text-sm text-muted">{step.description}</p>
-                </div>
-              </li>
-            ))}
+          <ol className="surface mt-4 divide-y divide-border rounded-2xl">
+            {STEPS.map((step) => {
+              const Icon = STEP_ICONS[step.key] ?? ListChecks;
+              return (
+                <li key={step.key} className="flex gap-3 p-4">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60">
+                    <Icon className="size-4" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium">{step.title}</p>
+                    <p className="text-sm text-muted">{step.description}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
       </div>

@@ -34,7 +34,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <div>
-      <PageHeader title="Search" description="Clients, projects, businesses and leads." />
+      <PageHeader icon={Search} title="Search" description="Clients, projects, businesses and leads." />
       <div className="mb-6">
         <FilterBar searchPlaceholder="Search…" />
       </div>

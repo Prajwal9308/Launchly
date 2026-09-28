@@ -2,6 +2,7 @@ import * as React from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 import { ArrowLink } from "./arrow-link";
+import { NamedIcon } from "./icons";
 
 export function Section({
   id,
@@ -23,6 +24,8 @@ export function Section({
 
 interface SectionHeaderProps {
   eyebrow?: string;
+  /** Icon key (see icons.tsx) shown inside the eyebrow pill. */
+  eyebrowIcon?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
@@ -32,14 +35,19 @@ interface SectionHeaderProps {
   action?: { href: string; label: string };
 }
 
-export function SectionHeader({ eyebrow, title, description, align = "left", className, as: Heading = "h2", action }: SectionHeaderProps) {
+export function SectionHeader({ eyebrow, eyebrowIcon, title, description, align = "left", className, as: Heading = "h2", action }: SectionHeaderProps) {
   const text = (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      {eyebrow && <p className="text-sm font-semibold text-accent">{eyebrow}</p>}
+      {eyebrow && (
+        <p className="eyebrow">
+          {eyebrowIcon && <NamedIcon name={eyebrowIcon} className="size-3.5" />}
+          {eyebrow}
+        </p>
+      )}
       <Heading
         className={cn(
           "font-semibold text-foreground",
-          eyebrow && "mt-3",
+          eyebrow && "mt-4",
           Heading === "h1"
             ? "text-[2.25rem] leading-[1.08] sm:text-5xl sm:leading-[1.05]"
             : "text-[1.75rem] leading-[1.15] sm:text-4xl sm:leading-[1.1]",
@@ -63,15 +71,25 @@ export function SectionHeader({ eyebrow, title, description, align = "left", cla
 }
 
 /** Page intro used on inner marketing pages. */
-export function PageHero({ eyebrow, title, description, children }: { eyebrow?: string; title: string; description?: string; children?: React.ReactNode }) {
+export function PageHero({
+  eyebrow,
+  eyebrowIcon,
+  title,
+  description,
+  children,
+}: {
+  eyebrow?: string;
+  eyebrowIcon?: string;
+  title: string;
+  description?: string;
+  children?: React.ReactNode;
+}) {
   return (
     <div className="relative isolate overflow-hidden border-b border-border bg-canvas">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:56px_56px] opacity-50 [mask-image:linear-gradient(to_bottom,black,transparent)]"
-      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-glow" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-60" />
       <div className="container-page py-14 sm:py-20">
-        <SectionHeader as="h1" eyebrow={eyebrow} title={title} description={description} />
+        <SectionHeader as="h1" eyebrow={eyebrow} eyebrowIcon={eyebrowIcon} title={title} description={description} />
         {children && <div className="mt-8">{children}</div>}
       </div>
     </div>

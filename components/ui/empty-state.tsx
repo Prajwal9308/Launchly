@@ -13,9 +13,10 @@ interface EmptyStateProps {
 
 export function EmptyState({ icon: Icon, title, description, action, className, compact }: EmptyStateProps) {
   return (
-    <div className={cn("flex flex-col items-center justify-center text-center", compact ? "px-4 py-8" : "px-6 py-14", className)}>
+    <div className={cn("isolate flex flex-col items-center justify-center text-center", compact ? "px-4 py-8" : "px-6 py-14", className)}>
       {Icon && (
-        <div className="mb-3 flex size-10 items-center justify-center rounded-lg border border-border bg-background text-faint shadow-xs">
+        <div className="relative mb-4 flex size-12 items-center justify-center rounded-2xl bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60">
+          <span aria-hidden className="absolute -inset-2 -z-10 rounded-3xl bg-accent-subtle/50" />
           <Icon className="size-5" aria-hidden />
         </div>
       )}

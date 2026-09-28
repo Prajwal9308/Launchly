@@ -1,7 +1,7 @@
-import { ArrowRight, FileStack, FolderPlus, MessageSquare } from "lucide-react";
+import { Activity, ArrowRight, Building2, CircleCheckBig, CircleDashed, CircleDot, FileStack, FileText, FolderKanban, FolderPlus, Layers, MessageSquare, Plus, Upload } from "lucide-react";
 import Link from "next/link";
 import { Greeting } from "@/components/client/greeting";
-import { SectionTitle } from "@/components/app/page-header";
+import { HeadingIcon, SectionTitle } from "@/components/app/page-header";
 import { ActionCenter } from "@/components/project/action-center";
 import { ActivityList } from "@/components/project/activity-list";
 import { ProjectCard } from "@/components/project/project-card";
@@ -39,7 +39,9 @@ export default async function ClientDashboardPage() {
             description="Your projects will appear here once you start one. The questionnaire takes about 10 minutes, and your progress is saved as you go."
             action={
               <Button asChild>
-                <Link href="/start-project">Start a Project</Link>
+                <Link href="/start-project">
+                  <Plus aria-hidden /> Start a Project
+                </Link>
               </Button>
             }
           />
@@ -59,8 +61,10 @@ export default async function ClientDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-muted">{project.business?.name ?? businessName}</p>
-        <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">
+        <p className="flex items-center gap-1.5 text-sm text-muted">
+          <Building2 className="size-4 text-accent" aria-hidden /> {project.business?.name ?? businessName}
+        </p>
+        <h1 className="mt-1 text-3xl font-bold sm:text-4xl">
           <Greeting firstName={actor.firstName} />
         </h1>
       </div>
@@ -72,9 +76,12 @@ export default async function ClientDashboardPage() {
         <Card level="elevated" className="relative overflow-hidden">
           <CardContent className="relative space-y-7 sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <p className="text-xs text-faint">{formatProjectNumber(project.number)}</p>
-                <h2 className="mt-0.5 text-base font-semibold">{project.name}</h2>
+              <div className="flex items-center gap-3">
+                <HeadingIcon icon={FolderKanban} />
+                <div>
+                  <p className="text-xs text-faint">{formatProjectNumber(project.number)}</p>
+                  <h2 className="mt-0.5 text-base font-semibold">{project.name}</h2>
+                </div>
               </div>
               <ProjectStatusBadge status={project.status} />
             </div>
@@ -90,7 +97,9 @@ export default async function ClientDashboardPage() {
 
             <div className="grid gap-6 sm:grid-cols-3">
               <div>
-                <p className="mb-2 text-xs font-medium uppercase tracking-wider text-faint">Completed</p>
+                <p className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-faint">
+                  <CircleCheckBig className="size-3.5 text-success" aria-hidden /> Completed
+                </p>
                 {complete.length ? (
                   <ProjectProgress phases={complete} />
                 ) : (
@@ -98,11 +107,15 @@ export default async function ClientDashboardPage() {
                 )}
               </div>
               <div>
-                <p className="mb-2 text-xs font-medium uppercase tracking-wider text-faint">Current</p>
+                <p className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-faint">
+                  <CircleDot className="size-3.5 text-accent" aria-hidden /> Current
+                </p>
                 {current ? <ProjectProgress phases={[current]} onHold={project.status === "ON_HOLD"} /> : <p className="text-sm text-muted">All phases complete</p>}
               </div>
               <div>
-                <p className="mb-2 text-xs font-medium uppercase tracking-wider text-faint">Next</p>
+                <p className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-faint">
+                  <CircleDashed className="size-3.5" aria-hidden /> Next
+                </p>
                 {upcoming.length ? <ProjectProgress phases={upcoming.slice(0, 5)} /> : <p className="text-sm text-faint">—</p>}
               </div>
             </div>
@@ -119,6 +132,7 @@ export default async function ClientDashboardPage() {
         <Card>
           <CardContent>
             <SectionTitle
+              icon={MessageSquare}
               action={
                 <Link href={`${projectHref}/messages`} className="text-xs font-medium text-accent hover:underline">
                   Open messages
@@ -130,7 +144,7 @@ export default async function ClientDashboardPage() {
             {data.recentMessages?.length ? (
               <ul className="space-y-3">
                 {data.recentMessages.map((m) => (
-                  <li key={m.id} className="rounded-lg border border-border p-3">
+                  <li key={m.id} className="rounded-xl border border-border bg-canvas/60 p-3 transition-colors hover:border-accent-border">
                     <p className="flex items-center justify-between gap-2 text-xs text-faint">
                       <span className="font-medium text-muted">
                         {m.sender ? `${m.sender.firstName} ${m.sender.lastName}` : "Studio"}
@@ -152,6 +166,7 @@ export default async function ClientDashboardPage() {
         <Card level="recessed">
           <CardContent>
             <SectionTitle
+              icon={Activity}
               action={
                 <Link href={`${projectHref}/activity`} className="text-xs font-medium text-accent hover:underline">
                   View all
@@ -166,6 +181,7 @@ export default async function ClientDashboardPage() {
         <Card level="recessed">
           <CardContent>
             <SectionTitle
+              icon={FileStack}
               action={
                 <Link href={`${projectHref}/files`} className="text-xs font-medium text-accent hover:underline">
                   Manage files
@@ -178,8 +194,11 @@ export default async function ClientDashboardPage() {
               <ul className="divide-y divide-border">
                 {data.recentFiles.map((f) => (
                   <li key={f.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
-                    <a href={`/api/files/${f.id}`} target="_blank" rel="noopener" className="truncate hover:underline">
-                      {f.originalName}
+                    <a href={`/api/files/${f.id}`} target="_blank" rel="noopener" className="flex min-w-0 items-center gap-2.5 hover:underline">
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-background text-accent ring-1 ring-inset ring-border">
+                        <FileText className="size-4" aria-hidden />
+                      </span>
+                      <span className="truncate">{f.originalName}</span>
                     </a>
                     <span className="shrink-0 text-xs text-faint">{formatFileSize(f.size)}</span>
                   </li>
@@ -193,7 +212,9 @@ export default async function ClientDashboardPage() {
                 compact
                 action={
                   <Button asChild size="sm" variant="secondary">
-                    <Link href={`${projectHref}/files`}>Upload files</Link>
+                    <Link href={`${projectHref}/files`}>
+                      <Upload aria-hidden /> Upload files
+                    </Link>
                   </Button>
                 }
               />
@@ -204,7 +225,7 @@ export default async function ClientDashboardPage() {
 
       {otherProjects.length > 0 && (
         <section>
-          <SectionTitle>Other projects</SectionTitle>
+          <SectionTitle icon={Layers}>Other projects</SectionTitle>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {otherProjects.map((p) => (
               <ProjectCard key={p.id} project={p} href={p.status === "DRAFT" ? `/start-project/${p.id}` : `/dashboard/project/${p.id}`} />

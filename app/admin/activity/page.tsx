@@ -1,3 +1,4 @@
+import { Activity } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/app/page-header";
 import { ActivityList } from "@/components/project/activity-list";
@@ -15,7 +16,7 @@ export default async function AdminActivityPage({ searchParams }: { searchParams
   const { items, total, pageSize } = await listAllActivityPage(actor, page);
   return (
     <div>
-      <PageHeader title="Activity" description="Every important event across the business." />
+      <PageHeader icon={Activity} title="Activity" description="Every important event across the business." />
       <Card>
         <CardContent>
           <ActivityList events={items} showProject projectHref={(id) => `/admin/projects/${id}`} showVisibility emptyText="No data yet." />

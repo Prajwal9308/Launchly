@@ -19,6 +19,7 @@ export default async function AdminPricingPage() {
   return (
     <div>
       <PageHeader
+        icon={Tag}
         title="Services"
         description="Packages without a price show “Let's discuss your project” on the website."
         actions={

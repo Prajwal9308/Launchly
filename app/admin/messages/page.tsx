@@ -16,7 +16,7 @@ export default async function AdminInboxPage() {
   const threads = await listMessageThreads(actor);
   return (
     <div>
-      <PageHeader title="Messages" description="Project conversations, most recent first." />
+      <PageHeader icon={MessageSquare} title="Messages" description="Project conversations, most recent first." />
       <Card className="overflow-hidden">
         {threads.length === 0 ? (
           <EmptyState icon={MessageSquare} title="No messages yet" description="Client conversations appear here." />

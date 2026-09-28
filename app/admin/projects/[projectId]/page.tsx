@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Building2, FileText, Mail, Milestone, Phone, Sparkles, UserRound } from "lucide-react";
 import { SectionTitle } from "@/components/app/page-header";
 import { GenerateBriefButton } from "@/components/admin/brief-panel";
 import { ProjectProgress } from "@/components/project/project-progress";
@@ -71,7 +71,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle action={isAIEnabled() && project.status !== "DRAFT" ? <GenerateBriefButton projectId={project.id} /> : undefined}>Project brief</SectionTitle>
+              <SectionTitle icon={FileText} action={isAIEnabled() && project.status !== "DRAFT" ? <GenerateBriefButton projectId={project.id} /> : undefined}>Project brief</SectionTitle>
               {systemBrief ? (
                 <>
                   <p className="mb-4 text-xs text-faint">Assembled from the client&apos;s questionnaire answers only.</p>
@@ -91,7 +91,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
           {aiBrief && (
             <Card>
               <CardContent>
-                <SectionTitle action={<Badge tone="accent">AI-generated</Badge>}>AI brief</SectionTitle>
+                <SectionTitle icon={Sparkles} action={<Badge tone="accent">AI-generated</Badge>}>AI brief</SectionTitle>
                 <p className="mb-4 text-xs text-faint">
                   Generated {formatDateTime(aiBrief.createdAt)} by {aiBrief.generator}. Based only on client-provided answers — verify before use.
                 </p>
@@ -104,7 +104,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
         <div className="space-y-6">
           <Card>
             <CardContent>
-              <SectionTitle>Client</SectionTitle>
+              <SectionTitle icon={UserRound}>Client</SectionTitle>
               {members.length ? (
                 <ul className="space-y-3">
                   {members.map((u) => (
@@ -131,7 +131,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle>Business</SectionTitle>
+              <SectionTitle icon={Building2}>Business</SectionTitle>
               <dl className="space-y-2.5 text-sm">
                 {[
                   ["Name", project.business?.name],
@@ -153,7 +153,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle>Client-facing timeline</SectionTitle>
+              <SectionTitle icon={Milestone}>Client-facing timeline</SectionTitle>
               <ProjectProgress phases={project.phases} onHold={project.status === "ON_HOLD"} />
             </CardContent>
           </Card>

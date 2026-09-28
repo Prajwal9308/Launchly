@@ -22,7 +22,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
 
   return (
     <div>
-      <PageHeader title="Leads" description={`${byStatus.NEW ?? 0} new · ${total} shown`} />
+      <PageHeader icon={Inbox} title="Leads" description={`${byStatus.NEW ?? 0} new · ${total} shown`} />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search name, business or email"

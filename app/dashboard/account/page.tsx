@@ -1,3 +1,4 @@
+import { UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/app/page-header";
 import { PasswordForm, ProfileForm } from "@/components/client/account-forms";
@@ -14,7 +15,7 @@ export default async function AccountPage() {
   const account = await getAccount(actor);
   return (
     <div>
-      <PageHeader title="Account" description={`Member since ${formatDate(account.createdAt)}`} />
+      <PageHeader icon={UserRound} title="Account" description={`Member since ${formatDate(account.createdAt)}`} />
       <Card>
         <CardContent className="divide-y divide-border">
           <FormSection title="Profile" description="Your contact details for this project.">

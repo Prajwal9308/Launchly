@@ -18,6 +18,7 @@ export default async function PricingPage() {
     <>
       <PageHero
         eyebrow="Pricing"
+        eyebrowIcon="tag"
         title="Clear, written quotes for every project"
         description="Every project is quoted in writing after we've reviewed your requirements, before any work starts and with no obligation. Here's what each type of project includes."
       />
@@ -26,7 +27,7 @@ export default async function PricingPage() {
       </Section>
       <Section tone="muted">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-          <SectionHeader title="Pricing questions" />
+          <SectionHeader eyebrow="FAQ" eyebrowIcon="circle-help" title="Pricing questions" />
           <FaqList items={FAQS.filter((f) => /cost|long|content|after launch/i.test(f.question))} />
         </div>
       </Section>

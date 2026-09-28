@@ -19,6 +19,7 @@ export default async function AdminServicesPage() {
   return (
     <div>
       <PageHeader
+        icon={Sparkles}
         title="Services"
         description="Shown on the public website and offered in the project questionnaire."
         actions={

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FileStack } from "lucide-react";
+import { FileStack, Upload } from "lucide-react";
 import { SectionTitle } from "@/components/app/page-header";
 import { FileList } from "@/components/project/file-list";
 import { FileUploader } from "@/components/project/file-uploader";
@@ -21,7 +21,7 @@ export default async function ClientFilesPage({ params }: { params: Promise<{ pr
     <div className="space-y-6">
       <Card>
         <CardContent>
-          <SectionTitle>Upload files</SectionTitle>
+          <SectionTitle icon={Upload}>Upload files</SectionTitle>
           <p className="mb-4 text-sm text-muted">Logos, photos, menus, brochures, brand guidelines or any content you&apos;d like us to use.</p>
           <FileUploader projectId={projectId} category="CONTENT" />
         </CardContent>
