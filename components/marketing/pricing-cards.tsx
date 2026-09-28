@@ -23,17 +23,17 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
         <article
           key={pkg.id}
           className={cn(
-            "flex flex-col rounded-xl border bg-background p-6",
-            pkg.highlighted ? "border-accent shadow-popover ring-1 ring-accent/20" : "border-border shadow-card",
+            "relative flex flex-col rounded-2xl border bg-background p-7",
+            pkg.highlighted ? "border-accent shadow-popover ring-1 ring-accent/25" : "border-border shadow-card",
           )}
         >
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-[15px] font-semibold">{pkg.name}</h3>
-            {pkg.highlighted && (
-              <span className="rounded-md bg-accent-subtle px-2 py-0.5 text-xs font-medium text-accent">Most popular</span>
-            )}
-          </div>
-          <p className="mt-1.5 min-h-10 text-sm leading-relaxed text-muted">{pkg.description}</p>
+          {pkg.highlighted && (
+            <span className="absolute -top-3 left-7 whitespace-nowrap rounded-full bg-accent px-2.5 py-0.5 text-xs font-medium text-accent-foreground shadow-xs">
+              Most popular
+            </span>
+          )}
+          <h3 className="text-base font-semibold">{pkg.name}</h3>
+          <p className="mt-1.5 min-h-[4.25rem] text-sm leading-relaxed text-muted">{pkg.description}</p>
           <div className="mt-5">
             {pkg.priceCents != null ? (
               <p className="flex items-baseline gap-1.5">
@@ -41,7 +41,10 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
                 <span className="text-3xl font-semibold tracking-tight">{formatPrice(pkg.priceCents)}</span>
               </p>
             ) : (
-              <p className="text-lg font-semibold tracking-tight">Let&apos;s discuss your project</p>
+              <>
+                <p className="text-2xl font-semibold tracking-tight">Custom quote</p>
+                <p className="mt-1 text-xs text-faint">Let&apos;s discuss your project</p>
+              </>
             )}
           </div>
           <ul className="mt-6 space-y-2.5 border-t border-border pt-6">

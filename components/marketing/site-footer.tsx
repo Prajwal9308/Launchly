@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeSwitcher } from "@/components/app/theme-switcher";
 import { Logo } from "./logo";
 
 const COLUMNS = [
@@ -73,11 +74,11 @@ export function SiteFooter({
         ))}
       </div>
       <div className="border-t border-border">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-faint sm:flex-row sm:justify-between">
+        <div className="container-page flex flex-col gap-4 py-5 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {businessName}. All rights reserved.
           </p>
-          <p>Web design & development for small businesses.</p>
+          <ThemeSwitcher />
         </div>
       </div>
     </footer>

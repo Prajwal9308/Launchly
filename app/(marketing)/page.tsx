@@ -44,25 +44,30 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="relative isolate overflow-hidden">
+        {/* Faint grid that fades out from the top — texture without decoration. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-canvas),var(--color-background)_70%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:56px_56px] opacity-70 [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent_75%)]"
         />
-        <div className="container-page relative grid items-center gap-16 pb-24 pt-16 sm:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:pb-28 lg:pt-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-24 -z-10 h-[28rem] w-[56rem] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl"
+        />
+        <div className="container-page grid items-center gap-16 pb-20 pt-16 sm:pt-24 lg:grid-cols-[1.08fr_1fr] lg:gap-12 lg:pb-24 lg:pt-28">
           <div className="max-w-xl">
-            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted shadow-xs">
+            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-medium text-muted shadow-xs backdrop-blur">
               <span className="size-1.5 rounded-full bg-accent" aria-hidden />
               Web design & development for small businesses
             </p>
-            <h1 className="mt-6 text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-[3.4rem]">
+            <h1 className="mt-6 text-[2.6rem] font-semibold leading-[1.04] sm:text-[3.4rem] xl:text-[3.9rem]">
               Websites Built to Grow Your Business
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-muted">
+            <p className="mt-6 text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
               We design and build modern, professional websites that help businesses attract customers, communicate their
               value, and grow online.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/start-project">
                   Start Your Project <ArrowRight aria-hidden />
@@ -72,7 +77,7 @@ export default async function HomePage() {
                 <Link href="/portfolio">View Our Work</Link>
               </Button>
             </div>
-            <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+            <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
               {["Clear, step-by-step process", "Review every design", "Track progress online"].map((item) => (
                 <li key={item} className="flex items-center gap-1.5">
                   <Check className="size-4 text-accent" aria-hidden /> {item}

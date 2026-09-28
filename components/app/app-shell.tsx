@@ -27,6 +27,7 @@ import { LogoMark } from "@/components/marketing/logo";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
+import { CommandMenu, type CommandItem } from "./command-menu";
 import { NotificationBell, type NotificationView } from "./notification-bell";
 import { UserMenu } from "./user-menu";
 
@@ -94,7 +95,7 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => v
               <Icon className={cn("size-4 shrink-0", active ? "text-accent" : "text-faint")} aria-hidden />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge ? (
-                <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-white">
+                <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">
                   {item.badge}
                   <span className="sr-only"> new</span>
                 </span>
@@ -139,6 +140,19 @@ export function AppShell({
   const items = variant === "admin" ? ADMIN_NAV : clientNav(projectId, unreadMessages, reviewsAwaiting);
   const home = variant === "admin" ? "/admin" : "/dashboard";
   const accountHref = variant === "admin" ? "/admin/settings" : "/dashboard/account";
+  const commandItems: CommandItem[] = [
+    ...items.map((i) => ({ label: i.label, href: i.href, group: "Go to" })),
+    ...(variant === "admin"
+      ? [
+          { label: "New portfolio project", href: "/admin/portfolio/new", group: "Actions", keywords: "add create" },
+          { label: "New service", href: "/admin/services/new", group: "Actions", keywords: "add create" },
+          { label: "New pricing package", href: "/admin/services/pricing/new", group: "Actions", keywords: "add create price" },
+          { label: "Open tasks assigned to me", href: "/admin/tasks?mine=1", group: "Actions" },
+          { label: "New leads", href: "/admin/leads?status=NEW", group: "Actions", keywords: "enquiries contact" },
+        ]
+      : [{ label: "Start a new project", href: "/start-project", group: "Actions", keywords: "questionnaire new" }]),
+    { label: "View website", href: "/", group: "Actions", keywords: "home public" },
+  ];
 
   const brand = (
     <Link href={home} className="flex min-w-0 items-center gap-2.5 rounded-md">
@@ -195,21 +209,12 @@ export function AppShell({
 
           <div className="min-w-0 lg:hidden">{brand}</div>
 
-          {variant === "admin" && (
-            <form action="/admin/search" role="search" className="relative hidden max-w-sm flex-1 md:block">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-faint" aria-hidden />
-              <label htmlFor="global-search" className="sr-only">
-                Search clients, projects, businesses and leads
-              </label>
-              <input
-                id="global-search"
-                name="q"
-                type="search"
-                placeholder="Search clients, projects, leads…"
-                className="h-9 w-full rounded-md border border-border bg-canvas pl-9 pr-3 text-sm placeholder:text-faint focus-visible:border-accent focus-visible:bg-background focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-accent/25"
-              />
-            </form>
-          )}
+          <div className="hidden flex-1 md:block">
+            <CommandMenu
+              items={commandItems}
+              searchHref={variant === "admin" ? (q) => `/admin/search?q=${encodeURIComponent(q)}` : undefined}
+            />
+          </div>
 
           <div className="ml-auto flex items-center gap-1.5">
             {variant === "admin" && (
@@ -252,7 +257,7 @@ export function AppShell({
                     <Icon className="size-5" aria-hidden />
                     {item.label}
                     {item.badge ? (
-                      <span className="absolute right-1/2 top-1 translate-x-4 rounded-full bg-accent px-1 text-[10px] font-semibold leading-4 text-white">
+                      <span className="absolute right-1/2 top-1 translate-x-4 rounded-full bg-accent px-1 text-[10px] font-semibold leading-4 text-accent-foreground">
                         {item.badge}
                       </span>
                     ) : null}

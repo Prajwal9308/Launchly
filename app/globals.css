@@ -25,6 +25,10 @@
   --color-accent-border: #c9d4f7;
   --color-accent-foreground: #ffffff;
 
+  /* Inverse surface (e.g. the closing CTA band) */
+  --color-inverse: #17171c;
+  --color-inverse-foreground: #ffffff;
+
   /* Semantic (subtle) */
   --color-success: #177245;
   --color-success-subtle: #edf8f1;
@@ -86,6 +90,108 @@
   }
 }
 
+/*
+ * Dark theme. Follows the OS by default; `data-theme` on <html> (set by the
+ * theme switcher) forces light or dark. Only token values change, so every
+ * component adapts without per-component dark styles.
+ */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+    }
+  }
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root[data-theme="dark"] {
+  --color-background: #111114;
+  --color-canvas: #0a0a0c;
+  --color-subtle: #1b1b20;
+  --color-border: #26262d;
+  --color-border-strong: #36363f;
+  --color-foreground: #ececf0;
+  --color-muted: #a3a3ad;
+  --color-faint: #7d7d88;
+  --color-accent: #6283ff;
+  --color-accent-hover: #7a96ff;
+  --color-accent-subtle: #151c38;
+  --color-accent-border: #2a376f;
+  --color-inverse: #1b1b21;
+  --color-inverse-foreground: #ffffff;
+  --color-success: #4ccb87;
+  --color-success-subtle: #0f2319;
+  --color-success-border: #1d4430;
+  --color-warning: #f0b44c;
+  --color-warning-subtle: #291f0c;
+  --color-warning-border: #4b3a15;
+  --color-danger: #f47a7a;
+  --color-danger-subtle: #2c1315;
+  --color-danger-border: #55252a;
+  --color-info: #7fb2f5;
+  --color-info-subtle: #0f1c30;
+  --color-info-border: #20395c;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-popover: 0 8px 24px rgb(0 0 0 / 0.45), 0 1px 3px rgb(0 0 0 / 0.4);
+  --shadow-dialog: 0 20px 56px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: #111114;
+    --color-canvas: #0a0a0c;
+    --color-subtle: #1b1b20;
+    --color-border: #26262d;
+    --color-border-strong: #36363f;
+    --color-foreground: #ececf0;
+    --color-muted: #a3a3ad;
+    --color-faint: #7d7d88;
+    --color-accent: #6283ff;
+    --color-accent-hover: #7a96ff;
+    --color-accent-subtle: #151c38;
+    --color-accent-border: #2a376f;
+    --color-inverse: #1b1b21;
+    --color-inverse-foreground: #ffffff;
+    --color-success: #4ccb87;
+    --color-success-subtle: #0f2319;
+    --color-success-border: #1d4430;
+    --color-warning: #f0b44c;
+    --color-warning-subtle: #291f0c;
+    --color-warning-border: #4b3a15;
+    --color-danger: #f47a7a;
+    --color-danger-subtle: #2c1315;
+    --color-danger-border: #55252a;
+    --color-info: #7fb2f5;
+    --color-info-subtle: #0f1c30;
+    --color-info-border: #20395c;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-popover: 0 8px 24px rgb(0 0 0 / 0.45), 0 1px 3px rgb(0 0 0 / 0.4);
+    --shadow-dialog: 0 20px 56px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.4);
+  }
+}
+
+/* Forces light tokens inside a subtree (the hero's website mockup is a "screenshot" of a light site). */
+.theme-light-tokens {
+  color-scheme: light;
+  --color-background: #ffffff;
+  --color-canvas: #f8f8f9;
+  --color-subtle: #f3f3f5;
+  --color-border: #e5e5e8;
+  --color-border-strong: #d4d4d9;
+  --color-foreground: #17171c;
+  --color-muted: #55555f;
+  --color-faint: #71717b;
+  --color-success: #177245;
+  --color-success-subtle: #edf8f1;
+  --color-success-border: #c5e8d3;
+}
+
 @utility focus-ring {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -121,8 +227,12 @@
     background: var(--color-accent-subtle);
   }
   h1, h2, h3, h4 {
-    @apply tracking-tight text-foreground;
+    @apply text-foreground;
+    letter-spacing: -0.02em;
     text-wrap: balance;
+  }
+  h1 {
+    letter-spacing: -0.035em;
   }
   p {
     text-wrap: pretty;

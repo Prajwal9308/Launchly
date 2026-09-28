@@ -6,8 +6,8 @@ import { Check, MessageSquare } from "lucide-react";
  */
 export function HeroPreview() {
   return (
-    <div className="relative mx-auto w-full max-w-xl lg:max-w-none" aria-hidden>
-      <div className="overflow-hidden rounded-xl border border-border bg-background shadow-dialog">
+    <div className="theme-light-tokens relative mx-auto w-full max-w-xl pb-10 lg:max-w-none" aria-hidden>
+      <div className="overflow-hidden rounded-xl border border-border bg-background shadow-dialog ring-1 ring-black/5">
         <div className="flex items-center gap-3 border-b border-border bg-canvas px-4 py-2.5">
           <div className="flex gap-1.5">
             <span className="size-2.5 rounded-full bg-border-strong" />
@@ -56,7 +56,7 @@ export function HeroPreview() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          <div className="mt-6 grid grid-cols-3 gap-3 pb-6">
             {["Emergency repairs", "Water heaters", "Drain cleaning"].map((label) => (
               <div key={label} className="rounded-lg border border-border p-3">
                 <span className="block size-4 rounded bg-[#1d3b5c]/10" />
@@ -68,7 +68,7 @@ export function HeroPreview() {
         </div>
       </div>
 
-      <div className="absolute -bottom-6 -left-6 hidden w-60 rounded-lg border border-border bg-background p-3.5 shadow-popover sm:block">
+      <div className="absolute bottom-0 left-8 hidden w-60 rounded-lg border border-border bg-background p-3.5 shadow-popover sm:block">
         <p className="text-[11px] font-medium text-faint">Design review</p>
         <div className="mt-1.5 flex items-center justify-between gap-2">
           <p className="text-sm font-medium text-foreground">Homepage · v2</p>
@@ -78,7 +78,7 @@ export function HeroPreview() {
         </div>
       </div>
 
-      <div className="absolute -right-5 -top-5 hidden w-56 rounded-lg border border-border bg-background p-3.5 shadow-popover md:block">
+      <div className="absolute -right-6 top-28 hidden w-56 rounded-lg border border-border bg-background p-3.5 shadow-popover md:block">
         <div className="flex items-center justify-between text-[11px]">
           <span className="font-medium text-faint">Project progress</span>
           <span className="font-medium text-foreground">Development</span>

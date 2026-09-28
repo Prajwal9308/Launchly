@@ -26,7 +26,7 @@ export function ProjectProgress({ phases, onHold }: { phases: Phase[]; onHold?: 
               aria-hidden
               className={cn(
                 "relative z-10 mt-0.5 flex size-[19px] shrink-0 items-center justify-center rounded-full border",
-                phase.state === "complete" && "border-accent bg-accent text-white",
+                phase.state === "complete" && "border-accent bg-accent text-accent-foreground",
                 phase.state === "current" && "border-accent bg-background",
                 phase.state === "upcoming" && "border-border-strong bg-background",
               )}

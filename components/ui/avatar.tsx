@@ -16,7 +16,7 @@ export function Avatar({
       aria-hidden
       className={cn(
         "inline-flex size-8 shrink-0 select-none items-center justify-center rounded-full text-xs font-semibold",
-        tone === "accent" ? "bg-accent text-white" : "bg-subtle text-muted ring-1 ring-border",
+        tone === "accent" ? "bg-accent text-accent-foreground" : "bg-subtle text-muted ring-1 ring-border",
         className,
       )}
     >

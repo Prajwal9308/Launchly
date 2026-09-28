@@ -54,7 +54,7 @@ export function NavTabs({ tabs, className }: { tabs: NavTab[]; className?: strin
               >
                 {tab.label}
                 {tab.count ? (
-                  <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-white">{tab.count}</span>
+                  <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">{tab.count}</span>
                 ) : null}
               </Link>
             </li>

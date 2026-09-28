@@ -24,7 +24,7 @@ export function OptionCard({ type, label, description, className, ...props }: Op
       <span
         aria-hidden
         className={cn(
-          "mt-0.5 flex size-4 shrink-0 items-center justify-center border border-border-strong bg-background text-transparent transition-colors peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white",
+          "mt-0.5 flex size-4 shrink-0 items-center justify-center border border-border-strong bg-background text-transparent transition-colors peer-checked:border-accent peer-checked:bg-accent peer-checked:text-accent-foreground",
           type === "radio" ? "rounded-full" : "rounded-sm",
         )}
       >

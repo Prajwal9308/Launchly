@@ -202,7 +202,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
                   <span
                     className={cn(
                       "flex size-5 shrink-0 items-center justify-center rounded-full border text-[11px] font-medium",
-                      state === "complete" && "border-accent bg-accent text-white",
+                      state === "complete" && "border-accent bg-accent text-accent-foreground",
                       state === "current" && "border-accent text-accent",
                       state === "upcoming" && "border-border-strong text-faint",
                     )}
