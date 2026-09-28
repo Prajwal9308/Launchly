@@ -49,8 +49,12 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
               <dd>{lead.businessName ?? "—"}</dd>
             </div>
             <div>
-              <dt className="text-faint">Service</dt>
+              <dt className="text-faint">Project type</dt>
               <dd>{lead.service ?? "Not specified"}</dd>
+            </div>
+            <div>
+              <dt className="text-faint">Budget</dt>
+              <dd>{lead.budgetRange ?? "Not specified"}</dd>
             </div>
             <div>
               <dt className="text-faint">Email</dt>

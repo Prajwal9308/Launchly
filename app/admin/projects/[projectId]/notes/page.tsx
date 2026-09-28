@@ -23,7 +23,7 @@ export default async function AdminNotesPage({ params }: { params: Promise<{ pro
       {notes.length ? (
         <ul className="space-y-3">
           {notes.map((n) => (
-            <li key={n.id} className="glass rounded-2xl p-4 shadow-card">
+            <li key={n.id} className="surface rounded-2xl p-4 shadow-card">
               <p className="whitespace-pre-wrap text-sm leading-relaxed">{n.body}</p>
               <p className="mt-2 text-xs text-faint">
                 {n.author ? `${n.author.firstName} ${n.author.lastName}` : "Studio"} · {formatDateTime(n.createdAt)}

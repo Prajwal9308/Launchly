@@ -37,7 +37,7 @@ export default async function AdminPricingPage() {
           <ul className="divide-y divide-border">
             {packages.map((p) => (
               <li key={p.id}>
-                <Link href={`/admin/services/pricing/${p.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.04]">
+                <Link href={`/admin/services/pricing/${p.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-subtle">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">{p.name}</p>
                     <p className="truncate text-xs text-faint">{p.description}</p>

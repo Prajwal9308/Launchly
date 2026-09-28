@@ -60,7 +60,7 @@ export default async function ClientDashboardPage() {
     <div className="space-y-6">
       <div>
         <p className="text-sm text-muted">{project.business?.name ?? businessName}</p>
-        <h1 className="text-lit mt-1 text-3xl font-semibold sm:text-4xl">
+        <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">
           <Greeting firstName={actor.firstName} />
         </h1>
       </div>
@@ -70,7 +70,6 @@ export default async function ClientDashboardPage() {
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
         {/* Current project — the primary surface (elevated) */}
         <Card level="elevated" className="relative overflow-hidden">
-          <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-80 rounded-full bg-accent/15 blur-3xl" />
           <CardContent className="relative space-y-7 sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>

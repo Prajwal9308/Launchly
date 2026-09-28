@@ -18,9 +18,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="w-full max-w-sm">
-      <div className="glass-elevated relative rounded-3xl p-6 sm:p-8">
-        <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-48 w-80 -translate-x-1/2 rounded-full bg-accent/25 blur-3xl" />
-        <h1 className="text-lit text-2xl font-semibold">Log in</h1>
+      <div className="surface-raised relative rounded-3xl p-6 sm:p-8">
+        <h1 className="text-2xl font-semibold">Log in</h1>
         <p className="mt-1 text-sm text-muted">Access your project dashboard.</p>
         <div className="mt-6 space-y-4">
           {error && (

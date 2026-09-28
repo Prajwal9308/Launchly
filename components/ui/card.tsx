@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 
 const LEVELS = {
   /** Supporting information — sits back in the scene. */
-  recessed: "glass-recessed",
+  recessed: "surface-muted",
   /** Standard floating panel. */
-  default: "glass",
+  default: "surface",
   /** Primary content — nearest to the viewer. */
-  elevated: "glass-elevated",
+  elevated: "surface-raised",
 } as const;
 
 export function Card({ className, level = "default", ...props }: React.HTMLAttributes<HTMLDivElement> & { level?: keyof typeof LEVELS }) {

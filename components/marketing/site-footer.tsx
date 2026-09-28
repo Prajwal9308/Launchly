@@ -1,32 +1,13 @@
 import Link from "next/link";
 import { Logo } from "./logo";
 
-const COLUMNS = [
-  {
-    title: "Company",
-    links: [
-      { href: "/services", label: "Services" },
-      { href: "/portfolio", label: "Portfolio" },
-      { href: "/process", label: "Process" },
-      { href: "/about", label: "About" },
-    ],
-  },
-  {
-    title: "Get started",
-    links: [
-      { href: "/start-project", label: "Start Project" },
-      { href: "/pricing", label: "Pricing" },
-      { href: "/faq", label: "FAQ" },
-      { href: "/contact", label: "Contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-    ],
-  },
+const COMPANY = [
+  { href: "/services", label: "Services" },
+  { href: "/solutions", label: "Solutions" },
+  { href: "/process", label: "Process" },
+  { href: "/about", label: "About" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 export function SiteFooter({
@@ -34,50 +15,86 @@ export function SiteFooter({
   tagline,
   contactEmail,
   contactPhone,
+  services,
 }: {
   businessName: string;
   tagline: string;
   contactEmail: string;
   contactPhone: string | null;
+  services: { slug: string; name: string }[];
 }) {
   return (
-    <footer className="relative mt-8 border-t border-white/[0.06] bg-[linear-gradient(180deg,rgb(255_255_255/0.02),transparent)]">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-        <div className="space-y-3">
+    <footer className="border-t border-border bg-canvas">
+      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="space-y-3 sm:col-span-2 lg:col-span-1">
           <Logo name={businessName} />
           <p className="max-w-xs text-sm leading-relaxed text-muted">{tagline}</p>
-          <div className="space-y-1 text-sm text-muted">
-            <a href={`mailto:${contactEmail}`} className="block hover:text-foreground">
-              {contactEmail}
-            </a>
-            {contactPhone && (
-              <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="block hover:text-foreground">
-                {contactPhone}
-              </a>
-            )}
-          </div>
         </div>
-        {COLUMNS.map((column) => (
-          <div key={column.title}>
-            <h2 className="text-xs font-medium uppercase tracking-wider text-faint">{column.title}</h2>
-            <ul className="mt-3 space-y-2">
-              {column.links.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-muted transition-colors hover:text-foreground">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Company</h2>
+          <ul className="mt-3 space-y-2">
+            {COMPANY.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-sm text-muted transition-colors hover:text-foreground">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Services</h2>
+          <ul className="mt-3 space-y-2">
+            {services.map((s) => (
+              <li key={s.slug}>
+                <Link href={`/services#${s.slug}`} className="text-sm text-muted transition-colors hover:text-foreground">
+                  {s.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Contact</h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            <li>
+              <a href={`mailto:${contactEmail}`} className="break-all text-muted hover:text-foreground">
+                {contactEmail}
+              </a>
+            </li>
+            {contactPhone && (
+              <li>
+                <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="text-muted hover:text-foreground">
+                  {contactPhone}
+                </a>
+              </li>
+            )}
+            <li>
+              <Link href="/contact" className="font-medium text-accent hover:underline">
+                Start a Project
+              </Link>
+            </li>
+            <li>
+              <Link href="/login" className="text-muted hover:text-foreground">
+                Client login
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="border-t border-border">
-        <div className="container-page flex flex-col gap-4 py-5 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-2 py-5 text-xs text-faint sm:flex-row sm:justify-between">
           <p>
             © {new Date().getFullYear()} {businessName}. All rights reserved.
           </p>
-          <p>Web design &amp; development for small businesses.</p>
+          <p className="flex gap-4">
+            <Link href="/privacy" className="hover:text-foreground">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-foreground">
+              Terms
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

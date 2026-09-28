@@ -22,7 +22,9 @@ export const leadSchema = z.object({
     .optional()
     .default("")
     .refine((v) => !v || /^[+()\-.\s\d]{7,}$/.test(v), "Please enter a valid phone number."),
+  /** Project type (Website, Mobile Application, …). */
   service: z.string().trim().max(120).optional().default(""),
+  budgetRange: z.string().trim().max(60).optional().default(""),
   message: z.string().trim().min(1, "Please enter a message.").max(5000),
 });
 
@@ -43,6 +45,7 @@ export async function createLead(input: LeadInput) {
         email: data.email,
         phone: data.phone || null,
         service: data.service || null,
+        budgetRange: data.budgetRange || null,
         message: data.message,
       },
     });

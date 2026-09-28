@@ -8,7 +8,7 @@ beforeEach(resetDb);
 describe("production bootstrap", () => {
   it("adds default settings, services, unpriced packages and labelled samples to a new database", async () => {
     expect(await bootstrapCatalog(db)).toEqual({ bootstrapped: true });
-    expect(await db.service.count()).toBe(10);
+    expect(await db.service.count()).toBe(5);
     const packages = await db.pricingPackage.findMany();
     expect(packages).toHaveLength(4);
     expect(packages.every((p) => p.priceCents === null)).toBe(true);
@@ -22,9 +22,9 @@ describe("production bootstrap", () => {
   it("runs only once, so the owner's later edits and deletions are kept", async () => {
     await bootstrapCatalog(db);
     await db.portfolioItem.deleteMany();
-    await db.service.deleteMany({ where: { slug: "landing-pages" } });
+    await db.service.deleteMany({ where: { slug: "business-solutions" } });
     expect(await bootstrapCatalog(db)).toEqual({ bootstrapped: false });
     expect(await db.portfolioItem.count()).toBe(0);
-    expect(await db.service.count()).toBe(9);
+    expect(await db.service.count()).toBe(4);
   });
 });

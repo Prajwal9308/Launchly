@@ -50,7 +50,7 @@ export function FileList({ files, currentUserId, canDeleteAll = false }: { files
         const canDelete = canDeleteAll || file.uploadedBy?.id === currentUserId;
         return (
           <li key={file.id} className="flex items-center gap-3 px-4 py-3">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-white/[0.03] text-faint">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-canvas text-faint">
               <Icon className="size-4" aria-hidden />
             </span>
             <div className="min-w-0 flex-1">

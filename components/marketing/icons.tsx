@@ -1,4 +1,11 @@
 import {
+  Layers,
+  LayoutDashboard,
+  ListChecks,
+  Monitor,
+  Smartphone,
+  Target,
+  Workflow,
   Briefcase,
   Building2,
   Code2,
@@ -22,6 +29,13 @@ import {
 } from "lucide-react";
 
 const ICONS: Record<string, LucideIcon> = {
+  monitor: Monitor,
+  smartphone: Smartphone,
+  workflow: Workflow,
+  "layout-dashboard": LayoutDashboard,
+  target: Target,
+  "list-checks": ListChecks,
+  layers: Layers,
   palette: Palette,
   code: Code2,
   layout: LayoutTemplate,

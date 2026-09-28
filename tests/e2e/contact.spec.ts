@@ -5,14 +5,14 @@ test("contact form keeps input on error and accepts a short message", async ({ p
   await page.goto("/contact");
   await page.getByLabel("Name").fill("Jamie");
   await page.getByLabel("Email").fill("not-an-email");
-  await page.getByLabel("Message").fill("Hi there");
-  await page.getByRole("button", { name: "Send message" }).click();
+  await page.getByLabel("Project details").fill("Hi there");
+  await page.getByRole("button", { name: "Send project details" }).click();
 
   await expect(page.getByText("Please enter a valid email address.")).toBeVisible();
   await expect(page.getByLabel("Name")).toHaveValue("Jamie");
-  await expect(page.getByLabel("Message")).toHaveValue("Hi there");
+  await expect(page.getByLabel("Project details")).toHaveValue("Hi there");
 
   await page.getByLabel("Email").fill("jamie@example.com");
-  await page.getByRole("button", { name: "Send message" }).click();
-  await expect(page.getByText("Message sent")).toBeVisible();
+  await page.getByRole("button", { name: "Send project details" }).click();
+  await expect(page.getByText(/received your project details/)).toBeVisible();
 });

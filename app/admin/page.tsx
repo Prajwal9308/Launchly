@@ -26,13 +26,12 @@ export default async function AdminOverviewPage() {
       {/* Primary: pipeline (level 5). Attention metrics (level 4). Supporting metrics recessed (level 3). */}
       <section aria-label="Metrics" className="grid gap-4 lg:grid-cols-12">
         <Card level="elevated" className="relative overflow-hidden lg:col-span-8 lg:row-span-3">
-          <div aria-hidden className="pointer-events-none absolute -left-20 -top-24 size-72 rounded-full bg-accent/20 blur-3xl" />
           <CardContent className="relative">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.14em] text-faint">Pipeline</p>
                 <p className="mt-2 flex items-baseline gap-3">
-                  <span className="text-lit text-5xl font-semibold tabular-nums tracking-tight">{m.active}</span>
+                  <span className="text-5xl font-semibold tabular-nums tracking-tight">{m.active}</span>
                   <span className="text-sm text-muted">active project{m.active === 1 ? "" : "s"}</span>
                 </p>
               </div>
@@ -74,7 +73,7 @@ export default async function AdminOverviewPage() {
             <ul className="divide-y divide-border">
               {overview.recentProjects.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/admin/projects/${p.id}`} className="flex items-center gap-4 px-5 py-3 transition-colors hover:bg-white/[0.04]">
+                  <Link href={`/admin/projects/${p.id}`} className="flex items-center gap-4 px-5 py-3 transition-colors hover:bg-subtle">
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{p.business?.name ?? p.name}</p>
                       <p className="text-xs text-faint">
@@ -102,7 +101,7 @@ export default async function AdminOverviewPage() {
             <ul className="divide-y divide-border">
               {overview.upcomingTasks.map((t) => (
                 <li key={t.id}>
-                  <Link href={`/admin/projects/${t.project.id}/tasks`} className="flex items-center gap-3 px-5 py-3 hover:bg-white/[0.04]">
+                  <Link href={`/admin/projects/${t.project.id}/tasks`} className="flex items-center gap-3 px-5 py-3 hover:bg-subtle">
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm">{t.title}</p>
                       <p className="truncate text-xs text-faint">

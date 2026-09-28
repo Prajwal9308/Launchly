@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
+import { Check } from "lucide-react";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
+import { WhyGrid } from "@/components/marketing/why-grid";
 import { getSiteSettings } from "@/services/catalog";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "An independent web design and development studio for small and local businesses.",
+  description: "PrimeTechLabs is a web and mobile app development studio helping businesses and entrepreneurs build practical digital products.",
   alternates: { canonical: "/about" },
 };
 
 const PRINCIPLES = [
-  { title: "Clarity over complexity", body: "Plain language, clear scope and no surprises. You'll know what's included before work begins." },
-  { title: "Built around your customers", body: "Every page is planned around what your customers need to know and do." },
-  { title: "Honest expectations", body: "We don't promise rankings, revenue or overnight results. We promise careful, professional work." },
-  { title: "Your approval, every step", body: "Designs and final websites go live only after you've explicitly approved them." },
+  "Plain language, clear scope and honest timelines.",
+  "Products designed around real users and real business requirements.",
+  "Clean, maintainable code that can grow with your business.",
+  "Nothing goes live without your approval.",
 ];
 
 export default async function AboutPage() {
@@ -23,34 +25,37 @@ export default async function AboutPage() {
       <PageHero
         eyebrow="About"
         title={`About ${settings.businessName}`}
-        description="An independent web design and development studio helping small businesses establish a professional online presence."
+        description="A web and mobile app development studio for businesses and entrepreneurs."
       />
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <SectionHeader title="Professional websites, without the agency overhead" />
-          <div className="space-y-4 text-[15px] leading-relaxed text-muted">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <SectionHeader title="Practical digital products, built properly" />
+          <div className="space-y-4 text-[17px] leading-relaxed text-muted">
             <p>
-              Many small businesses need a website that clearly explains what they do and makes it easy for customers to get
-              in touch — without a long, complicated agency engagement.
+              {settings.businessName} designs and develops websites, web applications and mobile apps. We work with businesses
+              that need a professional online presence, and with entrepreneurs who have an idea they want to turn into a real
+              product.
             </p>
             <p>
-              We work directly with business owners to plan, design and build websites that fit their business. You work
-              with the person designing and building your site, and you can follow every step in your client portal.
+              We&apos;re a new studio, and we&apos;d rather earn trust through how we work than through big claims: a clear
+              scope before we start, direct communication with the people building your product, and careful execution.
             </p>
-            {settings.serviceArea && <p>We work with businesses in {settings.serviceArea}.</p>}
+            {settings.serviceArea && <p>We work with clients in {settings.serviceArea}.</p>}
+            <ul className="space-y-3 pt-4">
+              {PRINCIPLES.map((p) => (
+                <li key={p} className="flex gap-3 text-[15px] text-foreground">
+                  <Check className="mt-1 size-4 shrink-0 text-accent" aria-hidden /> {p}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Section>
       <Section tone="muted">
-        <SectionHeader title="How we work" />
-        <dl className="mt-10 grid gap-8 sm:grid-cols-2">
-          {PRINCIPLES.map((p) => (
-            <div key={p.title} className="border-t border-border pt-5">
-              <dt className="text-[15px] font-semibold">{p.title}</dt>
-              <dd className="mt-1.5 text-sm leading-relaxed text-muted">{p.body}</dd>
-            </div>
-          ))}
-        </dl>
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="Built around your business needs" />
+        <div className="mt-12">
+          <WhyGrid />
+        </div>
       </Section>
       <CtaSection />
     </>

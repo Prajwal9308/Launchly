@@ -1,36 +1,39 @@
 export const FAQS = [
   {
-    question: "How long does a website take?",
+    question: "What do you build?",
     answer:
-      "It depends on scope. A focused business website usually takes a few weeks from kickoff to launch, while larger or e-commerce projects take longer. After reviewing your questionnaire we'll give you a timeline for your specific project.",
+      "Business websites, custom web applications (such as dashboards, portals and booking systems), mobile apps for iOS and Android, and e-commerce stores.",
   },
   {
-    question: "How much does a website cost?",
+    question: "Do you build apps for both iOS and Android?",
     answer:
-      "Pricing depends on the number of pages, features and how much content you need help with. Our packages give a starting point, and we'll confirm a price once we understand your project.",
+      "Yes. Most projects use a cross-platform approach so one codebase serves both platforms; where a project needs it, we can build natively. We'll recommend an approach once we understand your requirements.",
   },
   {
-    question: "Do I need to have my content ready?",
+    question: "How long does a project take?",
     answer:
-      "No. You can upload whatever you already have — text, photos, menus, brochures — and let us know where you need help. The questionnaire asks exactly this.",
+      "It depends on scope. A focused website is usually a matter of weeks; web and mobile applications take longer. After we understand your requirements, we'll give you a timeline for your specific project.",
   },
   {
-    question: "Will my website work on phones?",
-    answer: "Yes. Every website is designed and tested for phones, tablets and desktops before launch.",
+    question: "How much does a project cost?",
+    answer:
+      "Cost depends on features, platforms and complexity. Tell us what you'd like to build and we'll prepare a clear, written proposal before any work begins.",
   },
   {
-    question: "Can you help with SEO?",
+    question: "I only have an idea. Can you help?",
     answer:
-      "We set up SEO foundations: clean page structure, titles and descriptions, performance, and a sitemap. Search rankings depend on many factors outside anyone's control, so we don't promise specific rankings.",
+      "Yes. We can help you shape an idea into a defined scope and, if it makes sense, start with a smaller first version (MVP) to test it with real users.",
   },
   {
-    question: "How do I give feedback during the project?",
+    question: "How do we communicate during a project?",
     answer:
-      "Through your client portal. You can track progress, send messages, upload files, review designs, and approve or request changes — all in one place.",
+      "You get a private project portal where you can share files, send messages and review designs, plus regular updates on what's done and what's next.",
   },
   {
     question: "What happens after launch?",
-    answer:
-      "We can continue to maintain the website, make content updates and help with ongoing improvements. Ask us about maintenance when you start your project.",
+    answer: "We hand over the finished product and can continue with maintenance, updates and new features if you need them.",
   },
 ] as const;
+
+export const PROJECT_TYPES = ["Website", "Web Application", "Mobile Application", "E-commerce", "Other"] as const;
+export const BUDGET_RANGES = ["Under $5,000", "$5,000 – $15,000", "$15,000 – $40,000", "$40,000+", "Not sure yet"] as const;

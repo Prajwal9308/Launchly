@@ -1,14 +1,14 @@
-# Launchly
+# PrimeTechLabs
 
-Launchly is a freelance web-development business platform in one Next.js app:
+PrimeTechLabs is a web and mobile app development studio. This repository is its business platform in one Next.js app:
 
-- **Public website.** Services, portfolio, process, pricing, about, FAQ, contact, privacy and terms.
-- **Client portal.** Clients create an account, fill in a multi-step project questionnaire that saves as they go, and upload assets. From there they track progress, send messages, review designs, request revisions and explicitly approve work.
+- **Public website.** Home, services, solutions, process, about, contact, pricing, FAQ, privacy and terms. A work page (`/portfolio`) appears only once real, non-sample projects are published.
+- **Client portal.** Clients create an account, fill in a multi-step project questionnaire that saves as they go, and upload assets. From there they follow their project, send messages, review designs, request revisions and explicitly approve work.
 - **Studio admin.** Manage leads, clients, projects, tasks, requirements, files, messages, design versions, approvals, internal notes, services, pricing, portfolio and settings. Every important action is recorded in an activity timeline.
 
 The core workflow is: lead → account → questionnaire → project created (requirements, tasks, brief, notifications) → requirements review → discovery → design → client review ⇄ revision → development → testing → final approval → launch → maintenance.
 
-> All seeded data (businesses, portfolio items, testimonials) is **fictional** and labelled as sample content in the UI.
+> All seeded data (businesses, sample portfolio items) is **fictional**, for development only, and never shown on the public site.
 
 ## Tech stack
 
@@ -16,7 +16,7 @@ The core workflow is: lead → account → questionnaire → project created (re
 | --- | --- |
 | Framework | Next.js 16 (App Router, Server Components, Server Actions, `proxy.ts`) |
 | Language | TypeScript (strict) |
-| UI | Tailwind CSS v4 spatial design system (glass depth levels), shadcn-style components on Radix primitives, lucide icons, Inter; lazy-loaded Three.js hero via React Three Fiber |
+| UI | Tailwind CSS v4 light design system (three surface levels, one accent), shadcn-style components on Radix primitives, lucide icons, Inter |
 | Database | PostgreSQL + Prisma 7 (`@prisma/adapter-pg`) |
 | Auth | Auth.js v5: Google sign-in + email/password (bcrypt), JWT session cookie |
 | Validation | Zod 4 |

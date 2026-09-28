@@ -1,56 +1,71 @@
 "use client";
 
-import { useFormAction } from "@/components/forms/use-form-action";
+import { CheckCircle2 } from "lucide-react";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
+import { useFormAction } from "@/components/forms/use-form-action";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { BUDGET_RANGES, PROJECT_TYPES } from "@/content/faq";
 import { submitContactAction } from "@/server/actions/public";
 
-export function ContactForm({ services }: { services: string[] }) {
+/** Project inquiry form. Submissions become leads in the admin. */
+export function ContactForm() {
   const { state, onSubmit, pending } = useFormAction(submitContactAction);
 
   if (state?.ok) {
     return (
-      <div className="glass-elevated rounded-2xl p-8 text-center shadow-card">
-        <p className="text-base font-semibold">Message sent</p>
-        <p className="mt-1.5 text-sm text-muted">{state.message}</p>
+      <div className="surface-raised flex flex-col items-center rounded-2xl p-10 text-center" role="status">
+        <CheckCircle2 className="size-8 text-success" aria-hidden />
+        <p className="mt-4 text-lg font-semibold">Thanks — we&apos;ve received your project details.</p>
+        <p className="mt-1.5 max-w-sm text-sm text-muted">We&apos;ll review them and get back to you by email with next steps.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 glass-elevated rounded-2xl p-6 shadow-card sm:p-8" noValidate>
+    <form onSubmit={onSubmit} className="surface-raised space-y-5 rounded-2xl p-6 sm:p-8" noValidate aria-label="Project inquiry">
       <FormStatus state={state} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="name" label="Name" required error={fieldError(state, "name")}>
           {(p) => <Input {...p} name="name" autoComplete="name" required />}
         </Field>
-        <Field id="businessName" label="Business" optional error={fieldError(state, "businessName")}>
-          {(p) => <Input {...p} name="businessName" autoComplete="organization" />}
-        </Field>
         <Field id="email" label="Email" required error={fieldError(state, "email")}>
           {(p) => <Input {...p} name="email" type="email" autoComplete="email" required />}
         </Field>
-        <Field id="phone" label="Phone" optional error={fieldError(state, "phone")}>
-          {(p) => <Input {...p} name="phone" type="tel" autoComplete="tel" />}
+      </div>
+      <Field id="businessName" label="Company / Business" optional error={fieldError(state, "businessName")}>
+        {(p) => <Input {...p} name="businessName" autoComplete="organization" />}
+      </Field>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field id="projectType" label="Project type" error={fieldError(state, "service")}>
+          {(p) => (
+            <Select {...p} name="projectType" defaultValue="">
+              <option value="">Select a project type</option>
+              {PROJECT_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </Select>
+          )}
+        </Field>
+        <Field id="budgetRange" label="Budget range" optional error={fieldError(state, "budgetRange")}>
+          {(p) => (
+            <Select {...p} name="budgetRange" defaultValue="">
+              <option value="">Prefer not to say</option>
+              {BUDGET_RANGES.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </Select>
+          )}
         </Field>
       </div>
-      <Field id="service" label="Service" optional error={fieldError(state, "service")}>
-        {(p) => (
-          <Select {...p} name="service" defaultValue="">
-            <option value="">Not sure yet</option>
-            {services.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </Select>
-        )}
-      </Field>
-      <Field id="message" label="Message" required hint="What does your business do, and what do you need help with?" error={fieldError(state, "message")}>
+      <Field id="message" label="Project details" required hint="What would you like to build, and who is it for?" error={fieldError(state, "message")}>
         {(p) => <Textarea {...p} name="message" rows={5} required />}
       </Field>
       {/* Honeypot field for bots — hidden from people and assistive tech. */}
@@ -60,7 +75,7 @@ export function ContactForm({ services }: { services: string[] }) {
         </label>
       </div>
       <SubmitButton pending={pending} className="w-full sm:w-auto" pendingText="Sending…">
-        Send message
+        Send project details
       </SubmitButton>
     </form>
   );

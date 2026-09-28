@@ -1,4 +1,4 @@
-// Launchly database schema.
+// PrimeTechLabs database schema.
 // See docs/database.md for an overview of models and relationships.
 
 generator client {
@@ -292,7 +292,9 @@ model Lead {
   businessName   String?
   email          String
   phone          String?
+  /// Project type chosen on the contact form (Website, Mobile Application, …).
   service        String?
+  budgetRange    String?
   message        String
   status         LeadStatus @default(NEW)
   source         String     @default("contact_form")
@@ -645,8 +647,8 @@ model PortfolioItem {
 /// Singleton row (id = "default") holding editable studio details.
 model SiteSettings {
   id           String   @id @default("default")
-  businessName String   @default("Launchly")
-  tagline      String   @default("Websites for small businesses")
+  businessName String   @default("PrimeTechLabs")
+  tagline      String   @default("Websites and mobile apps for businesses and entrepreneurs.")
   contactEmail String   @default("hello@example.com")
   contactPhone String?
   serviceArea  String?

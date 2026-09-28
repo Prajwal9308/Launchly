@@ -14,7 +14,7 @@ export function ProjectCard({
   href: string;
 }) {
   return (
-    <Link href={href} className="group block glass rounded-2xl p-5 shadow-card transition-colors hover:border-border-strong">
+    <Link href={href} className="group block surface rounded-2xl p-5 shadow-card transition-colors hover:border-border-strong">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs text-faint">{formatProjectNumber(project.number)}</p>

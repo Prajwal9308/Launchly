@@ -23,7 +23,8 @@ export async function submitContactAction(_prev: ActionResult | null, form: Form
       businessName: text(form, "businessName"),
       email: text(form, "email"),
       phone: text(form, "phone"),
-      service: text(form, "service"),
+      service: text(form, "projectType"),
+      budgetRange: text(form, "budgetRange"),
       message: text(form, "message"),
     });
   }, "Thanks — we've received your message and will get back to you soon.");

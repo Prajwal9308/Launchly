@@ -1,27 +1,22 @@
 /**
  * Default public-site catalog: the studio's services, pricing packages (no
- * prices; the owner sets them in admin) and SAMPLE portfolio concepts, which
- * are always labelled as samples on the site. Used by the dev seed and by the
+ * prices; the owner sets them in admin) and SAMPLE portfolio concepts. Sample
+ * items are never shown publicly — the portfolio only lists real projects. Used by the dev seed and by the
  * one-time production bootstrap (prisma/bootstrap.ts).
  */
 export const SERVICES = [
-  { slug: "website-design", name: "Website Design", icon: "palette", summary: "Clean, modern designs built around your brand and the customers you want to reach.", features: ["Custom page layouts", "Mobile-first design", "Brand-aligned typography and color", "Design review in your portal"] },
-  { slug: "website-development", name: "Website Development", icon: "code", summary: "Fast, reliable websites built with modern tools and tested across devices.", features: ["Responsive build", "Performance optimization", "Accessible markup", "Cross-browser testing"] },
-  { slug: "landing-pages", name: "Landing Pages", icon: "layout", summary: "Focused single pages for a campaign, offer or new service.", features: ["Clear single call to action", "Lead capture form", "Fast turnaround"] },
-  { slug: "business-websites", name: "Business Websites", icon: "building", summary: "Complete multi-page websites for established local and service businesses.", features: ["Home, about, services and contact pages", "Service area and hours", "Google Maps and click-to-call"] },
-  { slug: "ecommerce-websites", name: "E-commerce Websites", icon: "shopping-cart", summary: "Online stores with product catalogs, secure checkout and order management.", features: ["Product catalog setup", "Checkout and payment configuration", "Order flow testing"] },
-  { slug: "website-redesign", name: "Website Redesign", icon: "refresh", summary: "Modernize an outdated website while keeping what already works.", features: ["Review of your current site", "Updated structure and design", "Content migration"] },
-  { slug: "seo-foundations", name: "SEO Foundations", icon: "search", summary: "Technical and on-page foundations that help search engines understand your site.", features: ["Page titles and descriptions", "Structured data and sitemap", "Performance and mobile checks"] },
-  { slug: "website-maintenance", name: "Website Maintenance", icon: "wrench", summary: "Ongoing updates, monitoring and fixes so your website stays in good shape.", features: ["Software and plugin updates", "Uptime monitoring", "Small fixes and changes"] },
-  { slug: "content-updates", name: "Content Updates", icon: "file-text", summary: "Keep menus, prices, photos and service details current.", features: ["Text and image updates", "New pages and sections", "Seasonal changes"] },
-  { slug: "digital-marketing-support", name: "Digital Marketing Support", icon: "megaphone", summary: "Practical help with your online presence beyond the website.", features: ["Google Business Profile setup", "Social media links and sharing", "Email signup integration"] },
+  { slug: "web-development", name: "Web Development", icon: "monitor", summary: "Responsive websites and custom web applications, from business sites to dashboards and portals.", features: ["Business & landing pages", "Custom web applications", "Client portals & dashboards", "Responsive on every device"] },
+  { slug: "mobile-app-development", name: "Mobile App Development", icon: "smartphone", summary: "iOS, Android and cross-platform apps for customers or internal teams.", features: ["iOS & Android", "Cross-platform apps", "MVPs & prototypes", "App store release"] },
+  { slug: "ui-ux-design", name: "UI/UX Design", icon: "palette", summary: "Clean, intuitive interfaces designed around how people actually use your product.", features: ["User flows & wireframes", "Interface design", "Design systems", "Usability review"] },
+  { slug: "ecommerce-development", name: "E-commerce Development", icon: "shopping-cart", summary: "Online stores and commerce experiences with secure checkout and product management.", features: ["Online stores", "Checkout & payments", "Product management"] },
+  { slug: "business-solutions", name: "Business Solutions", icon: "workflow", summary: "Custom digital tools built around your specific business workflows.", features: ["Booking & scheduling", "Internal tools", "Integrations & automation"] },
 ];
 
 export const PACKAGES = [
-  { name: "Starter Website", description: "A focused website for a new or small business.", features: ["Up to 3 pages", "Mobile-friendly design", "Contact form", "Basic SEO setup"], highlighted: false },
-  { name: "Business Website", description: "A complete website for an established local business.", features: ["Up to 8 pages", "Custom design", "Service pages", "Maps and click-to-call", "SEO foundations"], highlighted: true },
-  { name: "Premium Website", description: "Advanced design and functionality for growing businesses.", features: ["Up to 15 pages", "Booking or e-commerce integration", "Blog setup", "Analytics setup"], highlighted: false },
-  { name: "Custom Website", description: "For larger or unusual projects that need a tailored plan.", features: ["Custom scope", "Third-party integrations", "Phased delivery"], highlighted: false },
+  { name: "Website", description: "A professional, responsive website for your business.", features: ["Custom design", "Mobile-friendly", "Contact & inquiry forms", "Launch support"], highlighted: false },
+  { name: "Web Application", description: "A custom browser-based product such as a portal, dashboard or booking system.", features: ["User accounts", "Custom features", "Admin tools", "Hosting setup"], highlighted: true },
+  { name: "Mobile App", description: "An iOS and Android app for your customers or team.", features: ["iOS & Android", "App store release", "Backend & APIs", "Post-launch support"], highlighted: false },
+  { name: "Custom Project", description: "For larger or unusual projects that need a tailored plan.", features: ["Custom scope", "Integrations", "Phased delivery"], highlighted: false },
 ];
 
 export const PORTFOLIO = [

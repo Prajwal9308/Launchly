@@ -37,7 +37,7 @@ export default async function AdminServicesPage() {
           <ul className="divide-y divide-border">
             {services.map((s) => (
               <li key={s.id}>
-                <Link href={`/admin/services/${s.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.04]">
+                <Link href={`/admin/services/${s.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-subtle">
                   <span className="flex size-8 items-center justify-center rounded-lg border border-border text-accent">
                     <NamedIcon name={s.icon} className="size-4" />
                   </span>

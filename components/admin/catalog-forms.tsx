@@ -42,7 +42,7 @@ function DeleteButton({ onDelete, label }: { onDelete: () => ReturnType<typeof d
   );
 }
 
-const ICON_OPTIONS = ["palette", "code", "layout", "building", "shopping-cart", "refresh", "search", "wrench", "file-text", "megaphone"];
+const ICON_OPTIONS = ["monitor", "smartphone", "workflow", "layout-dashboard", "palette", "code", "layout", "building", "shopping-cart", "refresh", "search", "wrench", "file-text", "megaphone"];
 
 export function ServiceForm({ service }: { service?: Service }) {
   const { state, onSubmit, pending } = useFormAction(saveServiceAction.bind(null, service?.id ?? null));
@@ -112,7 +112,7 @@ export function PricingForm({ pkg }: { pkg?: PricingPackage }) {
         {(p) => <Input {...p} name="sortOrder" type="number" min={0} defaultValue={pkg?.sortOrder ?? 0} className="max-w-32" />}
       </Field>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Toggle name="highlighted" label="Highlight" description="Marked as “Most popular”." defaultChecked={pkg?.highlighted ?? false} />
+        <Toggle name="highlighted" label="Highlight" description="Given a stronger border and a primary button on the pricing page." defaultChecked={pkg?.highlighted ?? false} />
         <Toggle name="published" label="Published" defaultChecked={pkg?.published ?? true} />
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-border pt-5">

@@ -18,8 +18,8 @@ export function RequirementsList({ rows, renderAction }: { rows: RequirementView
   return (
     <div className="space-y-6">
       {sections.map((section) => (
-        <section key={section} className="overflow-hidden glass rounded-2xl">
-          <h2 className="border-b border-border bg-white/[0.025] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-faint">{section}</h2>
+        <section key={section} className="overflow-hidden surface rounded-2xl">
+          <h2 className="border-b border-border bg-canvas px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-faint">{section}</h2>
           <dl className="divide-y divide-border">
             {rows
               .filter((r) => r.section === section)

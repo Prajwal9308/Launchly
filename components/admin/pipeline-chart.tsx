@@ -41,7 +41,7 @@ export function PipelineChart({ stages }: { stages: Stage[] }) {
         <div className="relative">
           {/* hairline grid */}
           {ticks.map((t) => (
-            <div key={t} aria-hidden className="absolute inset-x-0 h-px bg-white/[0.06]" style={{ bottom: `${(t / top) * 100}%` }} />
+            <div key={t} aria-hidden className="absolute inset-x-0 h-px bg-border" style={{ bottom: `${(t / top) * 100}%` }} />
           ))}
           <div className="absolute inset-0 grid" style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}>
             {stages.map((stage) => {
@@ -56,19 +56,19 @@ export function PipelineChart({ stages }: { stages: Stage[] }) {
                   onFocus={() => setActive(stage.key)}
                   onBlur={() => setActive(null)}
                   aria-label={`${stage.label}: ${stage.count} project${stage.count === 1 ? "" : "s"}`}
-                  className="group relative flex h-full items-end justify-center rounded-md outline-none focus-visible:bg-white/[0.04]"
+                  className="group relative flex h-full items-end justify-center rounded-md outline-none focus-visible:bg-background"
                 >
                   {/* column: ≤24px, rounded data-end, square at the baseline */}
                   <span
                     className={cn(
-                      "relative w-full max-w-6 rounded-t-[4px] bg-[linear-gradient(180deg,#8a9dff,#6f86ff_60%,#5a70ee)] transition-[height,filter,box-shadow] duration-700 ease-[var(--ease-out-soft)]",
-                      stage.count === 0 && "bg-none bg-white/[0.06]",
-                      isActive ? "brightness-125 shadow-[0_0_28px_-4px_rgb(111_134_255/0.9)]" : "shadow-[0_0_18px_-8px_rgb(111_134_255/0.7)]",
+                      "relative w-full max-w-6 rounded-t-[4px] bg-accent transition-[height,background-color] duration-700 ease-[var(--ease-out-soft)]",
+                      stage.count === 0 && "bg-subtle",
+                      isActive ? "bg-accent-hover" : "",
                     )}
                     style={{ height: stage.count ? `${h}%` : "2px" }}
                   />
                   {isActive && (
-                    <span className="glass-overlay pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs" style={{ bottom: `calc(${Math.max(h, 2)}% + 10px)` }}>
+                    <span className="surface-overlay pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs" style={{ bottom: `calc(${Math.max(h, 2)}% + 10px)` }}>
                       <span className="text-muted">{stage.label}</span> <span className="font-semibold text-foreground">{stage.count}</span>
                     </span>
                   )}

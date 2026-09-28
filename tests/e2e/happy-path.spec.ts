@@ -38,15 +38,18 @@ let projectId = "";
 test("public site → sign up → questionnaire → upload → submit", async ({ page }) => {
   // 1. Visit the public website
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1, name: "Websites Built to Grow Your Business" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Websites and mobile apps, built for your business." })).toBeVisible();
+  await expect(page.getByText(/progress/i)).toHaveCount(0);
   await page.getByRole("link", { name: "Services", exact: true }).first().click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Websites and support");
-  await page.goto("/portfolio");
-  await expect(page.getByText("Sample project").first()).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Web and mobile development");
+  // Only sample (demo) work exists, so there is no public portfolio page.
+  expect((await page.goto("/portfolio"))?.status()).toBe(404);
 
-  // 2. Start project → create account
+  // 2. Start project → contact page → project questionnaire → create account
   await page.goto("/");
-  await page.getByRole("link", { name: "Start Your Project" }).first().click();
+  await page.getByRole("link", { name: "Start a Project" }).first().click();
+  await expect(page).toHaveURL(/\/contact$/);
+  await page.getByRole("link", { name: /Use the project questionnaire/ }).click();
   await expect(page).toHaveURL(/\/start-project$/);
   await page.getByRole("link", { name: "Create Account" }).click();
   await page.getByLabel("First name").fill(client.firstName);

@@ -8,7 +8,7 @@ describe("Resend email provider", () => {
   it("sends from the configured sender with the studio reply-to address", async () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response("{}", { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
-    await new ResendEmailProvider("re_test", "Launchly <onboarding@resend.dev>", "studio@example.test").send({
+    await new ResendEmailProvider("re_test", "PrimeTechLabs <onboarding@resend.dev>", "studio@example.test").send({
       to: "client@example.test",
       subject: "Hello",
       text: "Body",
@@ -17,7 +17,7 @@ describe("Resend email provider", () => {
     expect(url).toBe("https://api.resend.com/emails");
     expect(init.headers.Authorization).toBe("Bearer re_test");
     expect(JSON.parse(init.body)).toEqual({
-      from: "Launchly <onboarding@resend.dev>",
+      from: "PrimeTechLabs <onboarding@resend.dev>",
       to: ["client@example.test"],
       subject: "Hello",
       text: "Body",

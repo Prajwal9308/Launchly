@@ -96,7 +96,7 @@ const CLIENTS: DemoClient[] = [
     description: "Family-run plumbing company offering residential repairs, water heater installation and drain cleaning.",
     status: "CLIENT_REVIEW",
     submittedDaysAgo: 12,
-    services: ["business-websites", "seo-foundations"],
+    services: ["web-development", "ui-ux-design"],
     accent: "#1d3b5c",
     draft: {
       goals: { primaryGoal: "CALLS", primaryGoalOther: "", idealCustomers: "Homeowners and property managers in the local area.", differentiators: "Upfront pricing and same-day appointments when available.", keyOfferings: "Emergency repairs, water heaters, drain cleaning." },
@@ -114,7 +114,7 @@ const CLIENTS: DemoClient[] = [
     description: "Neighborhood Italian restaurant serving seasonal dishes, with dine-in, takeout and private events.",
     status: "NEW",
     submittedDaysAgo: 1,
-    services: ["website-design", "business-websites"],
+    services: ["web-development", "ui-ux-design"],
     accent: "#7a8b3f",
     draft: {
       goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Local diners, families and people planning small events.", differentiators: "Seasonal menu and a private dining room.", keyOfferings: "Dinner menu, private events, takeout." },
@@ -132,7 +132,7 @@ const CLIENTS: DemoClient[] = [
     description: "Landscape design and seasonal garden maintenance for residential clients.",
     status: "DEVELOPMENT",
     submittedDaysAgo: 30,
-    services: ["business-websites", "website-development"],
+    services: ["web-development", "business-solutions"],
     accent: "#3f6b3a",
     draft: {
       goals: { primaryGoal: "LEADS", primaryGoalOther: "", idealCustomers: "Homeowners planning garden projects.", differentiators: "Design and maintenance from the same team.", keyOfferings: "Garden design, planting, seasonal maintenance." },
@@ -150,7 +150,7 @@ const CLIENTS: DemoClient[] = [
     description: "Hair salon offering cuts, color and treatments.",
     status: "CLIENT_APPROVAL",
     submittedDaysAgo: 45,
-    services: ["website-design", "landing-pages"],
+    services: ["ui-ux-design", "web-development"],
     accent: "#9b5a6b",
     draft: {
       goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Clients looking for color specialists.", differentiators: "Color-focused stylists.", keyOfferings: "Color, cuts, treatments." },
@@ -168,7 +168,7 @@ const CLIENTS: DemoClient[] = [
     description: "General and family dental practice.",
     status: "LAUNCHED",
     submittedDaysAgo: 75,
-    services: ["website-redesign", "seo-foundations"],
+    services: ["web-development", "mobile-app-development"],
     accent: "#1f7a7a",
     draft: {
       goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Families and new patients.", differentiators: "Evening appointments.", keyOfferings: "Checkups, cleanings, family dentistry." },
@@ -203,8 +203,8 @@ async function main() {
   await db.siteSettings.create({
     data: {
       id: "default",
-      businessName: "Launchly",
-      tagline: "Professional websites that help businesses establish an online presence and make it easier for customers to get in touch.",
+      businessName: "PrimeTechLabs",
+      tagline: "Websites and mobile apps for businesses and entrepreneurs.",
       contactEmail: "hello@example.com",
       serviceArea: null,
     },

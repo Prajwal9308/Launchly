@@ -48,8 +48,8 @@ export const BLOG_TASKS: TaskTemplate[] = [
   { key: "blog-setup", title: "Set up blog", priority: "LOW", dueInDays: 27 },
 ];
 
-/** Service slugs that trigger additional task templates. */
-export const ECOMMERCE_SERVICE = "ecommerce-websites";
+/** Service slugs that trigger additional task templates (current and legacy slugs). */
+export const ECOMMERCE_SERVICES = ["ecommerce-development", "ecommerce-websites"];
 export const SEO_SERVICE = "seo-foundations";
 
 /** Picks templates based on the client's answers. Order is preserved in `sortOrder`. */
@@ -69,7 +69,7 @@ export function selectTaskTemplates(draft: QuestionnaireDraft): TaskTemplate[] {
     insertBefore("launch", SEO_TASKS.filter((t) => t.key !== "seo-search-console"));
     templates.push(...SEO_TASKS.filter((t) => t.key === "seo-search-console"));
   }
-  if (services.includes(ECOMMERCE_SERVICE) || features.includes("ECOMMERCE") || features.includes("PAYMENTS")) {
+  if (ECOMMERCE_SERVICES.some((s) => services.includes(s)) || features.includes("ECOMMERCE") || features.includes("PAYMENTS")) {
     insertBefore("testing", ECOMMERCE_TASKS);
   }
   if (features.includes("BOOKING") || pages.includes("BOOKING")) insertBefore("testing", BOOKING_TASKS);

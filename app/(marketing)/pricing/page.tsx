@@ -8,7 +8,7 @@ import { listPublishedPricing } from "@/services/catalog";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Website packages for small businesses. Every proposal is confirmed after reviewing your requirements.",
+  description: "Project types and what they include. Every proposal is confirmed in writing after reviewing your requirements.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -18,7 +18,7 @@ export default async function PricingPage() {
     <>
       <PageHero
         eyebrow="Pricing"
-        title="Packages for every stage"
+        title="Project types"
         description="Use these as a starting point. We'll confirm scope and price once we've reviewed your project details."
       />
       <Section>

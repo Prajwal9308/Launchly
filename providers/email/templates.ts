@@ -46,7 +46,7 @@ export const emailTemplates = {
   }),
   newLead: (
     to: string,
-    lead: { name: string; businessName?: string; email: string; phone?: string; service?: string; message: string },
+    lead: { name: string; businessName?: string; email: string; phone?: string; service?: string; budgetRange?: string; message: string },
     leadId: string,
   ): EmailMessage => ({
     to,
@@ -56,7 +56,8 @@ export const emailTemplates = {
       lead.businessName ? `Business: ${lead.businessName}` : null,
       `Email: ${lead.email}`,
       lead.phone ? `Phone: ${lead.phone}` : null,
-      lead.service ? `Service: ${lead.service}` : null,
+      lead.service ? `Project type: ${lead.service}` : null,
+      lead.budgetRange ? `Budget: ${lead.budgetRange}` : null,
       "",
       lead.message,
       "",

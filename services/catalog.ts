@@ -35,6 +35,10 @@ function parseOrThrow<T extends z.ZodType>(schema: T, input: unknown): z.infer<T
 // ---------------------------------------------------------------------------
 
 export const SERVICE_ICONS = [
+  "monitor",
+  "smartphone",
+  "workflow",
+  "layout-dashboard",
   "palette",
   "code",
   "layout",
@@ -248,8 +252,8 @@ export async function getSiteSettings() {
   return (
     (await db.siteSettings.findUnique({ where: { id: "default" } })) ?? {
       id: "default",
-      businessName: "Launchly",
-      tagline: "Websites for small businesses",
+      businessName: "PrimeTechLabs",
+      tagline: "Websites and mobile apps for businesses and entrepreneurs.",
       contactEmail: "hello@example.com",
       contactPhone: null,
       serviceArea: null,

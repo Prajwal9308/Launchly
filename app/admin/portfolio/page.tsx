@@ -34,7 +34,7 @@ export default async function AdminPortfolioPage() {
           <ul className="divide-y divide-border">
             {items.map((item) => (
               <li key={item.id}>
-                <Link href={`/admin/portfolio/${item.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.04]">
+                <Link href={`/admin/portfolio/${item.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-subtle">
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{item.title}</p>
                     <p className="text-xs text-faint">{item.industry}</p>

@@ -16,7 +16,7 @@ function Group({ title, children, count }: { title: string; children: React.Reac
   if (!count) return null;
   return (
     <Card className="overflow-hidden">
-      <h2 className="border-b border-border bg-white/[0.025] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-faint">
+      <h2 className="border-b border-border bg-canvas px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-faint">
         {title} ({count})
       </h2>
       <ul className="divide-y divide-border">{children}</ul>
@@ -24,7 +24,7 @@ function Group({ title, children, count }: { title: string; children: React.Reac
   );
 }
 
-const rowClass = "flex items-center justify-between gap-3 px-5 py-3 text-sm hover:bg-white/[0.04]";
+const rowClass = "flex items-center justify-between gap-3 px-5 py-3 text-sm hover:bg-subtle";
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q = "" } = await searchParams;

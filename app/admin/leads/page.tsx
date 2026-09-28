@@ -51,7 +51,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
               <tr>
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden md:table-cell">Business</TableHead>
-                <TableHead className="hidden lg:table-cell">Service</TableHead>
+                <TableHead className="hidden lg:table-cell">Project type</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="hidden sm:table-cell">Received</TableHead>
               </tr>

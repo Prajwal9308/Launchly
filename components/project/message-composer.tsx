@@ -46,7 +46,7 @@ export function MessageComposer({ projectId, placeholder = "Write a message…" 
         e.preventDefault();
         submit();
       }}
-      className="glass rounded-2xl focus-within:border-accent/60"
+      className="surface rounded-2xl focus-within:border-accent/60"
     >
       <label htmlFor="message-body" className="sr-only">
         Message

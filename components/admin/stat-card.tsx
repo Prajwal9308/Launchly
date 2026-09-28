@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Tilt } from "@/components/ui/tilt";
+import { HoverLift } from "@/components/ui/hover-lift";
 import { cn } from "@/lib/utils";
 
 /**
@@ -26,25 +26,24 @@ export function StatCard({
     <div
       className={cn(
         "relative flex h-full flex-col justify-between overflow-hidden rounded-2xl px-5 py-4",
-        recessed ? "glass-recessed" : "glass",
-        lit && "!border-accent/40",
+        recessed ? "surface-muted" : "surface",
+        lit && "!border-accent-border !bg-accent-subtle",
       )}
     >
-      {lit && <div aria-hidden className="absolute -right-10 -top-10 size-32 rounded-full bg-accent/30 blur-2xl" />}
       <p className="relative text-xs font-medium text-faint">{label}</p>
       <div className="relative mt-3 flex items-end justify-between gap-2">
-        <p className={cn("font-semibold tabular-nums tracking-tight", recessed ? "text-2xl" : "text-3xl", lit ? "text-foreground" : "text-lit")}>{value}</p>
-        {lit && <span className="mb-1 size-2 rounded-full bg-accent shadow-[0_0_10px_rgb(111_134_255)]" aria-hidden />}
+        <p className={cn("font-semibold tabular-nums tracking-tight", recessed ? "text-2xl" : "text-3xl", lit ? "text-foreground" : "")}>{value}</p>
+        {lit && <span className="mb-1.5 size-2 rounded-full bg-accent" aria-hidden />}
       </div>
       {hint && <p className="relative mt-1 text-xs text-faint">{hint}</p>}
     </div>
   );
   if (!href) return content;
   return (
-    <Tilt className="h-full rounded-2xl" max={5}>
+    <HoverLift className="h-full rounded-2xl">
       <Link href={href} className="block h-full rounded-2xl">
         {content}
       </Link>
-    </Tilt>
+    </HoverLift>
   );
 }

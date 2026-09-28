@@ -90,11 +90,11 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => v
               className={cn(
                 "relative flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-[background-color,color,box-shadow] duration-200",
                 active
-                  ? "bg-white/[0.08] font-medium text-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.07),0_6px_16px_-8px_rgb(0_0_0/0.8)] before:absolute before:-left-3 before:top-1/2 before:h-5 before:w-[3px] before:-translate-y-1/2 before:rounded-r-full before:bg-accent before:shadow-[0_0_12px_rgb(111_134_255/0.9)]"
-                  : "text-muted hover:bg-white/[0.04] hover:text-foreground",
+                  ? "bg-subtle font-medium text-foreground"
+                  : "text-muted hover:bg-subtle hover:text-foreground",
               )}
             >
-              <Icon className={cn("size-4 shrink-0 transition-colors", active ? "text-accent drop-shadow-[0_0_6px_rgb(111_134_255/0.6)]" : "text-faint")} aria-hidden />
+              <Icon className={cn("size-4 shrink-0 transition-colors", active ? "text-accent" : "text-faint")} aria-hidden />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge ? (
                 <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">
@@ -169,30 +169,30 @@ export function AppShell({
   return (
     <div className="min-h-dvh">
       {/* Desktop sidebar */}
-      {/* Desktop sidebar: a floating glass rail */}
-      <aside className="glass fixed inset-y-3 left-3 z-30 hidden w-60 flex-col overflow-hidden rounded-2xl lg:flex">
-        <div className="flex h-16 items-center border-b border-white/[0.06] px-5">{brand}</div>
+      {/* Desktop sidebar: a floating surface rail */}
+      <aside className="surface fixed inset-y-3 left-3 z-30 hidden w-60 flex-col overflow-hidden rounded-2xl lg:flex">
+        <div className="flex h-16 items-center border-b border-border px-5">{brand}</div>
         <nav aria-label={variant === "admin" ? "Studio" : "Client portal"} className="flex-1 overflow-y-auto p-3">
           <NavList items={items} />
           {variant === "client" && !projectId && (
             <Link
               href="/start-project"
-              className="mt-4 flex items-center justify-center rounded-lg border border-dashed border-white/15 px-3 py-2 text-sm font-medium text-muted hover:border-accent/50 hover:text-foreground"
+              className="mt-4 flex items-center justify-center rounded-lg border border-dashed border-border px-3 py-2 text-sm font-medium text-muted hover:border-accent/50 hover:text-foreground"
             >
               Start a project
             </Link>
           )}
         </nav>
-        <div className="border-t border-white/[0.06] p-3">
-          <Link href="/" className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted hover:bg-white/[0.04] hover:text-foreground">
+        <div className="border-t border-border p-3">
+          <Link href="/" className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted hover:bg-subtle hover:text-foreground">
             <Home className="size-4 text-faint" aria-hidden /> Website
           </Link>
         </div>
       </aside>
 
       <div className="lg:pl-[16.25rem]">
-        {/* Top bar: floating glass strip */}
-        <header className="glass sticky top-3 z-20 mx-3 flex h-14 items-center gap-3 rounded-2xl px-3 sm:px-4 lg:ml-3">
+        {/* Top bar: floating surface strip */}
+        <header className="surface sticky top-3 z-20 mx-3 flex h-14 items-center gap-3 rounded-2xl px-3 sm:px-4 lg:ml-3">
           <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
               <Button variant="ghost" size="icon" className="-ml-2 lg:hidden" aria-label="Open navigation">
@@ -200,7 +200,7 @@ export function AppShell({
               </Button>
             </DrawerTrigger>
             <DrawerContent side="left">
-              <div className="flex h-16 items-center border-b border-white/[0.06] px-5 pr-12">
+              <div className="flex h-16 items-center border-b border-border px-5 pr-12">
                 <DrawerTitle className="sr-only">Navigation</DrawerTitle>
                 {brand}
               </div>
@@ -241,7 +241,7 @@ export function AppShell({
       {variant === "client" && projectId && (
         <nav
           aria-label="Quick navigation"
-          className="glass-overlay fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-30 mx-auto max-w-md rounded-2xl lg:hidden"
+          className="surface-overlay fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-30 mx-auto max-w-md rounded-2xl lg:hidden"
         >
           <ul className="grid grid-cols-5">
             {[
@@ -260,7 +260,7 @@ export function AppShell({
                     aria-current={active ? "page" : undefined}
                     className={cn(
                       "relative flex flex-col items-center gap-0.5 py-2.5 text-[11px] transition-colors",
-                      active ? "text-foreground [&_svg]:text-accent [&_svg]:drop-shadow-[0_0_6px_rgb(111_134_255/0.7)]" : "text-faint",
+                      active ? "text-accent" : "text-faint",
                     )}
                   >
                     <Icon className="size-5" aria-hidden />

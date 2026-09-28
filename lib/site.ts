@@ -1,7 +1,9 @@
-/** Static site constants. Editable studio details live in SiteSettings (admin → Settings). */
+/** Brand constants. Editable contact details live in SiteSettings (Admin → Settings). */
+export const BRAND = "PrimeTechLabs";
+
 export const siteConfig = {
   url: process.env.APP_URL ?? "http://localhost:3000",
-  defaultTitle: "Launchly — Websites built to grow your business",
+  defaultTitle: "PrimeTechLabs — Web & Mobile App Development",
   defaultDescription:
-    "We design and build modern, professional websites that help businesses attract customers, communicate their value, and grow online.",
+    "PrimeTechLabs designs and develops professional websites, web applications and mobile apps for businesses and entrepreneurs.",
 };
