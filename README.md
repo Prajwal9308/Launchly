@@ -117,6 +117,8 @@ First run: `npx playwright install chromium`.
 
 Vercel + Neon + Vercel Blob with Google sign-in: step by step in [`docs/deployment.md`](docs/deployment.md).
 
+The GitHub repository is connected to Vercel: every push to `main` deploys to production (migrations run automatically), and pushes to other branches create preview deployments.
+
 ## Production build
 
 ```bash
