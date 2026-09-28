@@ -4,7 +4,7 @@ The recommended setup is **Vercel** (hosting) with **Neon** (PostgreSQL) and **V
 
 ## Vercel
 
-1. **Import the repo.** In Vercel, choose *Add New → Project*, then import the GitHub repository. Framework: Next.js (detected). Vercel runs the `vercel-build` script, which applies database migrations and then builds.
+1. **Import the repo.** (Done for this project: pushes to `main` deploy automatically.) In Vercel, choose *Add New → Project*, then import the GitHub repository. Framework: Next.js (detected). Vercel runs the `vercel-build` script, which applies database migrations and then builds.
 2. **Database.** In the project, go to *Storage → Create → Neon (Postgres)*, then connect it. This sets `DATABASE_URL` (pooled) and `DATABASE_URL_UNPOOLED` (direct; used for migrations).
 3. **File storage.** Go to *Storage → Create → Blob*, then connect it. This sets `BLOB_READ_WRITE_TOKEN`. Files are stored as **private** blobs and are only served through `/api/files/[id]` after a permission check.
 4. **Environment variables** (*Settings → Environment Variables*, Production):
@@ -17,6 +17,7 @@ The recommended setup is **Vercel** (hosting) with **Neon** (PostgreSQL) and **V
    | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | from Google (below) |
    | `EMAIL_PROVIDER` | `console` (until a real provider is added) |
    | `ADMIN_EMAILS` | your Google email (comma-separate several) |
+   | `PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK` | `1`. Neon's pooler can leave Prisma's migration lock held (error P1002). Safe because Vercel runs one production build at a time. |
 
    `AUTH_URL` isn't needed on Vercel.
 5. **Deploy.** Each build applies migrations (`prisma migrate deploy`) and then runs `prisma/bootstrap.ts`. On a brand-new database, the bootstrap adds the default services, unpriced packages and labelled sample portfolio items **once**. Later edits and deletions are never overwritten.
