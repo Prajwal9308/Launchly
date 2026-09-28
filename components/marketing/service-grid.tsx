@@ -1,6 +1,7 @@
-import { ArrowRight, Check } from "lucide-react";
-import Link from "next/link";
+import { Check } from "lucide-react";
 import type { Service } from "@/db/types";
+import { RevealGroup, RevealItem } from "@/components/motion/reveal";
+import { ArrowLink } from "./arrow-link";
 import { NamedIcon } from "./icons";
 
 /** Detailed services list for the Services page. */
@@ -9,14 +10,14 @@ export function ServiceGrid({ services }: { services: Service[] }) {
     return <p className="text-sm text-muted">Service details are coming soon. Get in touch to discuss your project.</p>;
   }
   return (
-    <div className="space-y-4">
+    <RevealGroup className="space-y-4">
       {services.map((service) => (
-        <article key={service.id} id={service.slug} className="surface grid scroll-mt-24 gap-6 rounded-2xl p-7 sm:p-8 md:grid-cols-[1fr_1.1fr] md:gap-10">
+        <RevealItem as="article" key={service.id} id={service.slug} className="surface grid scroll-mt-24 gap-6 rounded-2xl p-6 sm:p-8 md:grid-cols-[1fr_1.1fr] md:gap-10">
           <div>
             <div className="flex size-11 items-center justify-center rounded-xl bg-accent-subtle text-accent">
               <NamedIcon name={service.icon} className="size-5" />
             </div>
-            <h2 className="mt-5 text-2xl font-semibold">{service.name}</h2>
+            <h2 className="mt-5 text-xl font-semibold sm:text-2xl">{service.name}</h2>
             <p className="mt-2 text-[15px] leading-relaxed text-muted">{service.summary}</p>
             {service.description && <p className="mt-3 text-[15px] leading-relaxed text-muted">{service.description}</p>}
           </div>
@@ -33,13 +34,13 @@ export function ServiceGrid({ services }: { services: Service[] }) {
             )}
             <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
               {service.pricingText ? <p className="text-xs text-faint">{service.pricingText}</p> : <span />}
-              <Link href="/contact" className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline" aria-label={`Start a project: ${service.name}`}>
-                Start a project <ArrowRight className="size-3.5" aria-hidden />
-              </Link>
+              <ArrowLink href="/contact">
+                Start a project<span className="sr-only">: {service.name}</span>
+              </ArrowLink>
             </div>
           </div>
-        </article>
+        </RevealItem>
       ))}
-    </div>
+    </RevealGroup>
   );
 }

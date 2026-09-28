@@ -25,14 +25,14 @@ export function SiteFooter({
 }) {
   return (
     <footer className="border-t border-border bg-canvas">
-      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
-        <div className="space-y-3 sm:col-span-2 lg:col-span-1">
+      <div className="container-page grid grid-cols-2 gap-x-6 gap-y-10 py-12 sm:py-14 lg:grid-cols-[1.5fr_1fr_1.2fr_1fr]">
+        <div className="col-span-2 space-y-3 lg:col-span-1">
           <Logo name={businessName} />
           <p className="max-w-xs text-sm leading-relaxed text-muted">{tagline}</p>
         </div>
         <div>
           <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Company</h2>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-4 space-y-2.5">
             {COMPANY.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="text-sm text-muted transition-colors hover:text-foreground">
@@ -44,7 +44,7 @@ export function SiteFooter({
         </div>
         <div>
           <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Services</h2>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-4 space-y-2.5">
             {services.map((s) => (
               <li key={s.slug}>
                 <Link href={`/services#${s.slug}`} className="text-sm text-muted transition-colors hover:text-foreground">
@@ -54,9 +54,9 @@ export function SiteFooter({
             ))}
           </ul>
         </div>
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Contact</h2>
-          <ul className="mt-3 space-y-2 text-sm">
+          <ul className="mt-4 space-y-2.5 text-sm">
             <li>
               <a href={`mailto:${contactEmail}`} className="break-all text-muted hover:text-foreground">
                 {contactEmail}

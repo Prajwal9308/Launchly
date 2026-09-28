@@ -71,10 +71,12 @@
   --animate-fade-in: fade-in 180ms var(--ease-out-soft);
   --animate-fade-out: fade-out 140ms ease-in;
   --animate-pop-in: pop-in 260ms var(--ease-out-soft);
-  --animate-slide-in-right: slide-in-right 320ms var(--ease-out-soft);
-  --animate-slide-in-left: slide-in-left 320ms var(--ease-out-soft);
+  --animate-slide-in-right: slide-in-right 240ms var(--ease-out-soft);
+  --animate-slide-in-left: slide-in-left 240ms var(--ease-out-soft);
+  --animate-slide-out-right: slide-out-right 180ms ease-in;
+  --animate-slide-out-left: slide-out-left 180ms ease-in;
   --animate-slide-up: slide-up 420ms var(--ease-out-soft);
-  --animate-rise: rise 600ms var(--ease-out-soft) both;
+  --animate-rise: rise 450ms var(--ease-out-soft) both;
 
   @keyframes fade-in {
     from { opacity: 0; }
@@ -95,6 +97,14 @@
   @keyframes slide-in-left {
     from { transform: translateX(-100%); }
     to { transform: translateX(0); }
+  }
+  @keyframes slide-out-right {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+  @keyframes slide-out-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
   }
   @keyframes slide-up {
     from { opacity: 0; transform: translateY(8px); }
@@ -158,6 +168,7 @@
 @layer base {
   html {
     color-scheme: light;
+    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     background: var(--color-canvas);
@@ -184,7 +195,7 @@
   p {
     text-wrap: pretty;
   }
-  /* Native controls follow the dark scheme; give select menus a solid surface. */
+  /* Give native select menus a solid surface. */
   option {
     background: var(--color-surface);
     color: var(--color-foreground);

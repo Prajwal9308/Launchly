@@ -26,7 +26,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="surface-raised space-y-5 rounded-2xl p-6 sm:p-8" noValidate aria-label="Project inquiry">
+    <form onSubmit={onSubmit} className="surface-raised space-y-5 rounded-2xl p-5 sm:p-8" noValidate aria-label="Project inquiry">
       <FormStatus state={state} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="name" label="Name" required error={fieldError(state, "name")}>
@@ -66,7 +66,7 @@ export function ContactForm() {
         </Field>
       </div>
       <Field id="message" label="Project details" required hint="What would you like to build, and who is it for?" error={fieldError(state, "message")}>
-        {(p) => <Textarea {...p} name="message" rows={5} required />}
+        {(p) => <Textarea {...p} name="message" rows={5} required placeholder="e.g. A booking app for our clinic, so patients can schedule and pay online." />}
       </Field>
       {/* Honeypot field for bots — hidden from people and assistive tech. */}
       <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">

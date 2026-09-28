@@ -28,7 +28,7 @@ export function PricingCards({ packages }: { packages: PricingPackage[] }) {
             pkg.highlighted ? "surface-raised !border-accent-border" : "surface",
           )}
         >
-          <h3 className="text-base font-semibold">{pkg.name}</h3>
+          <h2 className="text-base font-semibold">{pkg.name}</h2>
           <p className="mt-1.5 min-h-[4.25rem] text-sm leading-relaxed text-muted">{pkg.description}</p>
           <div className="mt-5">
             {pkg.priceCents != null ? (

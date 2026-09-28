@@ -21,7 +21,7 @@ export default function ProcessPage() {
     <>
       <PageHero eyebrow="Process" title="From idea to launch" description="Five clear steps, whether you're building a website, a web application or a mobile app." />
       <Section>
-        <ProcessSteps />
+        <ProcessSteps headingLevel="h2" />
       </Section>
       <Section tone="muted">
         <SectionHeader eyebrow="Working together" title="How we work with you" />

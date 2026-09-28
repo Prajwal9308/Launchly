@@ -7,7 +7,7 @@ import { Bell, Calendar, CheckCircle2, Home, LayoutGrid, Search, User } from "lu
  */
 export function HeroVisual() {
   return (
-    <div aria-hidden className="relative mx-auto w-full max-w-[36rem] select-none pb-10 pr-6 sm:pb-12 sm:pr-10 lg:max-w-none">
+    <div aria-hidden className="relative mx-auto w-full max-w-[36rem] select-none pb-10 pr-8 sm:pb-12 sm:pr-12 lg:max-w-none">
       {/* Browser */}
       <div className="overflow-hidden rounded-xl border border-border bg-background shadow-[0_1px_2px_rgb(15_17_21/0.04),0_24px_60px_-24px_rgb(15_17_21/0.25)]">
         <div className="flex items-center gap-3 border-b border-border bg-canvas px-4 py-2.5">
@@ -41,13 +41,13 @@ export function HeroVisual() {
                 <Search className="size-3" /> Search
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
               {[
                 ["Booked", "w-8"],
                 ["Pending", "w-6"],
                 ["Completed", "w-10"],
               ].map(([label, w]) => (
-                <div key={label} className="rounded-lg border border-border p-2.5">
+                <div key={label} className="rounded-lg border border-border p-2.5 [&:nth-child(3)]:hidden sm:[&:nth-child(3)]:block">
                   <p className="text-[9px] text-faint sm:text-[10px]">{label}</p>
                   <span className={`mt-2 block h-2 rounded-full bg-foreground/80 ${w}`} />
                 </div>
@@ -72,7 +72,7 @@ export function HeroVisual() {
       </div>
 
       {/* Phone */}
-      <div className="absolute bottom-0 right-0 w-[34%] min-w-[7.5rem] max-w-[11.5rem] rounded-[1.75rem] border border-border-strong bg-foreground p-[5px] shadow-[0_24px_50px_-18px_rgb(15_17_21/0.45)]">
+      <div className="absolute bottom-0 right-0 w-[32%] min-w-[7rem] max-w-[11rem] rounded-[1.75rem] border border-border-strong bg-foreground p-[5px] shadow-[0_24px_50px_-18px_rgb(15_17_21/0.45)]">
         <div className="overflow-hidden rounded-[1.45rem] bg-background">
           <div className="flex justify-center pt-1.5">
             <span className="h-1 w-10 rounded-full bg-border-strong" />

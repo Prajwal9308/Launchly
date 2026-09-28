@@ -1,6 +1,7 @@
 import { connection } from "next/server";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { getSiteSettings, listPublishedServices } from "@/services/catalog";
 import { getActor } from "@/server/session";
 
@@ -14,7 +15,7 @@ export default async function MarketingLayout({ children }: { children: React.Re
     <div className="flex min-h-dvh flex-col">
       <SiteHeader businessName={settings.businessName} signedInHref={signedInHref} />
       <main id="main" className="flex-1">
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </main>
       <SiteFooter
         businessName={settings.businessName}
