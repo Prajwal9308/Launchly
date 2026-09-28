@@ -16,7 +16,7 @@ The core workflow is: lead → account → questionnaire → project created (re
 | --- | --- |
 | Framework | Next.js 16 (App Router, Server Components, Server Actions, `proxy.ts`) |
 | Language | TypeScript (strict) |
-| UI | Tailwind CSS v4 with design tokens, shadcn-style components on Radix primitives, lucide icons, Inter |
+| UI | Tailwind CSS v4 spatial design system (glass depth levels), shadcn-style components on Radix primitives, lucide icons, Inter; lazy-loaded Three.js hero via React Three Fiber |
 | Database | PostgreSQL + Prisma 7 (`@prisma/adapter-pg`) |
 | Auth | Auth.js v5: Google sign-in + email/password (bcrypt), JWT session cookie |
 | Validation | Zod 4 |

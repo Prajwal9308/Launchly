@@ -29,7 +29,7 @@ export default async function ContactPage() {
                 </a>
               )}
             </div>
-            <div className="rounded-xl border border-border bg-canvas p-5">
+            <div className="rounded-xl border border-border bg-white/[0.03] p-5">
               <p className="text-sm font-semibold">Ready to start?</p>
               <p className="mt-1 text-sm leading-relaxed text-muted">
                 Skip the back-and-forth: create an account and complete the project questionnaire. It takes about 10 minutes

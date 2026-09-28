@@ -86,7 +86,7 @@ function Respond({ approval }: { approval: ApprovalView }) {
             <Textarea id={`approval-comment-${approval.id}`} value={comment} onChange={(e) => setComment(e.target.value)} rows={4} />
           </div>
           {mode === "approve" && (
-            <label className="flex items-start gap-3 rounded-lg border border-border bg-canvas p-3 text-sm">
+            <label className="flex items-start gap-3 rounded-lg border border-border bg-white/[0.03] p-3 text-sm">
               <Checkbox checked={confirmed} onCheckedChange={(v) => setConfirmed(v === true)} className="mt-0.5" />
               <span>I have reviewed the website and give my {APPROVAL_TITLES[approval.type].toLowerCase()}.</span>
             </label>
@@ -129,10 +129,10 @@ function Withdraw({ id }: { id: string }) {
 export function ApprovalCard({ approval, viewer }: { approval: ApprovalView; viewer: "client" | "admin" }) {
   const pending = approval.status === "PENDING";
   return (
-    <article className="rounded-xl border border-border bg-background p-5 shadow-card">
+    <article className="glass rounded-2xl p-5 shadow-card">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <span className="flex size-9 items-center justify-center rounded-lg border border-border bg-canvas text-faint">
+          <span className="flex size-9 items-center justify-center rounded-lg border border-border bg-white/[0.03] text-faint">
             <ShieldCheck className="size-4" aria-hidden />
           </span>
           <div>
@@ -151,7 +151,7 @@ export function ApprovalCard({ approval, viewer }: { approval: ApprovalView; vie
       </div>
       {approval.requestMessage && <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-muted">{approval.requestMessage}</p>}
       {approval.comment && (
-        <p className="mt-3 rounded-lg bg-canvas p-3 text-sm text-muted">
+        <p className="mt-3 rounded-lg bg-white/[0.03] p-3 text-sm text-muted">
           <span className="block text-xs font-medium text-faint">Client comment</span>
           {approval.comment}
         </p>

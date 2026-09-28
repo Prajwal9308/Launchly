@@ -8,7 +8,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   await connection();
   const settings = await getSiteSettings();
   return (
-    <div className="flex min-h-dvh flex-col bg-canvas">
+    <div className="flex min-h-dvh flex-col">
       <header className="container-page flex h-16 items-center justify-between">
         <Logo name={settings.businessName} />
         <Link href="/" className="text-sm text-muted hover:text-foreground">

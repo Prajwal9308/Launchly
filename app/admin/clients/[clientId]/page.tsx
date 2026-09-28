@@ -79,7 +79,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
             <ul className="divide-y divide-border">
               {org.projects.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/admin/projects/${p.id}`} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-canvas">
+                  <Link href={`/admin/projects/${p.id}`} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-white/[0.04]">
                     <div>
                       <p className="text-sm font-medium">{p.name}</p>
                       <p className="text-xs text-faint">

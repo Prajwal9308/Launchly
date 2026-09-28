@@ -9,7 +9,7 @@ export function Toaster() {
       closeButton
       toastOptions={{
         classNames: {
-          toast: "!rounded-lg !border !border-border !bg-background !text-foreground !shadow-popover !font-sans",
+          toast: "glass-overlay !rounded-xl !border-white/12 !bg-[rgb(18_18_25/0.9)] !text-foreground !font-sans",
           description: "!text-muted",
         },
       }}

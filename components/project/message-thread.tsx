@@ -26,7 +26,9 @@ export function MessageBubble({ message, own, studioName }: { message: MessageVi
         <div
           className={cn(
             "whitespace-pre-wrap break-words rounded-xl px-3.5 py-2.5 text-sm leading-relaxed",
-            own ? "rounded-tr-sm bg-foreground text-background" : "rounded-tl-sm border border-border bg-background text-foreground",
+            own
+              ? "rounded-tr-sm bg-[linear-gradient(180deg,#7d92ff,#5f76f2)] text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_24px_-12px_rgb(111_134_255/0.8)]"
+              : "rounded-tl-sm border border-white/10 bg-white/[0.06] text-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.05)]",
           )}
         >
           {message.body}

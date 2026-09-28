@@ -17,7 +17,7 @@ export function PageSkeleton({ rows = 5 }: { rows?: number }) {
         <Skeleton className="h-24" />
         <Skeleton className="h-24" />
       </div>
-      <div className="space-y-3 rounded-xl border border-border bg-background p-5">
+      <div className="space-y-3 glass rounded-2xl p-5">
         {Array.from({ length: rows }).map((_, i) => (
           <Skeleton key={i} className="h-5 w-full" />
         ))}

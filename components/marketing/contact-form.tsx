@@ -14,7 +14,7 @@ export function ContactForm({ services }: { services: string[] }) {
 
   if (state?.ok) {
     return (
-      <div className="rounded-xl border border-border bg-background p-8 text-center shadow-card">
+      <div className="glass-elevated rounded-2xl p-8 text-center shadow-card">
         <p className="text-base font-semibold">Message sent</p>
         <p className="mt-1.5 text-sm text-muted">{state.message}</p>
       </div>
@@ -22,7 +22,7 @@ export function ContactForm({ services }: { services: string[] }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-border bg-background p-6 shadow-card sm:p-8" noValidate>
+    <form onSubmit={onSubmit} className="space-y-5 glass-elevated rounded-2xl p-6 shadow-card sm:p-8" noValidate>
       <FormStatus state={state} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="name" label="Name" required error={fieldError(state, "name")}>

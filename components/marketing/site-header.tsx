@@ -23,8 +23,8 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/75">
-      <div className="container-page flex h-16 items-center justify-between gap-6">
+    <header className="sticky top-3 z-40 px-3">
+      <div className="glass mx-auto flex h-14 max-w-[76rem] items-center justify-between gap-6 rounded-2xl pl-4 pr-2 sm:pl-5">
         <Logo name={businessName} />
 
         <nav aria-label="Main" className="hidden lg:block">
@@ -37,8 +37,8 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "rounded-md px-3 py-2 text-sm transition-colors",
-                      active ? "text-foreground" : "text-muted hover:text-foreground",
+                      "rounded-lg px-3 py-2 text-sm transition-colors",
+                      active ? "bg-white/[0.07] text-foreground" : "text-muted hover:bg-white/[0.04] hover:text-foreground",
                     )}
                   >
                     {item.label}
@@ -71,7 +71,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
             </Button>
           </DrawerTrigger>
           <DrawerContent side="right">
-            <div className="flex h-16 items-center border-b border-border px-5">
+            <div className="flex h-16 items-center border-b border-white/[0.06] px-5">
               <DrawerTitle className="text-sm font-semibold">Menu</DrawerTitle>
             </div>
             <nav aria-label="Mobile" className="flex-1 overflow-y-auto p-3">
@@ -81,20 +81,20 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="block rounded-md px-3 py-2.5 text-[15px] text-foreground hover:bg-subtle"
+                      className="block rounded-lg px-3 py-2.5 text-[15px] text-foreground hover:bg-white/[0.06]"
                     >
                       {item.label}
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <Link href="/faq" onClick={() => setOpen(false)} className="block rounded-md px-3 py-2.5 text-[15px] hover:bg-subtle">
+                  <Link href="/faq" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2.5 text-[15px] hover:bg-white/[0.06]">
                     FAQ
                   </Link>
                 </li>
               </ul>
             </nav>
-            <div className="space-y-2 border-t border-border p-4">
+            <div className="space-y-2 border-t border-white/[0.06] p-4">
               <Button asChild className="w-full" onClick={() => setOpen(false)}>
                 <Link href="/start-project">Start Your Project</Link>
               </Button>

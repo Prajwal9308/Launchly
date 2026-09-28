@@ -1,12 +1,21 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-xl border border-border bg-background shadow-card", className)} {...props} />;
+const LEVELS = {
+  /** Supporting information — sits back in the scene. */
+  recessed: "glass-recessed",
+  /** Standard floating panel. */
+  default: "glass",
+  /** Primary content — nearest to the viewer. */
+  elevated: "glass-elevated",
+} as const;
+
+export function Card({ className, level = "default", ...props }: React.HTMLAttributes<HTMLDivElement> & { level?: keyof typeof LEVELS }) {
+  return <div className={cn("rounded-2xl", LEVELS[level], className)} {...props} />;
 }
 
 export function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex items-start justify-between gap-4 px-5 pt-5", className)} {...props} />;
+  return <div className={cn("flex items-start justify-between gap-4 px-6 pt-6", className)} {...props} />;
 }
 
 export function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
@@ -18,9 +27,9 @@ export function CardDescription({ className, ...props }: React.HTMLAttributes<HT
 }
 
 export function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("px-5 py-5", className)} {...props} />;
+  return <div className={cn("px-6 py-6", className)} {...props} />;
 }
 
 export function CardFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex items-center gap-2 border-t border-border px-5 py-3", className)} {...props} />;
+  return <div className={cn("flex items-center gap-2 border-t border-border px-6 py-3", className)} {...props} />;
 }

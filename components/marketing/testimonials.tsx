@@ -5,8 +5,8 @@ export function Testimonials() {
     <div>
       <div className="grid gap-4 md:grid-cols-3">
         {SAMPLE_TESTIMONIALS.map((t, i) => (
-          <figure key={i} className="flex flex-col rounded-xl border border-dashed border-border-strong bg-background p-6">
-            <span className="self-start rounded-md bg-subtle px-2 py-0.5 text-[11px] font-medium text-muted">
+          <figure key={i} className="glass-recessed flex flex-col rounded-3xl !border-dashed p-7">
+            <span className="self-start rounded-md border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[11px] font-medium text-muted">
               Sample testimonial
             </span>
             <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-foreground">“{t.quote}”</blockquote>

@@ -16,8 +16,9 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="w-full max-w-md py-6">
-      <div className="rounded-xl border border-border bg-background p-6 shadow-card sm:p-8">
-        <h1 className="text-xl font-semibold">Create your client account</h1>
+      <div className="glass-elevated relative rounded-3xl p-6 sm:p-8">
+        <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-48 w-80 -translate-x-1/2 rounded-full bg-accent/25 blur-3xl" />
+        <h1 className="text-lit text-2xl font-semibold">Create your client account</h1>
         <p className="mt-1 text-sm text-muted">Start your project and track its progress in one place.</p>
         <div className="mt-6 space-y-4">
           {googleEnabled && (

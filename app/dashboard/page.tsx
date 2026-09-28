@@ -6,10 +6,10 @@ import { ActionCenter } from "@/components/project/action-center";
 import { ActivityList } from "@/components/project/activity-list";
 import { ProjectCard } from "@/components/project/project-card";
 import { ProjectProgress } from "@/components/project/project-progress";
+import { ProgressRing } from "@/components/project/progress-ring";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Progress } from "@/components/ui/progress";
 import { ProjectStatusBadge } from "@/components/ui/status-badge";
 import { CLIENT_STATUS_DESCRIPTIONS, STATUS_LABELS } from "@/domain/project-status";
 import { formatRelative } from "@/lib/format";
@@ -59,33 +59,34 @@ export default async function ClientDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold sm:text-2xl">
+        <p className="text-sm text-muted">{project.business?.name ?? businessName}</p>
+        <h1 className="text-lit mt-1 text-3xl font-semibold sm:text-4xl">
           <Greeting firstName={actor.firstName} />
         </h1>
-        <p className="mt-1 text-sm text-muted">{project.business?.name ?? businessName}</p>
       </div>
 
       <ActionCenter action={project.clientAction} />
 
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-        {/* Current project */}
-        <Card>
-          <CardContent className="space-y-6">
+        {/* Current project — the primary surface (elevated) */}
+        <Card level="elevated" className="relative overflow-hidden">
+          <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-80 rounded-full bg-accent/15 blur-3xl" />
+          <CardContent className="relative space-y-7 sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs text-faint">{formatProjectNumber(project.number)}</p>
                 <h2 className="mt-0.5 text-base font-semibold">{project.name}</h2>
-                <p className="mt-1 text-sm text-muted">{CLIENT_STATUS_DESCRIPTIONS[project.status]}</p>
               </div>
               <ProjectStatusBadge status={project.status} />
             </div>
 
-            <div>
-              <div className="mb-2 flex items-center justify-between text-sm">
-                <span className="font-medium">{current ? `${current.label} in progress` : STATUS_LABELS[project.status]}</span>
-                <span className="tabular-nums text-muted">{project.progress}%</span>
+            <div className="flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
+              <ProgressRing value={project.progress} label="complete" />
+              <div className="text-center sm:text-left">
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-faint">Now</p>
+                <p className="mt-1 text-2xl font-semibold">{current ? current.label : STATUS_LABELS[project.status]}</p>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">{CLIENT_STATUS_DESCRIPTIONS[project.status]}</p>
               </div>
-              <Progress value={project.progress} label="Project progress" />
             </div>
 
             <div className="grid gap-6 sm:grid-cols-3">
@@ -149,7 +150,7 @@ export default async function ClientDashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
+        <Card level="recessed">
           <CardContent>
             <SectionTitle
               action={
@@ -163,7 +164,7 @@ export default async function ClientDashboardPage() {
             <ActivityList events={activity} />
           </CardContent>
         </Card>
-        <Card>
+        <Card level="recessed">
           <CardContent>
             <SectionTitle
               action={

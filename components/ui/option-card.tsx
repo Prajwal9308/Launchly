@@ -16,7 +16,7 @@ export function OptionCard({ type, label, description, className, ...props }: Op
   return (
     <label
       className={cn(
-        "group relative flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-background px-3.5 py-3 text-sm transition-colors hover:border-border-strong has-[:checked]:border-accent has-[:checked]:bg-accent-subtle/60 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
+        "group relative flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.035] px-3.5 py-3 text-sm transition-[border-color,background-color,box-shadow] duration-200 hover:border-white/20 hover:bg-white/[0.06] has-[:checked]:border-accent/70 has-[:checked]:bg-accent-subtle has-[:checked]:shadow-[0_0_24px_-8px_rgb(111_134_255/0.6)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
         className,
       )}
     >

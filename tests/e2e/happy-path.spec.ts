@@ -118,7 +118,10 @@ test("public site → sign up → questionnaire → upload → submit", async ({
   await expect(page.getByText("New request").first()).toBeVisible();
   await page.goto("/dashboard");
   await expect(page.getByText(client.business).first()).toBeVisible();
-  await expect(page.getByText(/Requirements in progress/)).toBeVisible();
+  // Progress ring (derived from real project state) and the current stage.
+  await expect(page.getByRole("img", { name: /complete: \d+%/ })).toBeVisible();
+  await expect(page.getByText("Now", { exact: true })).toBeVisible();
+  await expect(page.getByText("Requirements", { exact: true }).first()).toBeVisible();
 
   // Files uploaded during onboarding are visible on the project
   await page.goto(`${projectUrl}/files`);

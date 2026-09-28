@@ -19,7 +19,7 @@ export default async function StartProjectPage() {
   const draft = actor ? await findDraftProject(actor) : null;
 
   return (
-    <div className="border-b border-border bg-canvas">
+    <div className="border-b border-border bg-white/[0.03]">
       <div className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div>
           <p className="text-sm font-medium text-accent">Start Your Project</p>
@@ -29,7 +29,7 @@ export default async function StartProjectPage() {
             logo and files as you go, and your progress is saved automatically.
           </p>
 
-          <div className="mt-8 max-w-md rounded-xl border border-border bg-background p-6 shadow-card">
+          <div className="mt-8 max-w-md glass-elevated rounded-2xl p-6 shadow-card">
             {!actor ? (
               <>
                 <p className="text-sm font-semibold">Create an account to get started</p>

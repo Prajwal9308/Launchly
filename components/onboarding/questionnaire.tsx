@@ -219,7 +219,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
       </nav>
 
       <div className="min-w-0">
-        <div className="rounded-xl border border-border bg-background shadow-card">
+        <div className="glass-elevated rounded-2xl">
           <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-5 sm:px-8">
             <div>
               <h1 ref={headingRef} tabIndex={-1} className="text-lg font-semibold outline-none sm:text-xl">
@@ -245,7 +245,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
             {submitError && <Alert tone="danger" title={submitError} className="mt-6" />}
           </div>
 
-          <div className="flex items-center justify-between gap-3 border-t border-border bg-canvas/60 px-5 py-4 sm:px-8">
+          <div className="flex items-center justify-between gap-3 border-t border-border bg-white/[0.025] px-5 py-4 sm:px-8">
             <Button variant="ghost" onClick={() => void goTo(index - 1)} disabled={index === 0} className={index === 0 ? "invisible" : undefined}>
               <ArrowLeft aria-hidden /> Back
             </Button>

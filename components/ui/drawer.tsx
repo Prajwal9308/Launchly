@@ -19,14 +19,14 @@ export function DrawerContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & { side?: "left" | "right" }) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-fade-in" />
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-fade-in" />
       <DialogPrimitive.Content
         aria-describedby={undefined}
         className={cn(
-          "fixed inset-y-0 z-50 flex w-[18rem] max-w-[85vw] flex-col bg-background shadow-dialog",
+          "glass-overlay fixed inset-y-0 z-50 flex w-[18rem] max-w-[85vw] flex-col !shadow-dialog",
           side === "left"
-            ? "left-0 border-r border-border data-[state=open]:animate-slide-in-left"
-            : "right-0 border-l border-border data-[state=open]:animate-slide-in-right",
+            ? "left-0 !border-y-0 !border-l-0 data-[state=open]:animate-slide-in-left"
+            : "right-0 !border-y-0 !border-r-0 data-[state=open]:animate-slide-in-right",
           className,
         )}
         {...props}

@@ -33,7 +33,7 @@ export interface DesignReviewView {
 function Preview({ review }: { review: DesignReviewView }) {
   if (review.file?.mimeType.startsWith("image/")) {
     return (
-      <a href={`/api/files/${review.file.id}`} target="_blank" rel="noopener" className="block overflow-hidden rounded-lg border border-border bg-canvas">
+      <a href={`/api/files/${review.file.id}`} target="_blank" rel="noopener" className="block overflow-hidden rounded-lg border border-border bg-white/[0.03]">
         {/* eslint-disable-next-line @next/next/no-img-element -- authenticated, dynamic file route */}
         <img src={`/api/files/${review.file.id}`} alt={`${review.title} version ${review.version} design preview`} className="w-full object-contain" loading="lazy" />
       </a>
@@ -45,7 +45,7 @@ function Preview({ review }: { review: DesignReviewView }) {
         href={`/api/files/${review.file.id}`}
         target="_blank"
         rel="noopener"
-        className="flex items-center gap-3 rounded-lg border border-border bg-canvas p-4 text-sm hover:bg-subtle"
+        className="flex items-center gap-3 rounded-lg border border-border bg-white/[0.03] p-4 text-sm hover:bg-subtle"
       >
         <FileText className="size-5 text-faint" aria-hidden /> Open {review.file.originalName}
       </a>
@@ -130,7 +130,7 @@ function ApproveDesign({ review }: { review: DesignReviewView }) {
             </Label>
             <Textarea id={`approve-comment-${review.id}`} value={comment} onChange={(e) => setComment(e.target.value)} rows={3} />
           </div>
-          <label className="flex items-start gap-3 rounded-lg border border-border bg-canvas p-3 text-sm">
+          <label className="flex items-start gap-3 rounded-lg border border-border bg-white/[0.03] p-3 text-sm">
             <Checkbox checked={confirmed} onCheckedChange={(v) => setConfirmed(v === true)} className="mt-0.5" aria-describedby={`approve-help-${review.id}`} />
             <span id={`approve-help-${review.id}`}>
               I approve <strong>{review.title} version {review.version}</strong>.
@@ -205,7 +205,7 @@ function ResolveButton({ id }: { id: string }) {
 export function DesignReviewCard({ review, viewer, expanded = true }: { review: DesignReviewView; viewer: "client" | "admin"; expanded?: boolean }) {
   const awaiting = review.status === "IN_REVIEW";
   return (
-    <article className="overflow-hidden rounded-xl border border-border bg-background shadow-card">
+    <article className="overflow-hidden glass rounded-2xl">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-3.5">
         <div>
           <h3 className="text-sm font-semibold">
@@ -231,7 +231,7 @@ export function DesignReviewCard({ review, viewer, expanded = true }: { review: 
             </a>
           )}
           {review.notes && (
-            <div className="rounded-lg bg-canvas p-3.5 text-sm leading-relaxed text-muted">
+            <div className="rounded-lg bg-white/[0.03] p-3.5 text-sm leading-relaxed text-muted">
               <p className="mb-1 text-xs font-medium text-faint">Notes from the studio</p>
               <p className="whitespace-pre-wrap">{review.notes}</p>
             </div>
@@ -263,7 +263,7 @@ export function DesignReviewCard({ review, viewer, expanded = true }: { review: 
         </div>
       )}
       {((viewer === "client" && awaiting) || (viewer === "admin" && review.status === "DRAFT")) && (
-        <footer className="flex flex-col-reverse gap-2 border-t border-border bg-canvas/60 px-5 py-3.5 sm:flex-row sm:justify-end">
+        <footer className="flex flex-col-reverse gap-2 border-t border-border bg-white/[0.025] px-5 py-3.5 sm:flex-row sm:justify-end">
           {viewer === "client" ? (
             <>
               <RequestChanges review={review} />

@@ -19,7 +19,7 @@ export function DropdownMenuContent({
         sideOffset={sideOffset}
         align={align}
         className={cn(
-          "z-50 min-w-48 overflow-hidden rounded-lg border border-border bg-background p-1 shadow-popover data-[state=open]:animate-pop-in",
+          "glass-overlay z-50 min-w-48 overflow-hidden rounded-xl p-1 data-[state=open]:animate-pop-in",
           className,
         )}
         {...props}
@@ -32,7 +32,7 @@ export function DropdownMenuItem({ className, ...props }: React.ComponentProps<t
   return (
     <DropdownPrimitive.Item
       className={cn(
-        "flex cursor-default select-none items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground outline-none data-[highlighted]:bg-subtle data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:text-faint",
+        "flex cursor-default select-none items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground outline-none data-[highlighted]:bg-white/[0.08] data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:text-faint",
         className,
       )}
       {...props}

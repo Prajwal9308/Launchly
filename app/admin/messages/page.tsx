@@ -24,7 +24,7 @@ export default async function AdminInboxPage() {
           <ul className="divide-y divide-border">
             {threads.map((t) => (
               <li key={t.id}>
-                <Link href={`/admin/projects/${t.id}/messages`} className="flex items-start gap-3 px-5 py-3.5 hover:bg-canvas">
+                <Link href={`/admin/projects/${t.id}/messages`} className="flex items-start gap-3 px-5 py-3.5 hover:bg-white/[0.04]">
                   <span aria-hidden className={cn("mt-2 size-2 shrink-0 rounded-full", t.unread ? "bg-accent" : "bg-transparent")} />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-baseline justify-between gap-3">

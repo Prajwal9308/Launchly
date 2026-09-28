@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 /** Shared error UI for error.tsx boundaries. Never shows stack traces. */
 export function ErrorState({ reset, digest }: { reset: () => void; digest?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-border bg-background px-6 py-16 text-center">
+    <div className="flex flex-col items-center justify-center glass rounded-2xl px-6 py-16 text-center">
       <span className="mb-3 flex size-10 items-center justify-center rounded-lg bg-danger-subtle text-danger">
         <AlertCircle className="size-5" aria-hidden />
       </span>

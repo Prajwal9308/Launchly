@@ -13,7 +13,7 @@ export function Tooltip({ content, children, side = "top" }: { content: React.Re
           <TooltipPrimitive.Content
             side={side}
             sideOffset={6}
-            className={cn("z-50 rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-popover data-[state=delayed-open]:animate-fade-in")}
+            className={cn("glass-overlay z-50 rounded-md px-2 py-1 text-xs text-foreground data-[state=delayed-open]:animate-fade-in")}
           >
             {content}
           </TooltipPrimitive.Content>

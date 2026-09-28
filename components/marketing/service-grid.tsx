@@ -17,7 +17,7 @@ export function ServiceGrid({ services, detailed = false }: { services: Service[
         const body = (
           <>
             <div className="flex items-start justify-between">
-              <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-canvas text-accent transition-colors group-hover:border-accent-border group-hover:bg-accent-subtle">
+              <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-white/[0.03] text-accent transition-colors group-hover:border-accent-border group-hover:bg-accent-subtle">
                 <NamedIcon name={service.icon} className="size-[18px]" />
               </div>
               {!detailed && (
@@ -33,7 +33,7 @@ export function ServiceGrid({ services, detailed = false }: { services: Service[
         );
         if (!detailed) {
           return (
-            <Link key={service.id} href={`/services#${service.slug}`} className="group flex flex-col bg-background p-7 transition-colors hover:bg-canvas">
+            <Link key={service.id} href={`/services#${service.slug}`} className="group flex flex-col bg-background p-7 transition-colors hover:bg-white/[0.04]">
               {body}
             </Link>
           );

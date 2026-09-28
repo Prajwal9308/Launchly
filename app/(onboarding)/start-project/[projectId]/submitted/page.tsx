@@ -16,7 +16,7 @@ export default async function SubmittedPage({ params }: { params: Promise<{ proj
 
   return (
     <div className="mx-auto max-w-lg">
-      <div className="rounded-xl border border-border bg-background p-6 text-center shadow-card sm:p-10">
+      <div className="glass-elevated rounded-2xl p-6 text-center shadow-card sm:p-10">
         <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-success-subtle text-success">
           <CheckCircle2 className="size-6" aria-hidden />
         </span>

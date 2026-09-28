@@ -1,20 +1,50 @@
 import Link from "next/link";
+import { Tilt } from "@/components/ui/tilt";
 import { cn } from "@/lib/utils";
 
-export function StatCard({ label, value, href, hint }: { label: string; value: number; href?: string; hint?: string }) {
+/**
+ * A metric tile. `emphasis` lifts it (and lights it when the value needs
+ * attention); `recessed` pushes supporting metrics back in the scene.
+ */
+export function StatCard({
+  label,
+  value,
+  href,
+  hint,
+  emphasis,
+  recessed,
+}: {
+  label: string;
+  value: number;
+  href?: string;
+  hint?: string;
+  emphasis?: boolean;
+  recessed?: boolean;
+}) {
+  const lit = emphasis && value > 0;
   const content = (
-    <>
-      <p className="text-xs font-medium text-faint">{label}</p>
-      <p className="mt-1.5 text-2xl font-semibold tabular-nums tracking-tight">{value}</p>
-      {hint && <p className="mt-0.5 text-xs text-faint">{hint}</p>}
-    </>
+    <div
+      className={cn(
+        "relative flex h-full flex-col justify-between overflow-hidden rounded-2xl px-5 py-4",
+        recessed ? "glass-recessed" : "glass",
+        lit && "!border-accent/40",
+      )}
+    >
+      {lit && <div aria-hidden className="absolute -right-10 -top-10 size-32 rounded-full bg-accent/30 blur-2xl" />}
+      <p className="relative text-xs font-medium text-faint">{label}</p>
+      <div className="relative mt-3 flex items-end justify-between gap-2">
+        <p className={cn("font-semibold tabular-nums tracking-tight", recessed ? "text-2xl" : "text-3xl", lit ? "text-foreground" : "text-lit")}>{value}</p>
+        {lit && <span className="mb-1 size-2 rounded-full bg-accent shadow-[0_0_10px_rgb(111_134_255)]" aria-hidden />}
+      </div>
+      {hint && <p className="relative mt-1 text-xs text-faint">{hint}</p>}
+    </div>
   );
-  const classes = "block rounded-xl border border-border bg-background px-4 py-3.5 shadow-card";
-  return href ? (
-    <Link href={href} className={cn(classes, "transition-colors hover:border-border-strong")}>
-      {content}
-    </Link>
-  ) : (
-    <div className={classes}>{content}</div>
+  if (!href) return content;
+  return (
+    <Tilt className="h-full rounded-2xl" max={5}>
+      <Link href={href} className="block h-full rounded-2xl">
+        {content}
+      </Link>
+    </Tilt>
   );
 }

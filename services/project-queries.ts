@@ -359,3 +359,27 @@ export async function getClientBadges(actor: Actor) {
   ]);
   return { unreadMessages, reviewsAwaiting };
 }
+
+/** Client-facing stages for the studio pipeline chart, in workflow order. */
+export const PIPELINE_STAGES: { key: string; label: string; statuses: ProjectStatus[] }[] = [
+  { key: "requirements", label: "Requirements", statuses: ["NEW", "INFORMATION_REQUIRED", "REQUIREMENTS_REVIEW"] },
+  { key: "discovery", label: "Discovery", statuses: ["DISCOVERY"] },
+  { key: "design", label: "Design", statuses: ["DESIGN"] },
+  { key: "review", label: "Review", statuses: ["CLIENT_REVIEW", "REVISION"] },
+  { key: "development", label: "Build", statuses: ["DEVELOPMENT"] },
+  { key: "testing", label: "Testing", statuses: ["TESTING"] },
+  { key: "approval", label: "Approval", statuses: ["CLIENT_APPROVAL", "READY_TO_LAUNCH"] },
+  { key: "live", label: "Live", statuses: ["LAUNCHED", "MAINTENANCE"] },
+];
+
+/** Real project counts per pipeline stage (drafts, on-hold, completed and cancelled excluded). */
+export async function getPipeline(actor: Actor) {
+  requireAdmin(actor);
+  const rows = await db.project.groupBy({ by: ["status"], _count: { _all: true } });
+  const counts = new Map(rows.map((r) => [r.status, r._count._all]));
+  return PIPELINE_STAGES.map((stage) => ({
+    key: stage.key,
+    label: stage.label,
+    count: stage.statuses.reduce((sum, s) => sum + (counts.get(s) ?? 0), 0),
+  }));
+}

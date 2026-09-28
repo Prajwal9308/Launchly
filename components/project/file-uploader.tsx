@@ -64,7 +64,7 @@ export function FileUploader({
         className={cn(
           "flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed text-center transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent",
           compact ? "gap-1 px-4 py-4" : "gap-2 px-6 py-8",
-          dragging ? "border-accent bg-accent-subtle/60" : "border-border-strong bg-canvas hover:border-accent/60 hover:bg-accent-subtle/30",
+          dragging ? "border-accent bg-accent-subtle/60" : "border-border-strong bg-white/[0.03] hover:border-accent/60 hover:bg-accent-subtle/30",
         )}
       >
         <UploadCloud className={cn("text-faint", compact ? "size-5" : "size-6")} aria-hidden />

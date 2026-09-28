@@ -66,7 +66,7 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
       <DialogPrimitive.Trigger asChild>
         <button
           type="button"
-          className="group flex h-9 w-full max-w-sm items-center gap-2 rounded-md border border-border bg-canvas px-3 text-sm text-faint transition-colors hover:border-border-strong hover:text-muted"
+          className="group flex h-10 w-full max-w-sm items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-faint shadow-[inset_0_1px_0_rgb(255_255_255/0.04)] transition-colors hover:border-white/18 hover:text-muted"
         >
           <Search className="size-4" aria-hidden />
           <span className="flex-1 text-left">{searchHref ? "Search or jump to…" : "Jump to…"}</span>
@@ -74,10 +74,10 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
         </button>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px] data-[state=open]:animate-fade-in" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-fade-in" />
         <DialogPrimitive.Content
           aria-describedby={undefined}
-          className="fixed left-1/2 top-[15vh] z-50 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-background shadow-dialog data-[state=open]:animate-pop-in"
+          className="glass-overlay fixed left-1/2 top-[15vh] z-50 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl !shadow-dialog data-[state=open]:animate-pop-in"
         >
           <DialogPrimitive.Title className="sr-only">Command menu</DialogPrimitive.Title>
           <div className="flex items-center gap-3 border-b border-border px-4">
@@ -126,7 +126,7 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
                     onClick={() => go(item)}
                     className={cn(
                       "flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-sm",
-                      index === active ? "bg-subtle text-foreground" : "text-muted",
+                      index === active ? "bg-white/[0.08] text-foreground" : "text-muted",
                     )}
                   >
                     {item.label}

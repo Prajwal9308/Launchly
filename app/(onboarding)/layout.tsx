@@ -12,7 +12,7 @@ export default async function OnboardingLayout({ children }: { children: React.R
   await connection();
   const settings = await getSiteSettings();
   return (
-    <div className="min-h-dvh bg-canvas">
+    <div className="min-h-dvh">
       <header className="border-b border-border bg-background">
         <div className="container-page flex h-14 items-center justify-between">
           <Logo name={settings.businessName} />

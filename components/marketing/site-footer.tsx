@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeSwitcher } from "@/components/app/theme-switcher";
 import { Logo } from "./logo";
 
 const COLUMNS = [
@@ -42,7 +41,7 @@ export function SiteFooter({
   contactPhone: string | null;
 }) {
   return (
-    <footer className="border-t border-border bg-canvas">
+    <footer className="relative mt-8 border-t border-white/[0.06] bg-[linear-gradient(180deg,rgb(255_255_255/0.02),transparent)]">
       <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="space-y-3">
           <Logo name={businessName} />
@@ -78,7 +77,7 @@ export function SiteFooter({
           <p>
             © {new Date().getFullYear()} {businessName}. All rights reserved.
           </p>
-          <ThemeSwitcher />
+          <p>Web design &amp; development for small businesses.</p>
         </div>
       </div>
     </footer>

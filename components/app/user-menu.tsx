@@ -2,7 +2,6 @@
 
 import { ExternalLink, LogOut, UserRound } from "lucide-react";
 import Link from "next/link";
-import { ThemeSwitcher } from "./theme-switcher";
 import { Avatar } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -51,7 +50,7 @@ export function UserMenu({
         <DropdownMenuSeparator />
         <div className="flex items-center justify-between px-2.5 py-1.5 text-sm">
           <span className="text-muted">Theme</span>
-          <ThemeSwitcher />
+          <p>Web design &amp; development for small businesses.</p>
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void logoutAction()}>

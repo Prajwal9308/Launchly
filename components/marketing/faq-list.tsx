@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 /** Accessible accordion using native <details>. Works without JavaScript. */
 export function FaqList({ items }: { items: readonly { question: string; answer: string }[] }) {
   return (
-    <div className="divide-y divide-border border-y border-border">
+    <div className="divide-y divide-border">
       {items.map((item) => (
         <details key={item.question} className="group py-1">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md py-4 text-left text-[15px] font-medium [&::-webkit-details-marker]:hidden">

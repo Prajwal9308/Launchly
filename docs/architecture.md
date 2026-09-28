@@ -51,3 +51,12 @@ Because authorization lives in services and not in components, the same rules ap
 - outputs use a structured schema
 - results are stored and labelled `aiGenerated`
 - nothing is published to clients without studio review
+
+## Visual design system
+
+The UI is a dark, spatial design driven by tokens in `app/globals.css`:
+
+- **Depth levels:** atmosphere (`components/app/atmosphere.tsx`) → 3D → `glass-recessed` → `glass` → `glass-elevated`. `glass-overlay` is used for menus and dialogs. `Card` takes `level="recessed" | "default" | "elevated"`.
+- **3D:** only the homepage hero uses WebGL (`components/marketing/hero-scene.tsx`, `three` + `@react-three/fiber`, no drei). `hero-stage.tsx` loads it lazily after the page is interactive, and only on desktop-class devices without reduced motion. It pauses when off-screen or when the tab is hidden, and falls back to a CSS orb.
+- **Interaction:** `components/ui/tilt.tsx` (cursor tilt and highlight) and pointer parallax in the atmosphere and hero. Both are disabled on touch devices and with `prefers-reduced-motion`.
+- **Data visualization:** `components/admin/pipeline-chart.tsx` charts real project counts per stage (single series, hover tooltips, accessible table). `components/project/progress-ring.tsx` shows derived progress.
