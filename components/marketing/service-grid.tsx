@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { ArrowLink } from "./arrow-link";
-import { NamedIcon } from "./icons";
+import { IconBadge } from "./icons";
 
 /** Detailed services list for the Services page. */
 export function ServiceGrid({ services }: { services: Service[] }) {
@@ -14,9 +14,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
       {services.map((service) => (
         <RevealItem as="article" key={service.id} id={service.slug} className="surface grid scroll-mt-24 gap-6 rounded-2xl p-6 sm:p-8 md:grid-cols-[1fr_1.1fr] md:gap-10">
           <div>
-            <div className="flex size-11 items-center justify-center rounded-xl bg-accent-subtle text-accent">
-              <NamedIcon name={service.icon} className="size-5" />
-            </div>
+            <IconBadge name={service.icon} />
             <h2 className="mt-5 text-xl font-semibold sm:text-2xl">{service.name}</h2>
             <p className="mt-2 text-[15px] leading-relaxed text-muted">{service.summary}</p>
             {service.description && <p className="mt-3 text-[15px] leading-relaxed text-muted">{service.description}</p>}

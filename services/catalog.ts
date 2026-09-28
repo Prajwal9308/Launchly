@@ -1,3 +1,4 @@
+import { SERVICE_ICONS } from "@/domain/service-icons";
 import { z } from "zod";
 import { db } from "@/db";
 import { conflict, notFound, validation } from "@/lib/errors";
@@ -34,22 +35,8 @@ function parseOrThrow<T extends z.ZodType>(schema: T, input: unknown): z.infer<T
 // Services
 // ---------------------------------------------------------------------------
 
-export const SERVICE_ICONS = [
-  "monitor",
-  "smartphone",
-  "workflow",
-  "layout-dashboard",
-  "palette",
-  "code",
-  "layout",
-  "building",
-  "shopping-cart",
-  "refresh",
-  "search",
-  "wrench",
-  "file-text",
-  "megaphone",
-] as const;
+
+export { SERVICE_ICONS };
 
 export const serviceSchema = z.object({
   name: z.string().trim().min(1, "Name is required.").max(80),

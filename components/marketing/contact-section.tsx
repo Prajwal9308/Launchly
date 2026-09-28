@@ -40,7 +40,7 @@ export function ContactSection({ contactEmail, heading = true }: { contactEmail:
         </ol>
         <div className="mt-8 space-y-2 text-sm">
           <a href={`mailto:${contactEmail}`} className="inline-flex min-h-11 items-center gap-2 text-muted hover:text-foreground sm:min-h-0">
-            <Mail className="size-4 text-faint" aria-hidden /> {contactEmail}
+            <Mail className="size-4 text-accent" aria-hidden /> {contactEmail}
           </a>
           <p className="text-muted">
             Prefer a detailed brief?{" "}

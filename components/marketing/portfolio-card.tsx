@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { HoverLift } from "@/components/ui/hover-lift";
 import type { PortfolioItem } from "@/db/types";
@@ -39,9 +39,10 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
           >
-            Visit website <ArrowUpRight className="size-3.5" aria-hidden />
+            Visit website <ExternalLink className="size-4" aria-hidden />
+            <span className="sr-only">(opens in a new tab)</span>
           </a>
         )}
       </div>

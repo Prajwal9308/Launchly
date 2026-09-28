@@ -1,0 +1,21 @@
+/** Icon keys a service can use (rendered by components/marketing/icons.tsx). Shared by the server schema and the admin form. */
+export const SERVICE_ICONS = [
+  "monitor",
+  "smartphone",
+  "pen-tool",
+  "shopping-cart",
+  "briefcase-business",
+  "monitor-smartphone",
+  "globe",
+  "workflow",
+  "layout-dashboard",
+  "palette",
+  "code",
+  "layout",
+  "building",
+  "refresh",
+  "search",
+  "wrench",
+  "file-text",
+  "megaphone",
+] as const;

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { PortfolioItem, PricingPackage, Service } from "@/db/types";
+import { SERVICE_ICONS } from "@/domain/service-icons";
 import {
   deletePortfolioAction,
   deletePricingAction,
@@ -42,7 +43,7 @@ function DeleteButton({ onDelete, label }: { onDelete: () => ReturnType<typeof d
   );
 }
 
-const ICON_OPTIONS = ["monitor", "smartphone", "workflow", "layout-dashboard", "palette", "code", "layout", "building", "shopping-cart", "refresh", "search", "wrench", "file-text", "megaphone"];
+const ICON_OPTIONS = SERVICE_ICONS;
 
 export function ServiceForm({ service }: { service?: Service }) {
   const { state, onSubmit, pending } = useFormAction(saveServiceAction.bind(null, service?.id ?? null));

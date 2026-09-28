@@ -6,7 +6,7 @@ export const SOLUTIONS = [
   {
     slug: "business-websites",
     title: "Business Websites",
-    icon: "monitor",
+    icon: "globe",
     description: "Professional, responsive websites designed to establish credibility and generate inquiries.",
     examples: ["Company websites", "Landing pages", "Service & booking sites", "Website redesigns"],
   },

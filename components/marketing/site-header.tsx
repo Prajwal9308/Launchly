@@ -59,7 +59,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" className="-mr-2.5 size-11 lg:hidden" aria-label="Open menu">
-              <Menu className="!size-5" />
+              <Menu className="!size-5" aria-hidden />
             </Button>
           </DrawerTrigger>
           <DrawerContent side="right">

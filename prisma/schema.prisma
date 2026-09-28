@@ -594,7 +594,7 @@ model Service {
   description String?
   features    String[] @default([])
   pricingText String?
-  /// Lucide icon key (see components/marketing/service-icon.tsx).
+  /// Lucide icon key (see components/marketing/icons.tsx).
   icon        String   @default("layout")
   published   Boolean  @default(true)
   sortOrder   Int      @default(0)

@@ -2,7 +2,7 @@ import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { NamedIcon } from "./icons";
+import { IconBadge } from "./icons";
 
 /**
  * Homepage services: the two primary offerings (web and mobile) as larger
@@ -24,9 +24,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
               href={`/services#${service.slug}`}
               className="surface group flex h-full flex-col rounded-2xl p-6 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-border-strong hover:shadow-popover motion-reduce:hover:translate-y-0 sm:p-8"
             >
-              <span className="flex size-11 items-center justify-center rounded-xl bg-accent-subtle text-accent">
-                <NamedIcon name={service.icon} className="size-5" />
-              </span>
+              <IconBadge name={service.icon} />
               <h3 className="mt-5 text-xl font-semibold sm:mt-6">{service.name}</h3>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">{service.summary}</p>
               {service.features.length > 0 && (
@@ -51,13 +49,11 @@ export function ServicesOverview({ services }: { services: Service[] }) {
           {secondary.map((service) => (
             <li key={service.id}>
               <Link href={`/services#${service.slug}`} className="group flex h-full gap-4 p-5 transition-colors hover:bg-canvas sm:p-6">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-subtle text-accent">
-                  <NamedIcon name={service.icon} className="size-[18px]" />
-                </span>
+                <IconBadge name={service.icon} size="sm" />
                 <span className="min-w-0">
                   <span className="flex items-center gap-1 font-semibold">
                     {service.name}
-                    <ArrowRight className="size-3.5 text-faint opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
+                    <ArrowRight className="size-4 text-faint opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
                   </span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted">{service.summary}</span>
                 </span>

@@ -1,3 +1,4 @@
+import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "./logo";
 
@@ -58,13 +59,15 @@ export function SiteFooter({
           <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">Contact</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
             <li>
-              <a href={`mailto:${contactEmail}`} className="break-all text-muted hover:text-foreground">
+              <a href={`mailto:${contactEmail}`} className="inline-flex items-center gap-2 break-all text-muted transition-colors hover:text-foreground">
+                <Mail className="size-4 shrink-0 text-accent" aria-hidden />
                 {contactEmail}
               </a>
             </li>
             {contactPhone && (
               <li>
-                <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="text-muted hover:text-foreground">
+                <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground">
+                  <Phone className="size-4 shrink-0 text-accent" aria-hidden />
                   {contactPhone}
                 </a>
               </li>
