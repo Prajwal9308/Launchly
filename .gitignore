@@ -54,3 +54,7 @@ next-env.d.ts
 
 # marketing review captures
 /.review/
+
+# python bytecode (skill scripts)
+__pycache__/
+*.pyc
