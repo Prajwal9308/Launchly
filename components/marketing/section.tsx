@@ -38,7 +38,7 @@ export function SectionHeader({ eyebrow, title, description, align = "left", cla
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}
       <Heading
         className={cn(
-          "font-semibold text-foreground",
+          "font-semibold text-heading",
           eyebrow && "mt-3",
           Heading === "h1"
             ? "text-[2rem] leading-[1.12] sm:text-[2.5rem] sm:leading-[1.1]"

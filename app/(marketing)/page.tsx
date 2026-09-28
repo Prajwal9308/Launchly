@@ -38,10 +38,10 @@ export default async function HomePage() {
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-glow" />
         <div className="container-page grid gap-10 pb-14 pt-10 sm:gap-12 sm:pb-20 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0 lg:pb-24 lg:pt-20">
           <Entrance className="max-w-[35rem] lg:self-end">
-            <p className="text-sm font-medium text-accent">Web &amp; mobile development studio</p>
+            <p className="eyebrow">Web &amp; mobile development studio</p>
             <h1 className="mt-4 text-[1.875rem] font-semibold leading-[1.15] sm:text-[2.5rem] sm:leading-[1.1] lg:text-[2.875rem]">
               Websites, apps and digital products, built with{" "}
-              <span className="relative inline-block whitespace-nowrap">
+              <span className="relative inline-block whitespace-nowrap text-accent">
                 precision.
                 <BrandCurve className="absolute -bottom-[0.28em] left-0 h-[0.3em] w-[96%]" />
               </span>
@@ -132,7 +132,7 @@ export default async function HomePage() {
             </p>
             <ul className="mt-7 divide-y divide-border border-y border-border">
               {ABOUT_POINTS.map(({ text, icon: Icon }) => (
-                <li key={text} className="flex items-start gap-3.5 py-4 text-[15px] text-foreground">
+                <li key={text} className="flex items-start gap-3.5 py-4 text-[15px] font-medium text-heading">
                   <Icon className="mt-0.5 text-accent" aria-hidden />
                   {text}
                 </li>

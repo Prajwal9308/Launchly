@@ -22,10 +22,11 @@
   --color-border: #e5e6ea;
   --color-border-strong: #d2d4da;
 
-  /* Text: near-black charcoal with muted grays */
-  --color-foreground: #0f1115;
-  --color-muted: #4a4f5c;
-  --color-faint: #6a707d;
+  /* Text: deep ink headings, slate body and supporting grays (all AA on white and canvas) */
+  --color-heading: #0b1b33;
+  --color-foreground: #151c2b;
+  --color-muted: #475467;
+  --color-faint: #5d6679;
 
   /* Brand accent: links, icons, small highlights. AA as text on white (5.2:1) and on accent-subtle (4.8:1). */
   --color-accent: #c2410c;
@@ -160,8 +161,9 @@
 @utility eyebrow {
   display: block;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.25rem;
+  letter-spacing: 0.01em;
   color: var(--color-accent);
 }
 
@@ -236,7 +238,7 @@
     background: var(--color-accent-subtle);
   }
   h1, h2, h3, h4 {
-    @apply text-foreground font-display;
+    @apply text-heading font-display;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
@@ -245,6 +247,10 @@
   }
   p {
     text-wrap: pretty;
+  }
+  /* Emphasis inside supporting copy lifts to heading ink rather than staying gray. */
+  :where(p, li) :where(strong, b) {
+    @apply text-heading font-semibold;
   }
   /* Give native select menus a solid surface. */
   option {

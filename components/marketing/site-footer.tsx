@@ -33,7 +33,7 @@ export function SiteFooter({
           <p className="max-w-xs text-sm leading-relaxed text-muted">{tagline}</p>
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Company</h2>
+          <h2 className="text-sm font-semibold text-heading">Company</h2>
           <ul className="mt-4 space-y-2.5">
             {COMPANY.map((link) => (
               <li key={link.href}>
@@ -45,7 +45,7 @@ export function SiteFooter({
           </ul>
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Services</h2>
+          <h2 className="text-sm font-semibold text-heading">Services</h2>
           <ul className="mt-4 space-y-2.5">
             {services.map((s) => (
               <li key={s.slug}>
@@ -57,7 +57,7 @@ export function SiteFooter({
           </ul>
         </div>
         <div className="col-span-2 sm:col-span-1">
-          <h2 className="text-sm font-semibold text-foreground">Contact</h2>
+          <h2 className="text-sm font-semibold text-heading">Contact</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
             {!isPlaceholderEmail(contactEmail) && (
               <li>

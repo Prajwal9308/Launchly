@@ -1,19 +1,20 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const alt = "ViperByte — Web & Mobile App Development";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+export default async function OpengraphImage() {
+  const mark = await readFile(join(process.cwd(), "public/images/brand/viper-mark-og.png"));
+  const markSrc = `data:image/png;base64,${mark.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#ffffff", padding: 80, fontFamily: "sans-serif" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <svg width="60" height="60" viewBox="0 0 24 24">
-            <rect width="24" height="24" rx="6" fill="#16181d" />
-            <path d="M5 6h4.2L12 14.4 14.8 6H19l-5.9 13h-2.2Z" fill="#ea6a1f" />
-            <path d="M12 14.4 14.8 6H19l-5.9 13H12Z" fill="#f7b58a" />
-          </svg>
+          <img src={markSrc} width={60} height={60} alt="" />
           <div style={{ fontSize: 38, fontWeight: 700, color: "#16181d", letterSpacing: -1 }}>ViperByte</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
