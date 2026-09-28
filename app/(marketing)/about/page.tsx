@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const PRINCIPLES = [
   "Plain language, clear scope and honest timelines.",
   "Products designed around real users and real business requirements.",
-  "Clean, maintainable code that can grow with your business.",
+  "Clean, maintainable products that can grow with your business.",
   "Nothing goes live without your approval.",
 ];
 

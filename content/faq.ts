@@ -7,7 +7,7 @@ export const FAQS = [
   {
     question: "Do you build apps for both iOS and Android?",
     answer:
-      "Yes. Most projects use a cross-platform approach so one codebase serves both platforms; where a project needs it, we can build natively. We'll recommend an approach once we understand your requirements.",
+      "Yes. Most projects use a cross-platform approach so a single product serves both platforms; where a project needs it, we can build natively. We'll recommend an approach once we understand your requirements.",
   },
   {
     question: "How long does a project take?",

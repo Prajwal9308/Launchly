@@ -3,7 +3,7 @@ import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 import { ArrowLink } from "./arrow-link";
-import { NamedIcon } from "./icons";
+import { IconBadge } from "./icons";
 import { ServicePreview } from "./mockups/compositions";
 
 /**
@@ -26,8 +26,8 @@ export function ServiceGrid({ services }: { services: Service[] }) {
             className="surface group grid scroll-mt-24 overflow-hidden rounded-2xl md:grid-cols-2"
           >
             <div className={cn("flex flex-col p-6 sm:p-8", i % 2 === 1 && "md:order-2")}>
-              <h2 className="flex items-center gap-2.5 text-xl font-semibold sm:text-2xl">
-                <NamedIcon name={service.icon} className="text-accent" />
+              <h2 className="flex items-center gap-4 text-xl font-semibold sm:text-2xl">
+                <IconBadge name={service.icon} />
                 {service.name}
               </h2>
               <p className="mt-3 text-[15px] leading-relaxed text-muted">{service.summary}</p>
