@@ -4,8 +4,8 @@ import type { StorageProvider } from "./types";
 /**
  * Vercel Blob storage using PRIVATE blobs: files are never publicly reachable.
  * Downloads always go through /api/files/[id], which checks permissions and
- * then reads the bytes server-side. Requires BLOB_READ_WRITE_TOKEN (set
- * automatically when a Blob store is connected to the Vercel project).
+ * then reads the bytes server-side. On Vercel, a connected store authenticates
+ * with OIDC and BLOB_STORE_ID automatically; BLOB_READ_WRITE_TOKEN also works.
  */
 export class VercelBlobStorageProvider implements StorageProvider {
   readonly name = "vercel-blob";

@@ -20,7 +20,10 @@ export function getStorage(): StorageProvider {
       provider = new LocalStorageProvider(process.env.STORAGE_LOCAL_DIR ?? "./storage/uploads");
       return provider;
     case "vercel-blob":
-      if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error("BLOB_READ_WRITE_TOKEN is required for vercel-blob storage.");
+      // Connected stores on Vercel use OIDC + BLOB_STORE_ID; a read-write token also works (e.g. locally).
+      if (!process.env.BLOB_STORE_ID && !process.env.BLOB_READ_WRITE_TOKEN) {
+        throw new Error("vercel-blob storage needs a connected Blob store (BLOB_STORE_ID) or BLOB_READ_WRITE_TOKEN.");
+      }
       provider = new VercelBlobStorageProvider();
       return provider;
     default:
