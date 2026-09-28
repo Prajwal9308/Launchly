@@ -16,5 +16,10 @@ export const staggerChildren: Variants = {
   show: { transition: { staggerChildren: 0.06 } },
 };
 
-/** Reveal once, shortly after an element enters the viewport. */
-export const REVEAL_VIEWPORT = { once: true, amount: 0.15, margin: "0px 0px -8% 0px" } as const;
+/**
+ * Reveal once, as soon as any part of an element is 60px inside the viewport.
+ * Use "some", never a fraction: a fraction of a tall group (e.g. the full
+ * services list) can exceed what fits below a page hero, leaving it blank
+ * until the visitor scrolls.
+ */
+export const REVEAL_VIEWPORT = { once: true, amount: "some", margin: "0px 0px -60px 0px" } as const;
