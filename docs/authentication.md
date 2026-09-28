@@ -24,7 +24,7 @@ Google-only users have no password. Their Account page says so, and password cha
 
 - Clients sign up at `/signup`. Registration creates `User`, `ClientProfile`, `Organization` (owner membership) and `Business`.
 - If the studio converted a lead for that email, the new user joins the existing organization and inherits its draft project.
-- Admin accounts are created with `npm run create-admin` (or the seed in development). There is no public admin signup.
+- Admin accounts come from `ADMIN_EMAILS` (applied only on a Google-verified sign-in; the account's client memberships and any unverified password are removed) or from `npm run create-admin` (or the seed in development). There is no public admin signup.
 
 ## Authorization
 

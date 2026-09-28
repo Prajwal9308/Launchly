@@ -84,3 +84,47 @@ describe("Google sign-in", () => {
     expect(org.name).toBe(COMPLETE_ANSWERS.business.businessName);
   });
 });
+
+describe("ADMIN_EMAILS", () => {
+  const withAdmins = async (emails: string, fn: () => Promise<void>) => {
+    const previous = process.env.ADMIN_EMAILS;
+    process.env.ADMIN_EMAILS = emails;
+    try {
+      await fn();
+    } finally {
+      process.env.ADMIN_EMAILS = previous;
+    }
+  };
+
+  it("creates a listed email as an admin with no client organization", () =>
+    withAdmins("Owner@Example.test, other@example.test", async () => {
+      const result = await signInWithOAuth(google({ email: "owner@example.test" }));
+      expect(result?.role).toBe("ADMIN");
+      expect(await db.organizationMember.count({ where: { userId: result!.id } })).toBe(0);
+    }));
+
+  it("promotes an existing client with a listed email and removes their password and memberships", () =>
+    withAdmins("owner@example.test", async () => {
+      const client = await createClient("Owner Co", "owner@example.test");
+      const result = await signInWithOAuth(google({ email: "owner@example.test" }));
+      expect(result).toMatchObject({ id: client.id, role: "ADMIN" });
+      const user = await db.user.findUniqueOrThrow({ where: { id: client.id } });
+      expect(user.passwordHash).toBeNull();
+      expect(await db.organizationMember.count({ where: { userId: client.id } })).toBe(0);
+    }));
+
+  it("promotes an already-linked Google user once they are listed", async () => {
+    const first = await signInWithOAuth(google({ email: "owner@example.test" }));
+    expect(first?.role).toBe("CLIENT");
+    await withAdmins("owner@example.test", async () => {
+      expect((await signInWithOAuth(google({ email: "owner@example.test" })))?.role).toBe("ADMIN");
+    });
+  });
+
+  it("never promotes unverified emails or password signups", () =>
+    withAdmins("owner@example.test", async () => {
+      expect(await signInWithOAuth(google({ email: "owner@example.test", emailVerified: false }))).toBeNull();
+      const passwordUser = await createClient("X", "owner@example.test");
+      expect(passwordUser.role).toBe("CLIENT");
+    }));
+});

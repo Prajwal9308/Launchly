@@ -16,15 +16,11 @@ The recommended setup is **Vercel** (hosting) with **Neon** (PostgreSQL) and **V
    | `STORAGE_PROVIDER` | `vercel-blob` |
    | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | from Google (below) |
    | `EMAIL_PROVIDER` | `console` (until a real provider is added) |
+   | `ADMIN_EMAILS` | your Google email (comma-separate several) |
 
    `AUTH_URL` isn't needed on Vercel.
-5. **Deploy.** The first build creates the database tables.
-6. **Make yourself admin.** Sign in on the live site with Google (this creates a client account), then run this on your machine:
-   ```bash
-   npx vercel env pull .env.production.local   # downloads production env vars
-   npx tsx --env-file=.env.production.local scripts/create-admin.ts you@yourdomain.com
-   ```
-   (Add a password as a second argument to create a password admin instead.)
+5. **Deploy.** Each build applies migrations (`prisma migrate deploy`) and then runs `prisma/bootstrap.ts`. On a brand-new database, the bootstrap adds the default services, unpriced packages and labelled sample portfolio items **once**. Later edits and deletions are never overwritten.
+6. **Make yourself admin.** Sign in on the live site with Google using an email listed in `ADMIN_EMAILS`. Promotion only happens for Google-verified sign-ins, never for password signups. Alternatively, run `scripts/create-admin.ts` against the production database (`npx tsx --env-file=<file with DATABASE_URL> scripts/create-admin.ts you@yourdomain.com`).
 7. **Set up the site.** In *Admin → Settings*, enter your business name and contact details. In *Services / Pricing*, set prices. Replace the sample portfolio and testimonials (`content/testimonials.ts`). **Never run the seed against production.**
 
 ### Google sign-in

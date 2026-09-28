@@ -212,6 +212,14 @@ export interface OAuthProfile {
   lastName: string;
 }
 
+/** Emails that become studio admins on their first verified Google sign-in (env ADMIN_EMAILS, comma-separated). */
+export function adminEmails(): string[] {
+  return (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 async function recordLogin(userId: string, role: "ADMIN" | "CLIENT", name: string, provider: string) {
   await db.$transaction(async (tx) => {
     await tx.user.update({ where: { id: userId }, data: { lastLoginAt: new Date() } });
@@ -242,8 +250,11 @@ export async function signInWithOAuth(profile: OAuthProfile) {
     where: { provider_providerAccountId: { provider: profile.provider, providerAccountId: profile.providerAccountId } },
     include: { user: true },
   });
+  const listedAdmin = profile.emailVerified && adminEmails().includes(email);
+
   if (linked) {
-    const u = linked.user;
+    let u = linked.user;
+    if (listedAdmin && u.role !== "ADMIN" && u.email === email) u = await promoteToAdmin(u.id);
     await recordLogin(u.id, u.role, `${u.firstName} ${u.lastName}`, profile.provider);
     return { id: u.id, role: u.role, email: u.email };
   }
@@ -264,6 +275,19 @@ export async function signInWithOAuth(profile: OAuthProfile) {
         await tx.user.update({ where: { id: existing.id }, data: { passwordHash: null } });
       }
       return existing;
+    }
+
+    if (listedAdmin) {
+      // Studio accounts don't belong to a client organization.
+      return tx.user.create({
+        data: {
+          email,
+          firstName,
+          lastName,
+          role: "ADMIN",
+          accounts: { create: { type: "oidc", provider: profile.provider, providerAccountId: profile.providerAccountId } },
+        },
+      });
     }
 
     const created = await tx.user.create({
@@ -307,8 +331,27 @@ export async function signInWithOAuth(profile: OAuthProfile) {
   });
 
   if (welcome) await sendEmail(emailTemplates.welcome(user.email, user.firstName));
-  await recordLogin(user.id, user.role, `${user.firstName} ${user.lastName}`, profile.provider);
-  return { id: user.id, role: user.role, email: user.email };
+  const final = listedAdmin && user.role !== "ADMIN" ? await promoteToAdmin(user.id) : user;
+  await recordLogin(final.id, final.role, `${final.firstName} ${final.lastName}`, profile.provider);
+  return { id: final.id, role: final.role, email: final.email };
+}
+
+/**
+ * Promotes a user listed in ADMIN_EMAILS after Google verified the address.
+ * Removes client organization memberships and any unverified password.
+ */
+async function promoteToAdmin(userId: string) {
+  return db.$transaction(async (tx) => {
+    await tx.organizationMember.deleteMany({ where: { userId } });
+    const user = await tx.user.update({ where: { id: userId }, data: { role: "ADMIN", passwordHash: null } });
+    await recordActivity(tx, {
+      type: "PROJECT_UPDATED",
+      actorId: userId,
+      visibility: "INTERNAL",
+      message: `${user.firstName} ${user.lastName} was granted studio admin access (ADMIN_EMAILS)`,
+    });
+    return user;
+  });
 }
 
 /** Resolves the app user linked to a provider account (used when issuing the session token). */

@@ -60,6 +60,7 @@ openssl rand -base64 32   # paste into AUTH_SECRET
 | `AUTH_SECRET` | yes | Secret used to sign session cookies |
 | `AUTH_URL`, `APP_URL` | yes | Public URL of the app (used for auth and email links) |
 | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | no | Enables "Continue with Google" (see `docs/deployment.md`) |
+| `ADMIN_EMAILS` | no | Emails that become admins on first Google-verified sign-in |
 | `AI_PROVIDER` | no | `none` (default) or `anthropic` |
 | `AI_API_KEY`, `AI_MODEL` | no | API key and optional model override for the AI provider |
 | `STORAGE_PROVIDER` | no | `local` (default) or `vercel-blob` (private Vercel Blob; needs `BLOB_READ_WRITE_TOKEN`) |
