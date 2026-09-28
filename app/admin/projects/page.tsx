@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FolderKanban } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { FilterBar } from "@/components/admin/filter-bar";
 import { Card } from "@/components/ui/card";
@@ -27,7 +27,7 @@ export default async function AdminProjectsPage({ searchParams }: { searchParams
 
   return (
     <div>
-      <PageHeader icon={FolderKanban} title="Projects" description={`${total} project${total === 1 ? "" : "s"}`} />
+      <PageHeader icon={Icons.project} title="Projects" description={`${total} project${total === 1 ? "" : "s"}`} />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search client, business or P-number"
@@ -59,7 +59,7 @@ export default async function AdminProjectsPage({ searchParams }: { searchParams
       <Card className="overflow-hidden">
         {items.length === 0 ? (
           <EmptyState
-            icon={FolderKanban}
+            icon={Icons.project}
             title={filtered ? "No matching projects" : "No projects yet"}
             description={filtered ? "Try a different search or filter." : "New client projects will appear here once a client starts a project."}
           />

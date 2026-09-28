@@ -1,4 +1,4 @@
-import { FileStack, Upload } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { FileList } from "@/components/project/file-list";
 import { FileUploader } from "@/components/project/file-uploader";
@@ -16,7 +16,7 @@ export default async function AdminFilesPage({ params }: { params: Promise<{ pro
     <div className="space-y-6">
       <Card>
         <CardContent>
-          <SectionTitle icon={Upload}>Share a file with the client</SectionTitle>
+          <SectionTitle icon={Icons.upload}>Share a file with the client</SectionTitle>
           <FileUploader projectId={projectId} category="DOCUMENT" compact />
         </CardContent>
       </Card>
@@ -27,7 +27,7 @@ export default async function AdminFilesPage({ params }: { params: Promise<{ pro
         {files.length ? (
           <FileList files={files} currentUserId={actor.id} canDeleteAll />
         ) : (
-          <EmptyState icon={FileStack} title="No files yet" description="Files uploaded by the client or studio appear here." />
+          <EmptyState icon={Icons.files} title="No files yet" description="Files uploaded by the client or studio appear here." />
         )}
       </Card>
     </div>

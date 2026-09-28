@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, LogOut, UserRound } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import {
@@ -39,12 +39,12 @@ export function UserMenu({
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={accountHref}>
-            <UserRound /> Account
+            <Icons.account /> Account
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/">
-            <ExternalLink /> View website
+            <Icons.external /> View website
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -54,7 +54,7 @@ export function UserMenu({
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void logoutAction()}>
-          <LogOut /> Log out
+          <Icons.logout /> Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

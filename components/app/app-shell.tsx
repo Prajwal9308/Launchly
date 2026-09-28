@@ -1,26 +1,7 @@
 "use client";
 
-import {
-  Activity,
-  Briefcase,
-  CheckSquare,
-  ClipboardList,
-  FileStack,
-  FolderKanban,
-  Home,
-  Inbox,
-  LayoutDashboard,
-  Menu,
-  MessageSquare,
-  Palette,
-  Plus,
-  Search,
-  Settings,
-  Sparkles,
-  UserRound,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
+import type { LucideIcon } from "@/components/ui/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -41,34 +22,34 @@ interface NavItem {
 }
 
 function clientNav(projectId: string | null, unreadMessages: number, reviewsAwaiting: number): NavItem[] {
-  const base: NavItem[] = [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, exact: true }];
+  const base: NavItem[] = [{ href: "/dashboard", label: "Dashboard", icon: Icons.dashboard, exact: true }];
   if (projectId) {
     const p = `/dashboard/project/${projectId}`;
     base.push(
-      { href: p, label: "My Project", icon: FolderKanban, exact: true },
-      { href: `${p}/requirements`, label: "Requirements", icon: ClipboardList },
-      { href: `${p}/tasks`, label: "Tasks", icon: CheckSquare },
-      { href: `${p}/files`, label: "Files", icon: FileStack },
-      { href: `${p}/messages`, label: "Messages", icon: MessageSquare, badge: unreadMessages },
-      { href: `${p}/reviews`, label: "Design Reviews", icon: Palette, badge: reviewsAwaiting },
-      { href: `${p}/activity`, label: "Activity", icon: Activity },
+      { href: p, label: "My Project", icon: Icons.project, exact: true },
+      { href: `${p}/requirements`, label: "Requirements", icon: Icons.requirements },
+      { href: `${p}/tasks`, label: "Tasks", icon: Icons.tasks },
+      { href: `${p}/files`, label: "Files", icon: Icons.files },
+      { href: `${p}/messages`, label: "Messages", icon: Icons.messages, badge: unreadMessages },
+      { href: `${p}/reviews`, label: "Design Reviews", icon: Icons.design, badge: reviewsAwaiting },
+      { href: `${p}/activity`, label: "Activity", icon: Icons.activity },
     );
   }
-  base.push({ href: "/dashboard/account", label: "Account", icon: UserRound });
+  base.push({ href: "/dashboard/account", label: "Account", icon: Icons.account });
   return base;
 }
 
 const ADMIN_NAV: NavItem[] = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
-  { href: "/admin/projects", label: "Projects", icon: FolderKanban },
-  { href: "/admin/clients", label: "Clients", icon: Users },
-  { href: "/admin/leads", label: "Leads", icon: Inbox },
-  { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
-  { href: "/admin/messages", label: "Messages", icon: MessageSquare },
-  { href: "/admin/portfolio", label: "Portfolio", icon: Briefcase },
-  { href: "/admin/services", label: "Services", icon: Sparkles },
-  { href: "/admin/activity", label: "Activity", icon: Activity },
-  { href: "/admin/settings", label: "Settings", icon: Settings },
+  { href: "/admin", label: "Overview", icon: Icons.dashboard, exact: true },
+  { href: "/admin/projects", label: "Projects", icon: Icons.project },
+  { href: "/admin/clients", label: "Clients", icon: Icons.clients },
+  { href: "/admin/leads", label: "Leads", icon: Icons.leads },
+  { href: "/admin/tasks", label: "Tasks", icon: Icons.tasks },
+  { href: "/admin/messages", label: "Messages", icon: Icons.messages },
+  { href: "/admin/portfolio", label: "Portfolio", icon: Icons.portfolio },
+  { href: "/admin/services", label: "Services", icon: Icons.services },
+  { href: "/admin/activity", label: "Activity", icon: Icons.activity },
+  { href: "/admin/settings", label: "Settings", icon: Icons.settings },
 ];
 
 function isActive(pathname: string, item: NavItem) {
@@ -95,14 +76,7 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => v
                   : "text-muted hover:bg-subtle hover:text-foreground",
               )}
             >
-              <span
-                className={cn(
-                  "flex size-7 shrink-0 items-center justify-center rounded-md transition-colors duration-200",
-                  active ? "bg-accent text-accent-foreground shadow-xs" : "text-faint group-hover:bg-background group-hover:text-accent",
-                )}
-              >
-                <Icon className="size-4" aria-hidden />
-              </span>
+              <IconTile icon={Icon} size="sm" tone={active ? "solid" : "ghost"} className={active ? undefined : "group-hover:bg-background group-hover:text-accent"} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge ? (
                 <span className="rounded-full bg-accent px-1.5 text-[11px] font-semibold leading-4 text-accent-foreground">
@@ -188,15 +162,13 @@ export function AppShell({
               href="/start-project"
               className="mt-4 flex items-center justify-center gap-1.5 rounded-lg border border-dashed border-border px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:bg-accent-subtle hover:text-accent"
             >
-              <Plus className="size-4" aria-hidden /> Start a project
+              <Icons.add aria-hidden /> Start a project
             </Link>
           )}
         </nav>
         <div className="border-t border-border p-3">
           <Link href="/" className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm text-muted transition-colors hover:bg-subtle hover:text-foreground">
-            <span className="flex size-7 items-center justify-center rounded-md text-faint transition-colors group-hover:bg-background group-hover:text-accent">
-              <Home className="size-4" aria-hidden />
-            </span>
+            <IconTile icon={Icons.home} size="sm" tone="ghost" className="group-hover:bg-background group-hover:text-accent" />
             Website
           </Link>
         </div>
@@ -208,7 +180,7 @@ export function AppShell({
           <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
               <Button variant="ghost" size="icon" className="-ml-2 lg:hidden" aria-label="Open navigation">
-                <Menu className="!size-5" />
+                <Icons.menu />
               </Button>
             </DrawerTrigger>
             <DrawerContent side="left">
@@ -235,7 +207,7 @@ export function AppShell({
             {variant === "admin" && (
               <Button asChild variant="ghost" size="icon" className="md:hidden" aria-label="Search">
                 <Link href="/admin/search">
-                  <Search className="!size-[18px]" />
+                  <Icons.search />
                 </Link>
               </Button>
             )}
@@ -257,11 +229,11 @@ export function AppShell({
         >
           <ul className="grid grid-cols-5">
             {[
-              { href: "/dashboard", label: "Home", icon: LayoutDashboard, exact: true },
-              { href: `/dashboard/project/${projectId}`, label: "Project", icon: FolderKanban, exact: true },
-              { href: `/dashboard/project/${projectId}/messages`, label: "Messages", icon: MessageSquare, badge: unreadMessages },
-              { href: `/dashboard/project/${projectId}/files`, label: "Files", icon: FileStack },
-              { href: `/dashboard/project/${projectId}/reviews`, label: "Reviews", icon: Palette, badge: reviewsAwaiting },
+              { href: "/dashboard", label: "Home", icon: Icons.dashboard, exact: true },
+              { href: `/dashboard/project/${projectId}`, label: "Project", icon: Icons.project, exact: true },
+              { href: `/dashboard/project/${projectId}/messages`, label: "Messages", icon: Icons.messages, badge: unreadMessages },
+              { href: `/dashboard/project/${projectId}/files`, label: "Files", icon: Icons.files },
+              { href: `/dashboard/project/${projectId}/reviews`, label: "Reviews", icon: Icons.design, badge: reviewsAwaiting },
             ].map((item) => {
               const active = isActive(pathname, item);
               const Icon = item.icon;
@@ -275,7 +247,7 @@ export function AppShell({
                       active ? "text-accent" : "text-faint",
                     )}
                   >
-                    <Icon className="size-5" aria-hidden />
+                    <Icon aria-hidden />
                     {item.label}
                     {item.badge ? (
                       <span className="absolute right-1/2 top-1 translate-x-4 rounded-full bg-accent px-1 text-[10px] font-semibold leading-4 text-accent-foreground">

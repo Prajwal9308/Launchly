@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -17,9 +17,7 @@ export default async function SubmittedPage({ params }: { params: Promise<{ proj
   return (
     <div className="mx-auto max-w-lg">
       <div className="surface-raised rounded-2xl p-6 text-center shadow-card sm:p-10">
-        <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-success-subtle text-success">
-          <CheckCircle2 className="size-6" aria-hidden />
-        </span>
+        <IconTile icon={Icons.success} size="lg" tone="success" className="mx-auto" />
         <h1 className="mt-5 text-2xl font-semibold">Your project is in.</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           Your project has been submitted. We&apos;ve received your information and will review the project details before the next step.

@@ -1,6 +1,6 @@
 "use client";
 
-import { Paperclip } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { Alert } from "@/components/ui/alert";
 import type { UploadedFile } from "@/components/project/use-upload";
 import { STEPS, type DataStepKey, type QuestionnaireDraft, type SubmissionIssue } from "@/domain/questionnaire";
@@ -88,7 +88,7 @@ export function ReviewStep({
           <ul className="divide-y divide-border">
             {files.map((f) => (
               <li key={f.id} className="flex items-center gap-2 px-4 py-2.5 text-sm">
-                <Paperclip className="size-3.5 text-faint" aria-hidden /> {f.originalName}
+                <Icons.attach className="text-faint" aria-hidden /> {f.originalName}
               </li>
             ))}
           </ul>

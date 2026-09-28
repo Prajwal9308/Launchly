@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Plus, Sparkles } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { NamedIcon } from "@/components/marketing/icons";
 import { Badge } from "@/components/ui/badge";
@@ -19,13 +19,13 @@ export default async function AdminServicesPage() {
   return (
     <div>
       <PageHeader
-        icon={Sparkles}
+        icon={Icons.services}
         title="Services"
         description="Shown on the public website and offered in the project questionnaire."
         actions={
           <Button asChild>
             <Link href="/admin/services/new">
-              <Plus /> New service
+              <Icons.add /> New service
             </Link>
           </Button>
         }
@@ -33,14 +33,14 @@ export default async function AdminServicesPage() {
       <CatalogTabs />
       <Card className="overflow-hidden">
         {services.length === 0 ? (
-          <EmptyState icon={Sparkles} title="No services yet" description="Add the services you offer." />
+          <EmptyState icon={Icons.services} title="No services yet" description="Add the services you offer." />
         ) : (
           <ul className="divide-y divide-border">
             {services.map((s) => (
               <li key={s.id}>
                 <Link href={`/admin/services/${s.id}`} className="flex items-center gap-4 px-5 py-3.5 hover:bg-subtle">
                   <span className="flex size-8 items-center justify-center rounded-lg border border-border text-accent">
-                    <NamedIcon name={s.icon} className="size-4" />
+                    <NamedIcon name={s.icon} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">{s.name}</p>

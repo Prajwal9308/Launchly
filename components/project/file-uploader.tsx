@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, CheckCircle2, UploadCloud, X } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useRouter } from "next/navigation";
 import { useId, useRef, useState } from "react";
 import { ACCEPT_ATTRIBUTE, MAX_UPLOAD_BYTES } from "@/domain/files";
@@ -67,7 +67,7 @@ export function FileUploader({
           dragging ? "border-accent bg-accent-subtle/60" : "border-border-strong bg-canvas hover:border-accent/60 hover:bg-accent-subtle/30",
         )}
       >
-        <UploadCloud className={cn("text-faint", compact ? "size-5" : "size-6")} aria-hidden />
+        <Icons.upload className={cn("text-faint", compact ? "size-5" : "size-6")} aria-hidden />
         <span className="text-sm font-medium text-foreground">
           {label} <span className="font-normal text-muted">or drag and drop</span>
         </span>
@@ -87,9 +87,9 @@ export function FileUploader({
           {items.map((item) => (
             <li key={item.key} className="flex items-center gap-3 rounded-md border border-border bg-background px-3 py-2 text-sm">
               {item.error ? (
-                <AlertCircle className="size-4 shrink-0 text-danger" aria-hidden />
+                <Icons.error className="shrink-0 text-danger" aria-hidden />
               ) : item.file ? (
-                <CheckCircle2 className="size-4 shrink-0 text-success" aria-hidden />
+                <Icons.success className="shrink-0 text-success" aria-hidden />
               ) : (
                 <span className="size-4 shrink-0 animate-spin rounded-full border-2 border-border border-t-accent" aria-hidden />
               )}
@@ -107,7 +107,7 @@ export function FileUploader({
               </div>
               {(item.error || item.file) && (
                 <button type="button" onClick={() => dismiss(item.key)} className="rounded p-1 text-faint hover:bg-subtle hover:text-foreground" aria-label={`Dismiss ${item.name}`}>
-                  <X className="size-3.5" />
+                  <Icons.close />
                 </button>
               )}
             </li>

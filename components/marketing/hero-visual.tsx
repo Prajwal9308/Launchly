@@ -1,14 +1,12 @@
-import { BadgeCheck, MonitorSmartphone } from "lucide-react";
+import { IconTile, Icons, type LucideIcon } from "@/components/ui/icons";
 import Image from "next/image";
 import heroImage from "@/public/images/hero-collaboration.jpg";
 
 /** Small floating label over the photograph. Decorative: the hero copy says the same thing. */
-function Chip({ icon: Icon, title, detail, className }: { icon: typeof BadgeCheck; title: string; detail: string; className: string }) {
+function Chip({ icon: Icon, title, detail, className }: { icon: LucideIcon; title: string; detail: string; className: string }) {
   return (
     <div aria-hidden className={`surface-overlay absolute hidden items-center gap-3 rounded-xl bg-background/95 px-3.5 py-2.5 sm:flex ${className}`}>
-      <span className="flex size-8 items-center justify-center rounded-lg bg-accent-subtle text-accent">
-        <Icon className="size-4" />
-      </span>
+      <IconTile icon={Icon} size="sm" />
       <span className="leading-tight">
         <span className="block text-[13px] font-semibold text-foreground">{title}</span>
         <span className="block text-xs text-faint">{detail}</span>
@@ -38,8 +36,8 @@ export function HeroVisual() {
           className="aspect-[4/3] h-auto w-full rounded-[1.1rem] object-cover object-[55%_50%] sm:aspect-[16/10]"
         />
       </figure>
-      <Chip icon={MonitorSmartphone} title="Web, iOS & Android" detail="One team, every platform" className="-left-4 bottom-8 lg:-left-8" />
-      <Chip icon={BadgeCheck} title="You approve each step" detail="Nothing ships without you" className="-right-3 top-6 lg:-right-6" />
+      <Chip icon={Icons.crossPlatform} title="Web, iOS & Android" detail="One team, every platform" className="-left-4 bottom-8 lg:-left-8" />
+      <Chip icon={Icons.approved} title="You approve each step" detail="Nothing ships without you" className="-right-3 top-6 lg:-right-6" />
     </div>
   );
 }

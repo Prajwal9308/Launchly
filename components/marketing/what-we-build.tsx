@@ -1,5 +1,6 @@
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { SOLUTIONS } from "@/content/solutions";
+import { Icons } from "@/components/ui/icons";
 import { IconBadge } from "./icons";
 import { SolutionSketch } from "./solution-sketch";
 
@@ -14,7 +15,7 @@ export function WhatWeBuild({ detailed = false }: { detailed?: boolean }) {
           <SolutionSketch slug={item.slug} />
           <div className="flex flex-1 flex-col p-6 sm:p-7">
             <div className="flex items-center gap-3">
-              <IconBadge name={item.icon} size="sm" />
+              <IconBadge name={item.icon} size="md" />
               <Title className="text-lg font-semibold">{item.title}</Title>
             </div>
             <p className="mt-2.5 text-[15px] leading-relaxed text-muted">{item.description}</p>
@@ -22,7 +23,7 @@ export function WhatWeBuild({ detailed = false }: { detailed?: boolean }) {
               {item.examples.map((example) =>
                 detailed ? (
                   <li key={example} className="flex items-center gap-2 text-sm text-muted">
-                    <span className="size-1.5 rounded-full bg-accent" aria-hidden /> {example}
+                    <Icons.success className="text-accent" aria-hidden /> {example}
                   </li>
                 ) : (
                   <li key={example} className="rounded-md border border-border bg-canvas px-2.5 py-1 text-xs text-muted">

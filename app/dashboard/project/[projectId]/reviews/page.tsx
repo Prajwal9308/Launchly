@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BadgeCheck, History, ListChecks, Palette } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { ApprovalCard } from "@/components/project/approval-card";
 import { DesignReviewCard } from "@/components/project/design-review-card";
@@ -28,7 +28,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
     <div className="space-y-8">
       {pendingApprovals.length > 0 && (
         <section>
-          <SectionTitle icon={BadgeCheck}>Approvals needed</SectionTitle>
+          <SectionTitle icon={Icons.approved}>Approvals needed</SectionTitle>
           <div className="space-y-4">
             {pendingApprovals.map((a) => (
               <ApprovalCard key={a.id} approval={a} viewer="client" />
@@ -38,7 +38,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
       )}
 
       <section>
-        <SectionTitle icon={Palette}>Designs</SectionTitle>
+        <SectionTitle icon={Icons.design}>Designs</SectionTitle>
         {active.length ? (
           <div className="space-y-6">
             {active.map((r) => (
@@ -47,14 +47,14 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
           </div>
         ) : (
           <Card>
-            <EmptyState icon={Palette} title="No designs to review yet" description="When a design is ready, you'll see it here and get a notification." />
+            <EmptyState icon={Icons.design} title="No designs to review yet" description="When a design is ready, you'll see it here and get a notification." />
           </Card>
         )}
       </section>
 
       {superseded.length > 0 && (
         <section>
-          <SectionTitle icon={History}>Previous versions</SectionTitle>
+          <SectionTitle icon={Icons.history}>Previous versions</SectionTitle>
           <div className="space-y-3">
             {superseded.map((r) => (
               <details key={r.id} className="group">
@@ -72,7 +72,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
 
       {pastApprovals.length > 0 && (
         <section>
-          <SectionTitle icon={ListChecks}>Approval history</SectionTitle>
+          <SectionTitle icon={Icons.checklist}>Approval history</SectionTitle>
           <div className="space-y-3">
             {pastApprovals.map((a) => (
               <ApprovalCard key={a.id} approval={a} viewer="client" />

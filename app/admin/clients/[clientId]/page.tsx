@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Mail, Phone, Users } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader, SectionTitle } from "@/components/app/page-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProjectStatusBadge } from "@/components/ui/status-badge";
@@ -16,12 +16,12 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
 
   return (
     <div>
-      <PageHeader icon={Building2} breadcrumb={[{ label: "Clients", href: "/admin/clients" }, { label: org.name }]} title={org.name} description={`Client since ${formatDate(org.createdAt)}`} />
+      <PageHeader icon={Icons.business} breadcrumb={[{ label: "Clients", href: "/admin/clients" }, { label: org.name }]} title={org.name} description={`Client since ${formatDate(org.createdAt)}`} />
       <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr]">
         <div className="space-y-6">
           <Card>
             <CardContent>
-              <SectionTitle icon={Users}>Contacts</SectionTitle>
+              <SectionTitle icon={Icons.clients}>Contacts</SectionTitle>
               {org.members.length ? (
                 <ul className="space-y-4">
                   {org.members.map(({ user }) => (
@@ -30,11 +30,11 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
                         {user.firstName} {user.lastName}
                       </p>
                       <a href={`mailto:${user.email}`} className="mt-1 flex items-center gap-2 text-muted hover:text-foreground">
-                        <Mail className="size-3.5" aria-hidden /> {user.email}
+                        <Icons.email aria-hidden /> {user.email}
                       </a>
                       {user.clientProfile?.phone && (
                         <a href={`tel:${user.clientProfile.phone}`} className="mt-0.5 flex items-center gap-2 text-muted hover:text-foreground">
-                          <Phone className="size-3.5" aria-hidden /> {user.clientProfile.phone}
+                          <Icons.phone aria-hidden /> {user.clientProfile.phone}
                         </a>
                       )}
                       <p className="mt-1 text-xs text-faint">Last login: {user.lastLoginAt ? formatRelative(user.lastLoginAt) : "never"}</p>
@@ -49,7 +49,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ c
           {org.businesses.map((b) => (
             <Card key={b.id}>
               <CardContent>
-                <SectionTitle icon={Building2}>{b.name}</SectionTitle>
+                <SectionTitle icon={Icons.business}>{b.name}</SectionTitle>
                 <dl className="space-y-2 text-sm">
                   {[
                     ["Industry", b.industry],

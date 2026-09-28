@@ -1,4 +1,4 @@
-import { CalendarDays, CheckCircle2, Circle, CircleDashed, OctagonAlert } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import type { TaskPriority, TaskStatus } from "@/db/enums";
 import { PriorityBadge, TaskStatusBadge } from "@/components/ui/status-badge";
 import { formatDate } from "@/lib/format";
@@ -18,10 +18,10 @@ export interface TaskView {
 }
 
 const STATUS_ICON = {
-  TODO: <Circle className="size-4 text-border-strong" aria-hidden />,
-  IN_PROGRESS: <CircleDashed className="size-4 text-info" aria-hidden />,
-  BLOCKED: <OctagonAlert className="size-4 text-danger" aria-hidden />,
-  DONE: <CheckCircle2 className="size-4 text-success" aria-hidden />,
+  TODO: <Icons.upcoming className="text-border-strong" aria-hidden />,
+  IN_PROGRESS: <Icons.current className="text-info" aria-hidden />,
+  BLOCKED: <Icons.blocked className="text-danger" aria-hidden />,
+  DONE: <Icons.success className="text-success" aria-hidden />,
 };
 
 function isPast(date: Date | null) {
@@ -44,7 +44,7 @@ export function TaskItem({ task, showPriority = false, action }: { task: TaskVie
           {showPriority && <PriorityBadge priority={task.priority} />}
           {task.dueDate && task.status !== "DONE" && (
             <span className={cn("inline-flex items-center gap-1", overdue && "text-danger")}>
-              <CalendarDays className="size-3" aria-hidden /> {overdue ? "Overdue · " : "Due "}
+              <Icons.date aria-hidden /> {overdue ? "Overdue · " : "Due "}
               {formatDate(task.dueDate)}
             </span>
           )}

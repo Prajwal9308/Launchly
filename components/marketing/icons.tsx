@@ -1,126 +1,71 @@
-import {
-  BadgeCheck,
-  BellRing,
-  Briefcase,
-  BriefcaseBusiness,
-  Building2,
-  CircleHelp,
-  ClipboardList,
-  Code2,
-  Compass,
-  FileSignature,
-  FileText,
-  FolderKanban,
-  Gauge,
-  Globe,
-  Layers,
-  LayoutDashboard,
-  LayoutTemplate,
-  ListChecks,
-  Mail,
-  Megaphone,
-  MessagesSquare,
-  Monitor,
-  MonitorSmartphone,
-  Palette,
-  PenTool,
-  RefreshCw,
-  Rocket,
-  Scale,
-  Search,
-  ShieldCheck,
-  ShoppingCart,
-  Smartphone,
-  Sparkles,
-  Tag,
-  Target,
-  Users,
-  Workflow,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+import { IconTile, Icons, type LucideIcon } from "@/components/ui/icons";
 
 /**
- * The site's single icon system: Lucide outline icons at the default 2px
- * stroke, always in the accent colour. Content and the database refer to
- * icons by these keys, so every icon on the site comes from this map.
+ * String keys for icons chosen in content files and the database (service
+ * icons are stored by key), mapped onto the Icons registry. The service keys
+ * must stay stable because existing rows refer to them.
  */
-const ICONS: Record<string, LucideIcon> = {
-  // Services
-  monitor: Monitor,
-  smartphone: Smartphone,
-  "pen-tool": PenTool,
-  "shopping-cart": ShoppingCart,
-  "briefcase-business": BriefcaseBusiness,
-  // Solutions and values
-  globe: Globe,
-  "layout-dashboard": LayoutDashboard,
-  "monitor-smartphone": MonitorSmartphone,
-  "list-checks": ListChecks,
-  code: Code2,
-  target: Target,
-  gauge: Gauge,
-  // Process
-  compass: Compass,
-  "clipboard-list": ClipboardList,
-  rocket: Rocket,
+export const CONTENT_ICONS: Record<string, LucideIcon> = {
+  // Services (stored on Service.icon)
+  monitor: Icons.web,
+  smartphone: Icons.mobile,
+  "pen-tool": Icons.uiDesign,
+  "shopping-cart": Icons.ecommerce,
+  "briefcase-business": Icons.customBusiness,
+  "monitor-smartphone": Icons.crossPlatform,
+  globe: Icons.website,
+  workflow: Icons.process,
+  "layout-dashboard": Icons.dashboard,
+  palette: Icons.design,
+  code: Icons.develop,
+  layout: Icons.template,
+  building: Icons.business,
+  refresh: Icons.revision,
+  search: Icons.search,
+  wrench: Icons.maintenance,
+  "file-text": Icons.document,
+  megaphone: Icons.marketing,
+  // Solutions, values and process steps
+  "list-checks": Icons.checklist,
+  target: Icons.goals,
+  gauge: Icons.performance,
+  compass: Icons.discover,
+  "clipboard-list": Icons.requirements,
+  "file-signature": Icons.scope,
+  rocket: Icons.launch,
   // Section labels and working-together points
-  sparkles: Sparkles,
-  users: Users,
-  mail: Mail,
-  tag: Tag,
-  "circle-help": CircleHelp,
-  "shield-check": ShieldCheck,
-  scale: Scale,
-  "file-signature": FileSignature,
-  "bell-ring": BellRing,
-  "folder-kanban": FolderKanban,
-  "badge-check": BadgeCheck,
-  messages: MessagesSquare,
-  // Other choices offered in the admin service editor
-  workflow: Workflow,
-  layers: Layers,
-  palette: Palette,
-  layout: LayoutTemplate,
-  building: Building2,
-  briefcase: Briefcase,
-  refresh: RefreshCw,
-  search: Search,
-  wrench: Wrench,
-  "file-text": FileText,
-  megaphone: Megaphone,
+  quality: Icons.quality,
+  users: Icons.clients,
+  mail: Icons.email,
+  tag: Icons.pricing,
+  "circle-help": Icons.help,
+  "shield-check": Icons.privacy,
+  scale: Icons.terms,
+  layers: Icons.services,
+  briefcase: Icons.portfolio,
+  notifications: Icons.notifications,
+  "folder-kanban": Icons.project,
+  "badge-check": Icons.approved,
+  messages: Icons.messages,
 };
 
-export type IconName = keyof typeof ICONS;
+export function contentIcon(name: string): LucideIcon {
+  const icon = CONTENT_ICONS[name];
+  if (!icon && process.env.NODE_ENV !== "production") console.warn(`Unknown icon key "${name}" — add it to CONTENT_ICONS.`);
+  return icon ?? Icons.template;
+}
 
 export function NamedIcon({ name, className }: { name: string; className?: string }) {
-  const Icon = ICONS[name] ?? LayoutTemplate;
+  if (!(name in CONTENT_ICONS)) contentIcon(name); // dev warning for unknown keys
+  const Icon = CONTENT_ICONS[name] ?? Icons.template;
   return <Icon className={className} aria-hidden />;
 }
 
-const BADGE_SIZES = {
-  md: { box: "size-11 rounded-xl", icon: "size-5" },
-  sm: { box: "size-9 rounded-lg", icon: "size-[18px]" },
-} as const;
-
 /**
- * Icon in a soft accent tile — the one container style used for services,
- * solutions, values and process steps. Decorative: the adjacent heading
- * carries the meaning. Inside a `group` link it fills with the accent colour on
- * hover — a colour change rather than movement, so nothing shifts.
+ * A content icon in the shared tile. `lg` (48px tile, 24px icon) for feature
+ * cards; `md` (40px, 20px) for compact rows and steps. Inside a `group` link the
+ * tile fills with the accent colour on hover — a colour change, so nothing shifts.
  */
-export function IconBadge({ name, size = "md", className }: { name: string; size?: keyof typeof BADGE_SIZES; className?: string }) {
-  const s = BADGE_SIZES[size];
-  return (
-    <span
-      className={cn(
-        "flex shrink-0 items-center justify-center bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60 transition-colors duration-200 ease-out group-hover:bg-accent group-hover:text-accent-foreground group-hover:ring-accent group-focus-visible:bg-accent group-focus-visible:text-accent-foreground group-focus-visible:ring-accent",
-        s.box,
-        className,
-      )}
-    >
-      <NamedIcon name={name} className={s.icon} />
-    </span>
-  );
+export function IconBadge({ name, size = "lg", className }: { name: string; size?: "md" | "lg"; className?: string }) {
+  return <IconTile icon={contentIcon(name)} size={size} interactive className={className} />;
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, FileText, Mail, Milestone, Phone, Sparkles, UserRound } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { GenerateBriefButton } from "@/components/admin/brief-panel";
 import { ProjectProgress } from "@/components/project/project-progress";
@@ -71,7 +71,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle icon={FileText} action={isAIEnabled() && project.status !== "DRAFT" ? <GenerateBriefButton projectId={project.id} /> : undefined}>Project brief</SectionTitle>
+              <SectionTitle icon={Icons.document} action={isAIEnabled() && project.status !== "DRAFT" ? <GenerateBriefButton projectId={project.id} /> : undefined}>Project brief</SectionTitle>
               {systemBrief ? (
                 <>
                   <p className="mb-4 text-xs text-faint">Assembled from the client&apos;s questionnaire answers only.</p>
@@ -91,7 +91,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
           {aiBrief && (
             <Card>
               <CardContent>
-                <SectionTitle icon={Sparkles} action={<Badge tone="accent">AI-generated</Badge>}>AI brief</SectionTitle>
+                <SectionTitle icon={Icons.ai} action={<Badge tone="accent">AI-generated</Badge>}>AI brief</SectionTitle>
                 <p className="mb-4 text-xs text-faint">
                   Generated {formatDateTime(aiBrief.createdAt)} by {aiBrief.generator}. Based only on client-provided answers — verify before use.
                 </p>
@@ -104,7 +104,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
         <div className="space-y-6">
           <Card>
             <CardContent>
-              <SectionTitle icon={UserRound}>Client</SectionTitle>
+              <SectionTitle icon={Icons.account}>Client</SectionTitle>
               {members.length ? (
                 <ul className="space-y-3">
                   {members.map((u) => (
@@ -113,11 +113,11 @@ export default async function AdminProjectOverview({ params }: { params: Promise
                         {u.firstName} {u.lastName}
                       </Link>
                       <a href={`mailto:${u.email}`} className="mt-1 flex items-center gap-2 text-muted hover:text-foreground">
-                        <Mail className="size-3.5" aria-hidden /> {u.email}
+                        <Icons.email aria-hidden /> {u.email}
                       </a>
                       {u.clientProfile?.phone && (
                         <a href={`tel:${u.clientProfile.phone}`} className="mt-0.5 flex items-center gap-2 text-muted hover:text-foreground">
-                          <Phone className="size-3.5" aria-hidden /> {u.clientProfile.phone}
+                          <Icons.phone aria-hidden /> {u.clientProfile.phone}
                         </a>
                       )}
                     </li>
@@ -131,7 +131,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle icon={Building2}>Business</SectionTitle>
+              <SectionTitle icon={Icons.business}>Business</SectionTitle>
               <dl className="space-y-2.5 text-sm">
                 {[
                   ["Name", project.business?.name],
@@ -153,7 +153,7 @@ export default async function AdminProjectOverview({ params }: { params: Promise
 
           <Card>
             <CardContent>
-              <SectionTitle icon={Milestone}>Client-facing timeline</SectionTitle>
+              <SectionTitle icon={Icons.timeline}>Client-facing timeline</SectionTitle>
               <ProjectProgress phases={project.phases} onHold={project.status === "ON_HOLD"} />
             </CardContent>
           </Card>

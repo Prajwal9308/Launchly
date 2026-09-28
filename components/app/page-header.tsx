@@ -1,21 +1,7 @@
-import type { LucideIcon } from "lucide-react";
 import * as React from "react";
+import { IconTile, type LucideIcon } from "@/components/ui/icons";
 import { Breadcrumb, type Crumb } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
-
-/** Accent icon tile shared by page and section headings. */
-export function HeadingIcon({ icon: Icon, size = "md" }: { icon: LucideIcon; size?: "sm" | "md" }) {
-  return (
-    <span
-      className={cn(
-        "flex shrink-0 items-center justify-center bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60",
-        size === "md" ? "size-11 rounded-xl" : "size-7 rounded-lg",
-      )}
-    >
-      <Icon className={size === "md" ? "size-5" : "size-3.5"} aria-hidden />
-    </span>
-  );
-}
 
 export function PageHeader({
   title,
@@ -42,7 +28,7 @@ export function PageHeader({
         <div className="flex min-w-0 items-start gap-4">
           {icon && (
             <span className="hidden sm:block">
-              <HeadingIcon icon={icon} />
+              <IconTile icon={icon} />
             </span>
           )}
           <div className="min-w-0 space-y-1">
@@ -61,7 +47,7 @@ export function SectionTitle({ children, action, icon }: { children: React.React
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
       <h2 className="flex items-center gap-2.5 text-sm font-semibold">
-        {icon && <HeadingIcon icon={icon} size="sm" />}
+        {icon && <IconTile icon={icon} size="sm" />}
         {children}
       </h2>
       {action}

@@ -1,6 +1,6 @@
 "use client";
 
-import { CornerDownLeft, Search } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Dialog as DialogPrimitive } from "radix-ui";
@@ -68,7 +68,7 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
           type="button"
           className="group flex h-10 w-full max-w-sm items-center gap-2 rounded-lg border border-border bg-canvas px-3 text-sm text-faint shadow-xs transition-colors hover:border-border-strong hover:text-muted"
         >
-          <Search className="size-4" aria-hidden />
+          <Icons.search aria-hidden />
           <span className="flex-1 text-left">{searchHref ? "Search or jump to…" : "Jump to…"}</span>
           <kbd className="hidden rounded border border-border bg-background px-1.5 font-sans text-[11px] text-faint sm:inline">⌘K</kbd>
         </button>
@@ -81,7 +81,7 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
         >
           <DialogPrimitive.Title className="sr-only">Command menu</DialogPrimitive.Title>
           <div className="flex items-center gap-3 border-b border-border px-4">
-            <Search className="size-4 shrink-0 text-faint" aria-hidden />
+            <Icons.search className="shrink-0 text-faint" aria-hidden />
             <input
               autoFocus
               role="combobox"
@@ -130,7 +130,7 @@ export function CommandMenu({ items, searchHref }: { items: CommandItem[]; searc
                     )}
                   >
                     {item.label}
-                    {index === active && <CornerDownLeft className="size-3.5 text-faint" aria-hidden />}
+                    {index === active && <Icons.enter className="text-faint" aria-hidden />}
                   </div>
                 </li>
               );

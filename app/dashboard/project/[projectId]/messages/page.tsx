@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { MessageComposer } from "@/components/project/message-composer";
 import { MessageThread } from "@/components/project/message-thread";
 import { Card } from "@/components/ui/card";
@@ -47,7 +47,7 @@ export default async function ClientMessagesPage({
         {messages.length ? (
           <MessageThread messages={messages} currentUserId={actor.id} studioName={settings.businessName} />
         ) : (
-          <EmptyState icon={MessageSquare} title="No messages yet" description="Ask a question or share an update about your project." compact />
+          <EmptyState icon={Icons.messages} title="No messages yet" description="Ask a question or share an update about your project." compact />
         )}
       </Card>
       <MessageComposer projectId={projectId} />

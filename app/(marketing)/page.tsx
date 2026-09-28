@@ -1,4 +1,4 @@
-import { ArrowRight, FileSignature, Layers, MessagesSquare, MonitorSmartphone, ShieldCheck, Sparkles } from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { ContactSection } from "@/components/marketing/contact-section";
 import { CtaSection } from "@/components/marketing/cta-section";
@@ -13,15 +13,15 @@ import { Button } from "@/components/ui/button";
 import { getSiteSettings, listPublishedServices } from "@/services/catalog";
 
 const HERO_POINTS = [
-  { label: "Written scope and quote", icon: FileSignature },
-  { label: "Talk directly to your developers", icon: MessagesSquare },
-  { label: "Nothing goes live without your approval", icon: ShieldCheck },
+  { label: "Written scope and quote", icon: Icons.scope },
+  { label: "Talk directly to your developers", icon: Icons.messages },
+  { label: "Nothing goes live without your approval", icon: Icons.approved },
 ];
 
 const ABOUT_POINTS = [
-  { text: "You talk directly to the people designing and building your product.", icon: MessagesSquare },
-  { text: "Scope, timeline and cost are agreed in writing before work begins.", icon: FileSignature },
-  { text: "Web and mobile under one roof, so your product works across platforms.", icon: MonitorSmartphone },
+  { text: "You talk directly to the people designing and building your product.", icon: Icons.messages },
+  { text: "Scope, timeline and cost are agreed in writing before work begins.", icon: Icons.scope },
+  { text: "Web and mobile under one roof, so your product works across platforms.", icon: Icons.crossPlatform },
 ];
 
 export default async function HomePage() {
@@ -36,7 +36,7 @@ export default async function HomePage() {
         <div className="container-page grid items-center gap-12 pb-16 pt-12 sm:gap-14 sm:pb-20 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:pb-24 lg:pt-24">
           <div className="max-w-xl animate-rise">
             <p className="eyebrow">
-              <Sparkles className="size-3.5" aria-hidden /> Web &amp; mobile studio
+              <Icons.crossPlatform aria-hidden /> Web &amp; mobile studio
             </p>
             <h1 className="mt-5 text-[2.25rem] font-bold leading-[1.06] sm:text-5xl sm:leading-[1.04] lg:text-[3.5rem]">
               Websites and mobile apps for your business, <span className="text-gradient">scoped in writing and built to last.</span>
@@ -49,21 +49,19 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href="/contact">
-                  Get a free quote <ArrowRight aria-hidden />
+                  Get a free quote <Icons.forward aria-hidden />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/services">
-                  <Layers aria-hidden /> See our services
+                  <Icons.services aria-hidden /> See our services
                 </Link>
               </Button>
             </div>
             <ul className="mt-8 grid gap-2.5 text-sm text-muted sm:flex sm:flex-wrap sm:gap-x-5">
               {HERO_POINTS.map(({ label, icon: Icon }) => (
                 <li key={label} className="flex items-center gap-2">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-subtle text-accent">
-                    <Icon className="size-3.5" aria-hidden />
-                  </span>
+                  <Icon className="text-accent" aria-hidden />
                   {label}
                 </li>
               ))}
@@ -91,7 +89,7 @@ export default async function HomePage() {
 
       {/* Why */}
       <Section>
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="sparkles" title="What you can expect from us" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="quality" title="What you can expect from us" />
         <div className="mt-10 sm:mt-12">
           <WhyGrid />
         </div>
@@ -124,9 +122,7 @@ export default async function HomePage() {
             <ul className="mt-7 space-y-3">
               {ABOUT_POINTS.map(({ text, icon: Icon }) => (
                 <li key={text} className="surface flex items-center gap-4 rounded-xl p-4 text-[15px] text-foreground">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60">
-                    <Icon className="size-[18px]" aria-hidden />
-                  </span>
+                  <IconTile icon={Icon} />
                   {text}
                 </li>
               ))}

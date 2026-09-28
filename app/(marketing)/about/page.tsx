@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CircleCheck } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { PageHero, Section, SectionHeader } from "@/components/marketing/section";
 import { WhyGrid } from "@/components/marketing/why-grid";
@@ -45,7 +45,7 @@ export default async function AboutPage() {
             <ul className="space-y-3 pt-4">
               {PRINCIPLES.map((p) => (
                 <li key={p} className="flex gap-3 text-[15px] text-foreground">
-                  <CircleCheck className="mt-1 size-4 shrink-0 text-accent" aria-hidden /> {p}
+                  <Icons.success className="mt-1 shrink-0 text-accent" aria-hidden /> {p}
                 </li>
               ))}
             </ul>
@@ -53,7 +53,7 @@ export default async function AboutPage() {
         </div>
       </Section>
       <Section tone="muted">
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="sparkles" title="Built around your business needs" />
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} eyebrowIcon="quality" title="Built around your business needs" />
         <div className="mt-12">
           <WhyGrid />
         </div>

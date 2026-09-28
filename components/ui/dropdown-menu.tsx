@@ -32,7 +32,7 @@ export function DropdownMenuItem({ className, ...props }: React.ComponentProps<t
   return (
     <DropdownPrimitive.Item
       className={cn(
-        "flex cursor-default select-none items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground outline-none data-[highlighted]:bg-subtle data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:text-faint",
+        "flex cursor-default select-none items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-foreground outline-none data-[highlighted]:bg-subtle data-[disabled]:opacity-50 [&_svg]:size-5 [&_svg]:text-faint",
         className,
       )}
       {...props}

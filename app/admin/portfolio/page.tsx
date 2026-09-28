@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Briefcase, Plus } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,20 +17,20 @@ export default async function AdminPortfolioPage() {
   return (
     <div>
       <PageHeader
-        icon={Briefcase}
+        icon={Icons.portfolio}
         title="Portfolio"
         description="Sample projects are always labelled as samples on the public site."
         actions={
           <Button asChild>
             <Link href="/admin/portfolio/new">
-              <Plus /> New project
+              <Icons.add /> New project
             </Link>
           </Button>
         }
       />
       <Card className="overflow-hidden">
         {items.length === 0 ? (
-          <EmptyState icon={Briefcase} title="No portfolio projects" description="Add your first project to show on the website." />
+          <EmptyState icon={Icons.portfolio} title="No portfolio projects" description="Add your first project to show on the website." />
         ) : (
           <ul className="divide-y divide-border">
             {items.map((item) => (

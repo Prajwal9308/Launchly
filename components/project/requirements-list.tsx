@@ -1,4 +1,4 @@
-import { ClipboardList } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export interface RequirementView {
@@ -12,7 +12,7 @@ export interface RequirementView {
 /** Requirements grouped by questionnaire section, as a clean definition list. */
 export function RequirementsList({ rows, renderAction }: { rows: RequirementView[]; renderAction?: (row: RequirementView) => React.ReactNode }) {
   if (!rows.length) {
-    return <EmptyState icon={ClipboardList} title="No requirements yet" description="Requirements appear here once the project questionnaire is submitted." />;
+    return <EmptyState icon={Icons.requirements} title="No requirements yet" description="Requirements appear here once the project questionnaire is submitted." />;
   }
   const sections = [...new Set(rows.map((r) => r.section))];
   return (

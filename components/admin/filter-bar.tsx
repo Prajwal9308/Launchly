@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { Select } from "@/components/ui/select";
@@ -38,7 +38,7 @@ export function FilterBar({ searchPlaceholder = "Search…", filters = [] }: Fil
       aria-busy={pending}
     >
       <div className="relative flex-1 sm:max-w-xs">
-        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-faint" aria-hidden />
+        <Icons.search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-faint" aria-hidden />
         <label htmlFor="filter-q" className="sr-only">
           Search
         </label>

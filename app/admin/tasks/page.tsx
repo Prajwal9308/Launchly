@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckSquare } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { FilterBar } from "@/components/admin/filter-bar";
 import { AdminTaskRow } from "@/components/admin/task-row";
@@ -24,7 +24,7 @@ export default async function AdminTasksPage({ searchParams }: { searchParams: P
 
   return (
     <div>
-      <PageHeader icon={CheckSquare} title="Tasks" description="Across all active projects, soonest due first." />
+      <PageHeader icon={Icons.tasks} title="Tasks" description="Across all active projects, soonest due first." />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search tasks or projects"
@@ -46,7 +46,7 @@ export default async function AdminTasksPage({ searchParams }: { searchParams: P
       </div>
       <Card className="divide-y divide-border overflow-hidden">
         {items.length === 0 ? (
-          <EmptyState icon={CheckSquare} title="No tasks" description="Nothing matches these filters." />
+          <EmptyState icon={Icons.tasks} title="No tasks" description="Nothing matches these filters." />
         ) : (
           items.map((t) => (
             <div key={t.id}>

@@ -1,4 +1,4 @@
-import { ArrowRight, FileText, LogIn, Mail, Phone, ShieldCheck } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { isPlaceholderEmail } from "@/lib/site";
 import { Logo } from "./logo";
@@ -62,7 +62,7 @@ export function SiteFooter({
             {!isPlaceholderEmail(contactEmail) && (
               <li>
                 <a href={`mailto:${contactEmail}`} className="inline-flex min-h-10 items-center gap-2 break-all text-muted transition-colors hover:text-foreground sm:min-h-0">
-                  <Mail className="size-4 shrink-0 text-accent" aria-hidden />
+                  <Icons.email className="shrink-0 text-accent" aria-hidden />
                   {contactEmail}
                 </a>
               </li>
@@ -70,20 +70,20 @@ export function SiteFooter({
             {contactPhone && (
               <li>
                 <a href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`} className="inline-flex min-h-10 items-center gap-2 text-muted transition-colors hover:text-foreground sm:min-h-0">
-                  <Phone className="size-4 shrink-0 text-accent" aria-hidden />
+                  <Icons.phone className="shrink-0 text-accent" aria-hidden />
                   {contactPhone}
                 </a>
               </li>
             )}
             <li>
               <Link href="/contact" className="group inline-flex min-h-10 items-center gap-2 font-medium text-accent hover:underline sm:min-h-0">
-                <ArrowRight className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
+                <Icons.forward className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
                 Start a project
               </Link>
             </li>
             <li>
               <Link href="/login" className="inline-flex min-h-10 items-center gap-2 text-muted transition-colors hover:text-foreground sm:min-h-0">
-                <LogIn className="size-4 shrink-0 text-accent" aria-hidden />
+                <Icons.login className="shrink-0 text-accent" aria-hidden />
                 Client login
               </Link>
             </li>
@@ -97,11 +97,11 @@ export function SiteFooter({
           </p>
           <p className="flex gap-4">
             <Link href="/privacy" className="inline-flex items-center gap-1.5 hover:text-foreground">
-              <ShieldCheck className="size-3.5" aria-hidden />
+              <Icons.privacy aria-hidden />
               Privacy
             </Link>
             <Link href="/terms" className="inline-flex items-center gap-1.5 hover:text-foreground">
-              <FileText className="size-3.5" aria-hidden />
+              <Icons.document aria-hidden />
               Terms
             </Link>
           </p>

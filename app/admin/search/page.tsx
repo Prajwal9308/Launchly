@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { FilterBar } from "@/components/admin/filter-bar";
 import { Card } from "@/components/ui/card";
@@ -34,17 +34,17 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <div>
-      <PageHeader icon={Search} title="Search" description="Clients, projects, businesses and leads." />
+      <PageHeader icon={Icons.search} title="Search" description="Clients, projects, businesses and leads." />
       <div className="mb-6">
         <FilterBar searchPlaceholder="Search…" />
       </div>
       {results.q.length < 2 ? (
         <Card>
-          <EmptyState icon={Search} title="Search your business" description="Type at least two characters." compact />
+          <EmptyState icon={Icons.search} title="Search your business" description="Type at least two characters." compact />
         </Card>
       ) : total === 0 ? (
         <Card>
-          <EmptyState icon={Search} title={`No results for “${results.q}”`} description="Try a name, email, business or project number." compact />
+          <EmptyState icon={Icons.search} title={`No results for “${results.q}”`} description="Try a name, email, business or project number." compact />
         </Card>
       ) : (
         <div className="space-y-4">

@@ -40,7 +40,7 @@ export function SectionHeader({ eyebrow, eyebrowIcon, title, description, align 
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
       {eyebrow && (
         <p className="eyebrow">
-          {eyebrowIcon && <NamedIcon name={eyebrowIcon} className="size-3.5" />}
+          {eyebrowIcon && <NamedIcon name={eyebrowIcon} />}
           {eyebrow}
         </p>
       )}

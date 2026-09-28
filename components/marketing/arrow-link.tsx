@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ export function ArrowLink({ href, children, className }: { href: string; childre
       )}
     >
       {children}
-      <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
+      <Icons.forward className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
     </Link>
   );
 }

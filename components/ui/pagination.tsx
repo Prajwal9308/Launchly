@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./button";
@@ -24,10 +24,10 @@ export function Pagination({ page, pageSize, total, hrefFor }: PaginationProps) 
       </p>
       <div className="flex gap-2">
         <PageLink href={hrefFor(page - 1)} disabled={page <= 1} label="Previous page">
-          <ChevronLeft /> <span className="hidden sm:inline">Previous</span>
+          <Icons.chevronLeft /> <span className="hidden sm:inline">Previous</span>
         </PageLink>
         <PageLink href={hrefFor(page + 1)} disabled={page >= pages} label="Next page">
-          <span className="hidden sm:inline">Next</span> <ChevronRight />
+          <span className="hidden sm:inline">Next</span> <Icons.chevronRight />
         </PageLink>
       </div>
     </nav>

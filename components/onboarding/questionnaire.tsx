@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, CloudCheck, Loader2, TriangleAlert } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -208,7 +208,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
                     )}
                     aria-hidden
                   >
-                    {state === "complete" ? <Check className="size-3" strokeWidth={3} /> : i + 1}
+                    {state === "complete" ? <Icons.check className="size-3 [stroke-width:3]" aria-hidden /> : i + 1}
                   </span>
                   {s.title}
                 </button>
@@ -247,7 +247,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
 
           <div className="flex items-center justify-between gap-3 border-t border-border bg-canvas px-5 py-4 sm:px-8">
             <Button variant="ghost" onClick={() => void goTo(index - 1)} disabled={index === 0} className={index === 0 ? "invisible" : undefined}>
-              <ArrowLeft aria-hidden /> Back
+              <Icons.back aria-hidden /> Back
             </Button>
             {stepKey === "review" ? (
               <Button onClick={submit} loading={submitting} disabled={issues.length > 0}>
@@ -255,7 +255,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
               </Button>
             ) : (
               <Button onClick={() => void goTo(index + 1)} disabled={saveState === "saving"}>
-                {STEPS[index + 1]?.key === "review" ? "Review Project" : "Continue"} <ArrowRight aria-hidden />
+                {STEPS[index + 1]?.key === "review" ? "Review Project" : "Continue"} <Icons.forward aria-hidden />
               </Button>
             )}
           </div>
@@ -271,17 +271,17 @@ function SaveIndicator({ state }: { state: SaveState }) {
     <p className="flex shrink-0 items-center gap-1.5 text-xs text-faint" role="status" aria-live="polite">
       {state === "saving" && (
         <>
-          <Loader2 className="size-3.5 animate-spin" aria-hidden /> Saving…
+          <Icons.loading className="animate-spin" aria-hidden /> Saving…
         </>
       )}
       {state === "saved" && (
         <>
-          <CloudCheck className="size-3.5 text-success" aria-hidden /> Saved
+          <Icons.saved className="text-success" aria-hidden /> Saved
         </>
       )}
       {state === "error" && (
         <>
-          <TriangleAlert className="size-3.5 text-danger" aria-hidden /> <span className="text-danger">Not saved</span>
+          <Icons.warning className="text-danger" aria-hidden /> <span className="text-danger">Not saved</span>
         </>
       )}
     </p>

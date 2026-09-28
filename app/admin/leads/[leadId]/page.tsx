@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Inbox, Mail, Phone } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { ConvertLeadButton, LeadStatusSelect } from "@/components/admin/lead-actions";
 import { Alert } from "@/components/ui/alert";
@@ -19,7 +19,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
   return (
     <div className="max-w-3xl">
       <PageHeader
-        icon={Inbox}
+        icon={Icons.leads}
         breadcrumb={[{ label: "Leads", href: "/admin/leads" }, { label: lead.name }]}
         title={lead.name}
         meta={
@@ -61,7 +61,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
               <dt className="text-faint">Email</dt>
               <dd>
                 <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-1.5 hover:underline">
-                  <Mail className="size-3.5 text-faint" aria-hidden /> {lead.email}
+                  <Icons.email className="text-faint" aria-hidden /> {lead.email}
                 </a>
               </dd>
             </div>
@@ -70,7 +70,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
               <dd>
                 {lead.phone ? (
                   <a href={`tel:${lead.phone}`} className="inline-flex items-center gap-1.5 hover:underline">
-                    <Phone className="size-3.5 text-faint" aria-hidden /> {lead.phone}
+                    <Icons.phone className="text-faint" aria-hidden /> {lead.phone}
                   </a>
                 ) : (
                   "—"

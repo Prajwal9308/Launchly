@@ -50,7 +50,7 @@ export function NavTabs({ tabs, className }: { tabs: NavTab[]; className?: strin
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition-colors [&_svg]:size-4 [&_svg]:shrink-0",
+                  "-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-sm font-medium transition-colors [&_svg]:shrink-0",
                   active ? "border-accent text-foreground [&_svg]:text-accent" : "border-transparent text-muted hover:text-foreground [&_svg]:text-faint",
                 )}
               >

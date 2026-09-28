@@ -1,4 +1,4 @@
-import { Settings } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/app/page-header";
 import { SettingsForm } from "@/components/admin/catalog-forms";
@@ -26,7 +26,7 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <PageHeader icon={Settings} title="Settings" />
+      <PageHeader icon={Icons.settings} title="Settings" />
       <Card>
         <CardContent className="divide-y divide-border">
           <FormSection title="Studio details" description="Shown across the public website.">

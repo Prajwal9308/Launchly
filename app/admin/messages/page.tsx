@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -16,10 +16,10 @@ export default async function AdminInboxPage() {
   const threads = await listMessageThreads(actor);
   return (
     <div>
-      <PageHeader icon={MessageSquare} title="Messages" description="Project conversations, most recent first." />
+      <PageHeader icon={Icons.messages} title="Messages" description="Project conversations, most recent first." />
       <Card className="overflow-hidden">
         {threads.length === 0 ? (
-          <EmptyState icon={MessageSquare} title="No messages yet" description="Client conversations appear here." />
+          <EmptyState icon={Icons.messages} title="No messages yet" description="Client conversations appear here." />
         ) : (
           <ul className="divide-y divide-border">
             {threads.map((t) => (

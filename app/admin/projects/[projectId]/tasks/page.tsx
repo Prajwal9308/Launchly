@@ -1,4 +1,4 @@
-import { CheckSquare, Plus } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { AdminTaskRow } from "@/components/admin/task-row";
 import { TaskDialog } from "@/components/admin/task-dialog";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ export default async function AdminProjectTasksPage({ params }: { params: Promis
       team={team}
       trigger={
         <Button size="sm">
-          <Plus /> New task
+          <Icons.add /> New task
         </Button>
       }
     />
@@ -37,7 +37,7 @@ export default async function AdminProjectTasksPage({ params }: { params: Promis
       </div>
       {project.tasks.length === 0 ? (
         <Card>
-          <EmptyState icon={CheckSquare} title="No tasks yet" description="Tasks are created automatically when the client submits the questionnaire." action={newTask} />
+          <EmptyState icon={Icons.tasks} title="No tasks yet" description="Tasks are created automatically when the client submits the questionnaire." action={newTask} />
         </Card>
       ) : (
         <>

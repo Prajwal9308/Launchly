@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -32,7 +32,7 @@ export function AdminTaskRow({ task, projectId, team }: { task: TaskView; projec
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon-sm" className="mt-2" aria-label={`Actions for ${task.title}`}>
-            <MoreHorizontal />
+            <Icons.more />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -51,7 +51,7 @@ export function AdminTaskRow({ task, projectId, team }: { task: TaskView; projec
             }}
             trigger={
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <Pencil /> Edit
+                <Icons.edit /> Edit
               </DropdownMenuItem>
             }
           />
@@ -68,7 +68,7 @@ export function AdminTaskRow({ task, projectId, team }: { task: TaskView; projec
               if (confirm(`Delete “${task.title}”?`)) run(() => deleteTaskAction(task.id));
             }}
           >
-            <Trash2 /> Delete
+            <Icons.delete /> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

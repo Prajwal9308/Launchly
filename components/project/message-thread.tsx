@@ -1,4 +1,4 @@
-import { Paperclip } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { Avatar } from "@/components/ui/avatar";
 import { formatDateTime } from "@/lib/format";
 import { cn, formatFileSize } from "@/lib/utils";
@@ -41,7 +41,7 @@ export function MessageBubble({ message, own, studioName }: { message: MessageVi
                   href={`/api/files/${a.id}?download`}
                   className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs text-muted hover:text-foreground"
                 >
-                  <Paperclip className="size-3" aria-hidden /> {a.originalName} <span className="text-faint">({formatFileSize(a.size)})</span>
+                  <Icons.attach aria-hidden /> {a.originalName} <span className="text-faint">({formatFileSize(a.size)})</span>
                 </a>
               </li>
             ))}

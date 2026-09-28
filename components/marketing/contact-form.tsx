@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Send } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
@@ -19,7 +19,7 @@ export function ContactForm() {
   if (state?.ok) {
     return (
       <div className="surface-raised flex flex-col items-center rounded-2xl p-10 text-center" role="status">
-        <CheckCircle2 className="size-8 text-success" aria-hidden />
+        <Icons.success className="size-6 text-success" aria-hidden />
         <p className="mt-4 text-lg font-semibold">Thanks — we&apos;ve received your project details.</p>
         <p className="mt-1.5 max-w-sm text-sm text-muted">We&apos;ll review them and get back to you by email with next steps.</p>
       </div>
@@ -76,7 +76,7 @@ export function ContactForm() {
         </label>
       </div>
       <SubmitButton pending={pending} className="w-full sm:w-auto" pendingText="Sending…">
-        Send project details <Send aria-hidden />
+        Send project details <Icons.send aria-hidden />
       </SubmitButton>
       <p className="text-xs text-faint">
         We only use these details to reply to your enquiry. See our{" "}

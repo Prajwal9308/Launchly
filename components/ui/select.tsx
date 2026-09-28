@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { controlClasses } from "./input";
@@ -10,7 +10,7 @@ export function Select({ className, children, ...props }: React.SelectHTMLAttrib
       <select className={cn(controlClasses, "h-10 appearance-none pl-3 pr-9")} {...props}>
         {children}
       </select>
-      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-faint" aria-hidden />
+      <Icons.chevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-faint" aria-hidden />
     </div>
   );
 }

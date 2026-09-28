@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CheckSquare } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { TaskItem } from "@/components/project/task-item";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -28,7 +28,7 @@ export default async function ClientTasksPage({ params }: { params: Promise<{ pr
             ))}
           </div>
         ) : (
-          <EmptyState icon={CheckSquare} title="No tasks yet" description="Tasks appear here once we've reviewed your project." />
+          <EmptyState icon={Icons.tasks} title="No tasks yet" description="Tasks appear here once we've reviewed your project." />
         )}
       </Card>
     </div>

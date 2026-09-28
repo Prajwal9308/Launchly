@@ -1,4 +1,4 @@
-import { CircleCheck, Tag } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { ArrowLink } from "./arrow-link";
@@ -24,7 +24,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
               <ul className="grid gap-3 sm:grid-cols-2">
                 {service.features.map((feature) => (
                   <li key={feature} className="flex gap-2 text-sm text-muted">
-                    <CircleCheck className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+                    <Icons.success className="mt-0.5 shrink-0 text-accent" aria-hidden />
                     {feature}
                   </li>
                 ))}
@@ -33,7 +33,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
             <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
               {service.pricingText ? (
                 <p className="flex items-center gap-1.5 text-xs text-faint">
-                  <Tag className="size-3.5 shrink-0" aria-hidden /> {service.pricingText}
+                  <Icons.pricing className="shrink-0" aria-hidden /> {service.pricingText}
                 </p>
               ) : (
                 <span />

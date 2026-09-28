@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import { IconTile, type LucideIcon } from "@/components/ui/icons";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -15,9 +15,9 @@ export function EmptyState({ icon: Icon, title, description, action, className, 
   return (
     <div className={cn("isolate flex flex-col items-center justify-center text-center", compact ? "px-4 py-8" : "px-6 py-14", className)}>
       {Icon && (
-        <div className="relative mb-4 flex size-12 items-center justify-center rounded-2xl bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60">
+        <div className="relative mb-4">
           <span aria-hidden className="absolute -inset-2 -z-10 rounded-3xl bg-accent-subtle/50" />
-          <Icon className="size-5" aria-hidden />
+          <IconTile icon={Icon} size="lg" />
         </div>
       )}
       <p className="text-sm font-medium text-foreground">{title}</p>

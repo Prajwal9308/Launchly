@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, FileText, MessageSquareText } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useState, useTransition } from "react";
 import type { DesignReviewStatus } from "@/db/enums";
 import { Alert } from "@/components/ui/alert";
@@ -47,7 +47,7 @@ function Preview({ review }: { review: DesignReviewView }) {
         rel="noopener"
         className="flex items-center gap-3 rounded-lg border border-border bg-canvas p-4 text-sm hover:bg-subtle"
       >
-        <FileText className="size-5 text-faint" aria-hidden /> Open {review.file.originalName}
+        <Icons.document className="text-faint" aria-hidden /> Open {review.file.originalName}
       </a>
     );
   }
@@ -227,7 +227,7 @@ export function DesignReviewCard({ review, viewer, expanded = true }: { review: 
           <Preview review={review} />
           {review.previewUrl && (
             <a href={review.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
-              Open interactive preview <ExternalLink className="size-3.5" aria-hidden />
+              Open interactive preview <Icons.external aria-hidden />
             </a>
           )}
           {review.notes && (
@@ -239,7 +239,7 @@ export function DesignReviewCard({ review, viewer, expanded = true }: { review: 
           {review.revisionRequests.length > 0 && (
             <div className="space-y-2">
               <p className="flex items-center gap-1.5 text-xs font-medium text-faint">
-                <MessageSquareText className="size-3.5" aria-hidden /> Change requests
+                <Icons.messages aria-hidden /> Change requests
               </p>
               {review.revisionRequests.map((r) => (
                 <div key={r.id} className="rounded-lg border border-border p-3 text-sm">

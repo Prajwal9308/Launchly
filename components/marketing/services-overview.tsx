@@ -1,4 +1,4 @@
-import { ArrowRight, CircleCheck } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import type { Service } from "@/db/types";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
@@ -31,14 +31,14 @@ export function ServicesOverview({ services }: { services: Service[] }) {
                 <ul className="mt-5 grid gap-x-4 gap-y-2 sm:grid-cols-2">
                   {service.features.map((f) => (
                     <li key={f} className="flex gap-2 text-sm text-muted">
-                      <CircleCheck className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden /> {f}
+                      <Icons.success className="mt-0.5 shrink-0 text-accent" aria-hidden /> {f}
                     </li>
                   ))}
                 </ul>
               )}
               <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-foreground">
                 Learn more
-                <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" aria-hidden />
+                <Icons.forward className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" aria-hidden />
               </span>
             </Link>
           </RevealItem>
@@ -49,11 +49,11 @@ export function ServicesOverview({ services }: { services: Service[] }) {
           {secondary.map((service) => (
             <li key={service.id}>
               <Link href={`/services#${service.slug}`} className="group flex h-full gap-4 p-5 transition-colors hover:bg-canvas sm:p-6">
-                <IconBadge name={service.icon} size="sm" />
+                <IconBadge name={service.icon} size="md" />
                 <span className="min-w-0">
                   <span className="flex items-center gap-1 font-semibold">
                     {service.name}
-                    <ArrowRight className="size-4 shrink-0 text-faint transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-accent motion-reduce:group-hover:translate-x-0" aria-hidden />
+                    <Icons.forward className="shrink-0 text-faint transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-accent motion-reduce:group-hover:translate-x-0" aria-hidden />
                   </span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted">{service.summary}</span>
                 </span>

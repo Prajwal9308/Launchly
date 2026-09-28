@@ -1,6 +1,6 @@
 "use client";
 
-import { Paperclip, Send, X } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -69,14 +69,14 @@ export function MessageComposer({ projectId, placeholder = "Write a message…" 
         <ul className="flex flex-wrap gap-1.5 px-3 pb-2">
           {attachments.map((a) => (
             <li key={a.id} className="inline-flex items-center gap-1 rounded-md bg-subtle px-2 py-1 text-xs">
-              <Paperclip className="size-3" aria-hidden /> {a.originalName}
+              <Icons.attach aria-hidden /> {a.originalName}
               <button
                 type="button"
                 className="ml-0.5 rounded text-faint hover:text-foreground"
                 aria-label={`Remove attachment ${a.originalName}`}
                 onClick={() => setAttachments((prev) => prev.filter((x) => x.id !== a.id))}
               >
-                <X className="size-3" />
+                <Icons.close />
               </button>
             </li>
           ))}
@@ -106,7 +106,7 @@ export function MessageComposer({ projectId, placeholder = "Write a message…" 
             }}
           />
           <Button type="button" variant="ghost" size="sm" onClick={() => fileRef.current?.click()} disabled={attachments.length >= 5}>
-            <Paperclip /> Attach
+            <Icons.attach /> Attach
           </Button>
           {error && (
             <p id="message-error" className="text-xs text-danger" role="alert">
@@ -115,7 +115,7 @@ export function MessageComposer({ projectId, placeholder = "Write a message…" 
           )}
         </div>
         <Button type="submit" size="sm" loading={pending} disabled={uploading}>
-          {!pending && <Send />} Send
+          {!pending && <Icons.send />} Send
         </Button>
       </div>
     </form>

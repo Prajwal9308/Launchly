@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Inbox } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { FilterBar } from "@/components/admin/filter-bar";
 import { Card } from "@/components/ui/card";
@@ -22,7 +22,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
 
   return (
     <div>
-      <PageHeader icon={Inbox} title="Leads" description={`${byStatus.NEW ?? 0} new · ${total} shown`} />
+      <PageHeader icon={Icons.leads} title="Leads" description={`${byStatus.NEW ?? 0} new · ${total} shown`} />
       <div className="mb-4">
         <FilterBar
           searchPlaceholder="Search name, business or email"
@@ -44,7 +44,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
       </div>
       <Card className="overflow-hidden">
         {items.length === 0 ? (
-          <EmptyState icon={Inbox} title="No leads yet" description="Messages sent through the contact form appear here." />
+          <EmptyState icon={Icons.leads} title="No leads yet" description="Messages sent through the contact form appear here." />
         ) : (
           <Table>
             <TableHeader>

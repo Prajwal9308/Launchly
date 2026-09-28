@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FileStack, Upload } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { FileList } from "@/components/project/file-list";
 import { FileUploader } from "@/components/project/file-uploader";
@@ -21,7 +21,7 @@ export default async function ClientFilesPage({ params }: { params: Promise<{ pr
     <div className="space-y-6">
       <Card>
         <CardContent>
-          <SectionTitle icon={Upload}>Upload files</SectionTitle>
+          <SectionTitle icon={Icons.upload}>Upload files</SectionTitle>
           <p className="mb-4 text-sm text-muted">Logos, photos, menus, brochures, brand guidelines or any content you&apos;d like us to use.</p>
           <FileUploader projectId={projectId} category="CONTENT" />
         </CardContent>
@@ -33,7 +33,7 @@ export default async function ClientFilesPage({ params }: { params: Promise<{ pr
         {yours.length ? (
           <FileList files={yours} currentUserId={actor.id} />
         ) : (
-          <EmptyState icon={FileStack} title="No files yet" description="Files you and the studio share will appear here." />
+          <EmptyState icon={Icons.files} title="No files yet" description="Files you and the studio share will appear here." />
         )}
       </Card>
     </div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const WORKING_TOGETHER = [
   { title: "Scope in writing", icon: "file-signature", body: "Features, timeline and cost are agreed before development begins, so there are no surprises." },
-  { title: "Regular updates", icon: "bell-ring", body: "You'll know what's been done and what's next at every stage of the project." },
+  { title: "Regular updates", icon: "notifications", body: "You'll know what's been done and what's next at every stage of the project." },
   { title: "One place for your project", icon: "folder-kanban", body: "Share files, send messages and review designs in a private project portal." },
   { title: "Your approval first", icon: "badge-check", body: "Designs and the finished product go live only after you explicitly approve them." },
 ];

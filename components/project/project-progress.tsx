@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import type { PhaseState } from "@/domain/progress";
 import { cn } from "@/lib/utils";
 
@@ -31,7 +31,7 @@ export function ProjectProgress({ phases, onHold }: { phases: Phase[]; onHold?: 
                 phase.state === "upcoming" && "border-border-strong bg-background",
               )}
             >
-              {phase.state === "complete" && <Check className="size-3" strokeWidth={3} />}
+              {phase.state === "complete" && <Icons.check className="size-3 [stroke-width:3]" aria-hidden />}
               {phase.state === "current" && <span className={cn("size-2 rounded-full", onHold ? "bg-faint" : "bg-accent")} />}
             </span>
             <span

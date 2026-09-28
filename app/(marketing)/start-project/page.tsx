@@ -1,22 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Building2,
-  ClipboardCheck,
-  ClipboardList,
-  FileText,
-  Globe,
-  Images,
-  ListChecks,
-  LogIn,
-  Palette,
-  Puzzle,
-  Target,
-  UserPlus,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
+import type { LucideIcon } from "@/components/ui/icons";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Button } from "@/components/ui/button";
 import { STEPS } from "@/domain/questionnaire";
@@ -31,15 +16,15 @@ export const metadata: Metadata = {
 };
 
 const STEP_ICONS: Record<string, LucideIcon> = {
-  business: Building2,
-  goals: Target,
-  website: Globe,
-  brand: Palette,
-  content: FileText,
-  inspiration: Images,
-  features: Puzzle,
-  final: ListChecks,
-  review: ClipboardCheck,
+  business: Icons.business,
+  goals: Icons.goals,
+  website: Icons.website,
+  brand: Icons.design,
+  content: Icons.document,
+  inspiration: Icons.images,
+  features: Icons.features,
+  final: Icons.checklist,
+  review: Icons.requirementsApproved,
 };
 
 export default async function StartProjectPage() {
@@ -52,7 +37,7 @@ export default async function StartProjectPage() {
       <div className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div>
           <p className="eyebrow">
-            <ClipboardList className="size-3.5" aria-hidden /> Website questionnaire
+            <Icons.requirements aria-hidden /> Website questionnaire
           </p>
           <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">Tell us about your project</h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
@@ -75,12 +60,12 @@ export default async function StartProjectPage() {
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row">
                   <Button asChild className="sm:flex-1">
                     <Link href="/signup?callbackUrl=/start-project">
-                      <UserPlus aria-hidden /> Create account
+                      <Icons.signup aria-hidden /> Create account
                     </Link>
                   </Button>
                   <Button asChild variant="secondary" className="sm:flex-1">
                     <Link href="/login?callbackUrl=/start-project">
-                      <LogIn aria-hidden /> Log in
+                      <Icons.login aria-hidden /> Log in
                     </Link>
                   </Button>
                 </div>
@@ -93,7 +78,7 @@ export default async function StartProjectPage() {
                 </p>
                 <Button asChild variant="secondary" className="mt-5">
                   <Link href="/admin/leads">
-                    <Users aria-hidden /> Go to leads
+                    <Icons.clients aria-hidden /> Go to leads
                   </Link>
                 </Button>
               </>
@@ -104,7 +89,7 @@ export default async function StartProjectPage() {
                   {draft ? "Your answers so far are saved." : "Ready when you are. You can stop at any point and come back later."}
                 </p>
                 <SubmitButton className="mt-5" pendingText="Opening…">
-                  {draft ? "Continue questionnaire" : "Begin questionnaire"} <ArrowRight aria-hidden />
+                  {draft ? "Continue questionnaire" : "Begin questionnaire"} <Icons.forward aria-hidden />
                 </SubmitButton>
               </form>
             )}
@@ -115,12 +100,10 @@ export default async function StartProjectPage() {
           <p className="text-xs font-medium uppercase tracking-wider text-faint">What we&apos;ll ask</p>
           <ol className="surface mt-4 divide-y divide-border rounded-2xl">
             {STEPS.map((step) => {
-              const Icon = STEP_ICONS[step.key] ?? ListChecks;
+              const Icon = STEP_ICONS[step.key] ?? Icons.checklist;
               return (
                 <li key={step.key} className="flex gap-3 p-4">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60">
-                    <Icon className="size-4" aria-hidden />
-                  </span>
+                  <IconTile icon={Icon} />
                   <div>
                     <p className="text-sm font-medium">{step.title}</p>
                     <p className="text-sm text-muted">{step.description}</p>

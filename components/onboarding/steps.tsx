@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Trash2 } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { OptionCard } from "@/components/ui/option-card";
@@ -195,12 +195,12 @@ function UploadedList({ files, onRemove }: { files: UploadedFile[]; onRemove?: (
     <ul className="space-y-1.5">
       {files.map((f) => (
         <li key={f.id} className="flex items-center gap-2.5 rounded-md border border-border bg-background px-3 py-2 text-sm">
-          <FileText className="size-4 shrink-0 text-faint" aria-hidden />
+          <Icons.document className="shrink-0 text-faint" aria-hidden />
           <span className="min-w-0 flex-1 truncate">{f.originalName}</span>
           <span className="text-xs text-faint">{formatFileSize(f.size)}</span>
           {onRemove && (
             <button type="button" onClick={() => onRemove(f.id)} className="rounded p-1 text-faint hover:bg-subtle hover:text-foreground" aria-label={`Remove ${f.originalName}`}>
-              <Trash2 className="size-3.5" />
+              <Icons.delete />
             </button>
           )}
         </li>

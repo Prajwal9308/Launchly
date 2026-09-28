@@ -1,4 +1,4 @@
-import { BadgeCheck, History, Palette } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { ApprovalRequestDialog } from "@/components/admin/approval-request";
 import { DesignUploadDialog } from "@/components/admin/design-upload";
@@ -27,7 +27,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
       </div>
 
       <section>
-        <SectionTitle icon={Palette}>Designs</SectionTitle>
+        <SectionTitle icon={Icons.design}>Designs</SectionTitle>
         {current.length ? (
           <div className="space-y-6">
             {current.map((r) => (
@@ -36,13 +36,13 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
           </div>
         ) : (
           <Card>
-            <EmptyState icon={Palette} title="No designs uploaded" description="Upload a design to share it with the client for review." />
+            <EmptyState icon={Icons.design} title="No designs uploaded" description="Upload a design to share it with the client for review." />
           </Card>
         )}
       </section>
 
       <section>
-        <SectionTitle icon={BadgeCheck}>Approvals</SectionTitle>
+        <SectionTitle icon={Icons.approved}>Approvals</SectionTitle>
         {approvals.length ? (
           <div className="space-y-3">
             {approvals.map((a) => (
@@ -56,7 +56,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ p
 
       {history.length > 0 && (
         <section>
-          <SectionTitle icon={History}>Version history</SectionTitle>
+          <SectionTitle icon={Icons.history}>Version history</SectionTitle>
           <div className="space-y-3">
             {history.map((r) => (
               <DesignReviewCard key={r.id} review={r} viewer="admin" expanded={false} />

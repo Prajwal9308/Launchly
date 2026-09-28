@@ -1,40 +1,34 @@
-import {
-  Activity,
-  CheckCircle2,
-  FileUp,
-  FolderPlus,
-  LogIn,
-  MessageSquare,
-  Palette,
-  RefreshCw,
-  Send,
-  StickyNote,
-  UserPlus,
-  type LucideIcon,
-} from "lucide-react";
+import { IconTile, Icons, type LucideIcon } from "@/components/ui/icons";
 import Link from "next/link";
 import type { ActivityType } from "@/db/enums";
 import { EmptyState } from "@/components/ui/empty-state";
 import { formatDateTime, formatRelative } from "@/lib/format";
 
-const ICONS: Partial<Record<ActivityType, LucideIcon>> = {
-  USER_REGISTERED: UserPlus,
-  LEAD_CREATED: UserPlus,
-  PROJECT_CREATED: FolderPlus,
-  PROJECT_SUBMITTED: Send,
-  TASK_COMPLETED: CheckCircle2,
-  REQUIREMENTS_APPROVED: CheckCircle2,
-  FILE_UPLOADED: FileUp,
-  MESSAGE_SENT: MessageSquare,
-  DESIGN_UPLOADED: Palette,
-  DESIGN_REVIEW_REQUESTED: Palette,
-  REVISION_REQUESTED: RefreshCw,
-  DESIGN_APPROVED: CheckCircle2,
-  APPROVAL_GRANTED: CheckCircle2,
-  STATUS_CHANGED: RefreshCw,
-  NOTE_ADDED: StickyNote,
-  CLIENT_LOGIN: LogIn,
-  ADMIN_LOGIN: LogIn,
+/** One icon per event type. Complete by type, so a new ActivityType fails to compile until it has an icon. */
+const ICONS: Record<ActivityType, LucideIcon> = {
+  USER_REGISTERED: Icons.signup,
+  LEAD_CREATED: Icons.leads,
+  LEAD_CONVERTED: Icons.clientConverted,
+  PROJECT_CREATED: Icons.newProject,
+  PROJECT_SUBMITTED: Icons.send,
+  PROJECT_UPDATED: Icons.edit,
+  REQUIREMENTS_APPROVED: Icons.requirementsApproved,
+  INFORMATION_REQUESTED: Icons.help,
+  TASK_CREATED: Icons.newTask,
+  TASK_COMPLETED: Icons.tasks,
+  FILE_UPLOADED: Icons.upload,
+  MESSAGE_SENT: Icons.messages,
+  DESIGN_UPLOADED: Icons.design,
+  DESIGN_REVIEW_REQUESTED: Icons.design,
+  REVISION_REQUESTED: Icons.revision,
+  DESIGN_APPROVED: Icons.approved,
+  APPROVAL_REQUESTED: Icons.waiting,
+  APPROVAL_GRANTED: Icons.approved,
+  APPROVAL_CHANGES_REQUESTED: Icons.revision,
+  STATUS_CHANGED: Icons.timeline,
+  NOTE_ADDED: Icons.notes,
+  CLIENT_LOGIN: Icons.login,
+  ADMIN_LOGIN: Icons.login,
 };
 
 export interface ActivityView {
@@ -48,14 +42,12 @@ export interface ActivityView {
 }
 
 export function ActivityItem({ event, showProject, projectHref, showVisibility }: { event: ActivityView; showProject?: boolean; projectHref?: (id: string) => string; showVisibility?: boolean }) {
-  const Icon = ICONS[event.type] ?? Activity;
+  const Icon = ICONS[event.type];
   return (
     <li className="relative flex gap-3 pb-5 last:pb-0">
-      <span aria-hidden className="absolute left-[13px] top-8 h-[calc(100%-1.75rem)] w-px bg-border group-last:hidden" />
-      <span className="relative z-10 flex size-7 shrink-0 items-center justify-center rounded-full border border-border bg-background text-faint">
-        <Icon className="size-3.5" aria-hidden />
-      </span>
-      <div className="min-w-0 flex-1 pt-0.5">
+      <span aria-hidden className="absolute left-[15.5px] top-9 h-[calc(100%-2rem)] w-px bg-border group-last:hidden" />
+      <IconTile icon={Icon} size="sm" tone="neutral" className="relative z-10 rounded-full" />
+      <div className="min-w-0 flex-1 pt-1.5">
         <p className="text-sm text-foreground">
           {event.message}
           {showProject && event.project && (
@@ -96,7 +88,7 @@ export function ActivityList({
   showVisibility?: boolean;
   emptyText?: string;
 }) {
-  if (!events.length) return <EmptyState icon={Activity} title="No activity yet" description={emptyText} compact />;
+  if (!events.length) return <EmptyState icon={Icons.activity} title="No activity yet" description={emptyText} compact />;
   return (
     <ol className="[&>li:last-child>span:first-child]:hidden">
       {events.map((e) => (

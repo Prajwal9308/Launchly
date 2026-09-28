@@ -1,13 +1,13 @@
 "use client";
 
 import { useFormAction } from "@/components/forms/use-form-action";
-import { Trash2 } from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
+import { contentIcon } from "@/components/marketing/icons";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { PortfolioItem, PricingPackage, Service } from "@/db/types";
 import { SERVICE_ICONS } from "@/domain/service-icons";
@@ -38,12 +38,37 @@ function DeleteButton({ onDelete, label }: { onDelete: () => ReturnType<typeof d
   const { pending, run } = useServerAction();
   return (
     <Button type="button" variant="ghost" className="text-danger hover:bg-danger-subtle hover:text-danger" loading={pending} onClick={() => { if (confirm(`Delete ${label}? This can't be undone.`)) run(onDelete); }}>
-      {!pending && <Trash2 />} Delete
+      {!pending && <Icons.delete />} Delete
     </Button>
   );
 }
 
-const ICON_OPTIONS = SERVICE_ICONS;
+/** Visual icon picker: a radio group, so it works with the keyboard and submits `icon` like any field. */
+function IconPicker({ defaultValue, error }: { defaultValue: string; error?: string | string[] }) {
+  const message = Array.isArray(error) ? error[0] : error;
+  return (
+    <fieldset aria-describedby={message ? "icon-error" : undefined}>
+      <legend className="text-sm font-medium text-foreground">Icon</legend>
+      <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-6">
+        {SERVICE_ICONS.map((key) => (
+          <label
+            key={key}
+            className="group flex cursor-pointer flex-col items-center gap-1.5 rounded-xl border border-border bg-background p-2.5 text-center transition-colors hover:border-border-strong has-[:checked]:border-accent has-[:checked]:bg-accent-subtle has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
+          >
+            <input type="radio" name="icon" value={key} defaultChecked={key === defaultValue} className="sr-only" />
+            <IconTile icon={contentIcon(key)} size="sm" tone="neutral" className="group-has-[:checked]:bg-accent group-has-[:checked]:text-accent-foreground" />
+            <span className="w-full truncate text-[11px] text-muted">{key}</span>
+          </label>
+        ))}
+      </div>
+      {message && (
+        <p id="icon-error" className="mt-1.5 text-xs text-danger">
+          {message}
+        </p>
+      )}
+    </fieldset>
+  );
+}
 
 export function ServiceForm({ service }: { service?: Service }) {
   const { state, onSubmit, pending } = useFormAction(saveServiceAction.bind(null, service?.id ?? null));
@@ -60,18 +85,10 @@ export function ServiceForm({ service }: { service?: Service }) {
       <Field id="features" label="Features" optional hint="One per line." error={err("features")}>
         {(p) => <Textarea {...p} name="features" rows={4} defaultValue={service?.features.join("\n")} />}
       </Field>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <IconPicker defaultValue={service?.icon ?? "layout"} error={err("icon")} />
+      <div className="grid gap-5 sm:grid-cols-2">
         <Field id="pricingText" label="Pricing text" optional hint='e.g. "Included in all packages"' error={err("pricingText")}>
           {(p) => <Input {...p} name="pricingText" defaultValue={service?.pricingText ?? ""} />}
-        </Field>
-        <Field id="icon" label="Icon" error={err("icon")}>
-          {(p) => (
-            <Select {...p} name="icon" defaultValue={service?.icon ?? "layout"}>
-              {ICON_OPTIONS.map((i) => (
-                <option key={i}>{i}</option>
-              ))}
-            </Select>
-          )}
         </Field>
         <Field id="sortOrder" label="Order" error={err("sortOrder")}>
           {(p) => <Input {...p} name="sortOrder" type="number" min={0} defaultValue={service?.sortOrder ?? 0} />}

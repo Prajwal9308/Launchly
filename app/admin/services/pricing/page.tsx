@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Plus, Tag } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,13 +19,13 @@ export default async function AdminPricingPage() {
   return (
     <div>
       <PageHeader
-        icon={Tag}
+        icon={Icons.pricing}
         title="Services"
         description="Packages without a price show “Let's discuss your project” on the website."
         actions={
           <Button asChild>
             <Link href="/admin/services/pricing/new">
-              <Plus /> New package
+              <Icons.add /> New package
             </Link>
           </Button>
         }
@@ -33,7 +33,7 @@ export default async function AdminPricingPage() {
       <CatalogTabs />
       <Card className="overflow-hidden">
         {packages.length === 0 ? (
-          <EmptyState icon={Tag} title="No pricing packages" description="Add packages to show on the pricing page." />
+          <EmptyState icon={Icons.pricing} title="No pricing packages" description="Add packages to show on the pricing page." />
         ) : (
           <ul className="divide-y divide-border">
             {packages.map((p) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -21,7 +21,7 @@ export function AddRequirementDialog({ projectId }: { projectId: string }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" size="sm">
-          <Plus /> Add requirement
+          <Icons.add /> Add requirement
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -62,7 +62,7 @@ export function DeleteRequirementButton({ id, label }: { id: string; label: stri
   const { pending, run } = useServerAction();
   return (
     <Button variant="ghost" size="icon-sm" loading={pending} aria-label={`Remove requirement ${label}`} onClick={() => { if (confirm(`Remove “${label}”?`)) run(() => deleteRequirementAction(id)); }}>
-      {!pending && <Trash2 />}
+      {!pending && <Icons.delete />}
     </Button>
   );
 }

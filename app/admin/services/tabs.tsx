@@ -1,4 +1,4 @@
-import { Sparkles, Tag } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { NavTabs } from "@/components/ui/tabs";
 
 export function CatalogTabs() {
@@ -6,8 +6,8 @@ export function CatalogTabs() {
     <NavTabs
       className="mb-6"
       tabs={[
-        { href: "/admin/services", label: "Services", exact: true, icon: <Sparkles /> },
-        { href: "/admin/services/pricing", label: "Pricing packages", icon: <Tag /> },
+        { href: "/admin/services", label: "Services", exact: true, icon: <Icons.services /> },
+        { href: "/admin/services/pricing", label: "Pricing packages", icon: <Icons.pricing /> },
       ]}
     />
   );

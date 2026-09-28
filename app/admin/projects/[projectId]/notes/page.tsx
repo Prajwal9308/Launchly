@@ -1,4 +1,4 @@
-import { StickyNote } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { NoteForm } from "@/components/admin/note-form";
 import { Alert } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,7 +33,7 @@ export default async function AdminNotesPage({ params }: { params: Promise<{ pro
         </ul>
       ) : (
         <Card>
-          <EmptyState icon={StickyNote} title="No notes yet" description="Record call summaries, decisions and reminders here." compact />
+          <EmptyState icon={Icons.notes} title="No notes yet" description="Record call summaries, decisions and reminders here." compact />
         </Card>
       )}
     </div>

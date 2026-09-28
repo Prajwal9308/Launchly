@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -28,7 +28,7 @@ export function OptionCard({ type, label, description, className, ...props }: Op
           type === "radio" ? "rounded-full" : "rounded-sm",
         )}
       >
-        {type === "checkbox" ? <Check className="size-3" strokeWidth={3} /> : <span className="size-1.5 rounded-full bg-current" />}
+        {type === "checkbox" ? <Icons.check className="size-3 [stroke-width:3]" aria-hidden /> : <span className="size-1.5 rounded-full bg-current" />}
       </span>
       <span className="min-w-0">
         <span className="block font-medium text-foreground">{label}</span>

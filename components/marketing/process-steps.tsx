@@ -16,10 +16,10 @@ export function ProcessSteps({ headingLevel = "h3" }: { headingLevel?: "h2" | "h
           {i < last && (
             <span
               aria-hidden
-              className="absolute bottom-[-2rem] left-[18px] top-11 w-px bg-border-strong lg:bottom-auto lg:left-12 lg:right-[-1.5rem] lg:top-[18px] lg:h-px lg:w-auto"
+              className="absolute bottom-[-2rem] left-5 top-12 w-px bg-border-strong lg:bottom-auto lg:left-12 lg:right-[-1.5rem] lg:top-5 lg:h-px lg:w-auto"
             />
           )}
-          <IconBadge name={step.icon} size="sm" className="absolute left-0 top-0 lg:static" />
+          <IconBadge name={step.icon} size="md" className="absolute left-0 top-0 lg:static" />
           <p className="font-mono text-xs font-medium text-accent lg:mt-5">{step.number}</p>
           <Title className="mt-1 text-base font-semibold lg:text-lg">{step.title}</Title>
           <p className="mt-1.5 text-sm leading-relaxed text-muted lg:mt-2">{step.description}</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileImage, FileText, Trash2 } from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
 import { useTransition } from "react";
 import type { FileCategory } from "@/db/enums";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ function DeleteButton({ file }: { file: FileView }) {
         });
       }}
     >
-      {!pending && <Trash2 />}
+      {!pending && <Icons.delete />}
     </Button>
   );
 }
@@ -46,13 +46,11 @@ export function FileList({ files, currentUserId, canDeleteAll = false }: { files
   return (
     <ul className="divide-y divide-border">
       {files.map((file) => {
-        const Icon = file.mimeType.startsWith("image/") ? FileImage : FileText;
+        const Icon = file.mimeType.startsWith("image/") ? Icons.image : Icons.document;
         const canDelete = canDeleteAll || file.uploadedBy?.id === currentUserId;
         return (
           <li key={file.id} className="flex items-center gap-3 px-4 py-3">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-canvas text-faint">
-              <Icon className="size-4" aria-hidden />
-            </span>
+            <IconTile icon={Icon} tone="neutral" />
             <div className="min-w-0 flex-1">
               <a href={`/api/files/${file.id}`} target="_blank" rel="noopener" className="block truncate text-sm font-medium hover:underline">
                 {file.originalName}
@@ -64,7 +62,7 @@ export function FileList({ files, currentUserId, canDeleteAll = false }: { files
             </div>
             <Button asChild variant="ghost" size="icon-sm" aria-label={`Download ${file.originalName}`}>
               <a href={`/api/files/${file.id}?download`}>
-                <Download />
+                <Icons.download />
               </a>
             </Button>
             {canDelete && file.category !== "DESIGN" && <DeleteButton file={file} />}

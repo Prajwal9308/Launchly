@@ -1,19 +1,7 @@
 "use client";
 
-import {
-  ArrowRight,
-  ChevronRight,
-  CircleHelp,
-  Info,
-  Layers,
-  LayoutDashboard,
-  LogIn,
-  Mail,
-  Menu,
-  Tag,
-  Workflow,
-  type LucideIcon,
-} from "lucide-react";
+import { Icons } from "@/components/ui/icons";
+import type { LucideIcon } from "@/components/ui/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -23,18 +11,18 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
 export const MAIN_NAV: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: "/services", label: "Services", icon: Layers },
-  { href: "/process", label: "Process", icon: Workflow },
-  { href: "/pricing", label: "Pricing", icon: Tag },
-  { href: "/about", label: "About", icon: Info },
-  { href: "/faq", label: "FAQ", icon: CircleHelp },
-  { href: "/contact", label: "Contact", icon: Mail },
+  { href: "/services", label: "Services", icon: Icons.services },
+  { href: "/process", label: "Process", icon: Icons.process },
+  { href: "/pricing", label: "Pricing", icon: Icons.pricing },
+  { href: "/about", label: "About", icon: Icons.info },
+  { href: "/faq", label: "FAQ", icon: Icons.help },
+  { href: "/contact", label: "Contact", icon: Icons.email },
 ];
 
 export function SiteHeader({ businessName, signedInHref }: { businessName: string; signedInHref: string | null }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const AccountIcon = signedInHref ? LayoutDashboard : LogIn;
+  const AccountIcon = signedInHref ? Icons.dashboard : Icons.login;
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
@@ -69,7 +57,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
           </Button>
           <Button asChild size="sm" className="rounded-full px-4">
             <Link href="/contact">
-              Start a project <ArrowRight aria-hidden />
+              Start a project <Icons.forward aria-hidden />
             </Link>
           </Button>
         </div>
@@ -77,7 +65,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" className="-mr-2.5 size-11 lg:hidden" aria-label="Open menu">
-              <Menu className="!size-5" aria-hidden />
+              <Icons.menu aria-hidden />
             </Button>
           </DrawerTrigger>
           <DrawerContent side="right">
@@ -103,10 +91,10 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
                           isActive(item.href) ? "bg-accent text-accent-foreground" : "bg-subtle text-accent group-hover:bg-background",
                         )}
                       >
-                        <item.icon className="size-4" aria-hidden />
+                        <item.icon aria-hidden />
                       </span>
                       <span className="flex-1">{item.label}</span>
-                      <ChevronRight className="size-4 text-faint" aria-hidden />
+                      <Icons.chevronRight className="text-faint" aria-hidden />
                     </Link>
                   </li>
                 ))}
@@ -115,7 +103,7 @@ export function SiteHeader({ businessName, signedInHref }: { businessName: strin
             <div className="space-y-2 border-t border-border p-4">
               <Button asChild size="lg" className="w-full" onClick={() => setOpen(false)}>
                 <Link href="/contact">
-                  Start a project <ArrowRight aria-hidden />
+                  Start a project <Icons.forward aria-hidden />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="w-full" onClick={() => setOpen(false)}>

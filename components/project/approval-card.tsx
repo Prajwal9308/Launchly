@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck } from "lucide-react";
+import { IconTile, Icons } from "@/components/ui/icons";
 import { useState, useTransition } from "react";
 import type { ApprovalStatus, ApprovalType } from "@/db/enums";
 import { Alert } from "@/components/ui/alert";
@@ -132,9 +132,7 @@ export function ApprovalCard({ approval, viewer }: { approval: ApprovalView; vie
     <article className="surface rounded-2xl p-5 shadow-card">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <span className="flex size-9 items-center justify-center rounded-lg border border-border bg-canvas text-faint">
-            <ShieldCheck className="size-4" aria-hidden />
-          </span>
+          <IconTile icon={Icons.approved} tone={pending ? "accent" : "neutral"} />
           <div>
             <h3 className="text-sm font-semibold">
               {APPROVAL_TITLES[approval.type]}

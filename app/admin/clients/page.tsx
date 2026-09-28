@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Users } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { FilterBar } from "@/components/admin/filter-bar";
 import { Card } from "@/components/ui/card";
@@ -22,13 +22,13 @@ export default async function ClientsPage({ searchParams }: { searchParams: Prom
 
   return (
     <div>
-      <PageHeader icon={Users} title="Clients" description={`${total} client${total === 1 ? "" : "s"}`} />
+      <PageHeader icon={Icons.clients} title="Clients" description={`${total} client${total === 1 ? "" : "s"}`} />
       <div className="mb-4">
         <FilterBar searchPlaceholder="Search name, email or business" />
       </div>
       <Card className="overflow-hidden">
         {items.length === 0 ? (
-          <EmptyState icon={Users} title={params.q ? "No matching clients" : "No clients yet"} description={params.q ? "Try a different search." : "Clients appear here when they create an account or you convert a lead."} />
+          <EmptyState icon={Icons.clients} title={params.q ? "No matching clients" : "No clients yet"} description={params.q ? "Try a different search." : "Clients appear here when they create an account or you convert a lead."} />
         ) : (
           <Table>
             <TableHeader>

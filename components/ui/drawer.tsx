@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import * as React from "react";
 import { cn } from "@/lib/utils";
@@ -33,7 +33,7 @@ export function DrawerContent({
       >
         {children}
         <DialogPrimitive.Close className="absolute right-2.5 top-2.5 flex size-11 items-center justify-center rounded-md text-faint transition-colors hover:bg-subtle hover:text-foreground">
-          <X className="size-5" aria-hidden />
+          <Icons.close aria-hidden />
           <span className="sr-only">Close menu</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>

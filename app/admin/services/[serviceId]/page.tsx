@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { ServiceForm } from "@/components/admin/catalog-forms";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +12,7 @@ export default async function EditServicePage({ params }: { params: Promise<{ se
   const service = await orNotFound(getService(actor, serviceId));
   return (
     <div className="max-w-2xl">
-      <PageHeader icon={Sparkles} breadcrumb={[{ label: "Services", href: "/admin/services" }, { label: service.name }]} title={service.name} />
+      <PageHeader icon={Icons.services} breadcrumb={[{ label: "Services", href: "/admin/services" }, { label: service.name }]} title={service.name} />
       <Card>
         <CardContent>
           <ServiceForm service={service} />

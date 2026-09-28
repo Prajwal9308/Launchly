@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -26,7 +26,7 @@ export function Breadcrumb({ items }: { items: Crumb[] }) {
             </li>
             {index < items.length - 1 && (
               <li aria-hidden>
-                <ChevronRight className="size-3" />
+                <Icons.chevronRight />
               </li>
             )}
           </Fragment>
