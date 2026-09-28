@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormAction } from "@/components/forms/use-form-action";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Field } from "@/components/ui/field";
@@ -8,10 +8,10 @@ import { Input } from "@/components/ui/input";
 import { signupAction } from "@/server/actions/public";
 
 export function SignupForm({ callbackUrl, email }: { callbackUrl?: string; email?: string }) {
-  const [state, action] = useActionState(signupAction, null);
+  const { state, onSubmit, pending } = useFormAction(signupAction);
   const err = (name: string) => fieldError(state, name);
   return (
-    <form action={action} className="space-y-4" noValidate>
+    <form onSubmit={onSubmit} className="space-y-4" noValidate>
       <FormStatus state={state} />
       <input type="hidden" name="callbackUrl" value={callbackUrl ?? ""} />
       <div className="grid gap-4 sm:grid-cols-2">
@@ -34,7 +34,7 @@ export function SignupForm({ callbackUrl, email }: { callbackUrl?: string; email
       <Field id="password" label="Password" hint="At least 10 characters, including a letter and a number." error={err("password")}>
         {(p) => <Input {...p} name="password" type="password" autoComplete="new-password" required minLength={10} />}
       </Field>
-      <SubmitButton className="w-full" pendingText="Creating account…">
+      <SubmitButton pending={pending} className="w-full" pendingText="Creating account…">
         Create account
       </SubmitButton>
       <p className="text-center text-xs leading-relaxed text-faint">

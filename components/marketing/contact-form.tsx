@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormAction } from "@/components/forms/use-form-action";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Field } from "@/components/ui/field";
@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { submitContactAction } from "@/server/actions/public";
 
 export function ContactForm({ services }: { services: string[] }) {
-  const [state, action] = useActionState(submitContactAction, null);
+  const { state, onSubmit, pending } = useFormAction(submitContactAction);
 
   if (state?.ok) {
     return (
@@ -22,7 +22,7 @@ export function ContactForm({ services }: { services: string[] }) {
   }
 
   return (
-    <form action={action} className="space-y-5 rounded-xl border border-border bg-background p-6 shadow-card sm:p-8" noValidate>
+    <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-border bg-background p-6 shadow-card sm:p-8" noValidate>
       <FormStatus state={state} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="name" label="Name" required error={fieldError(state, "name")}>
@@ -59,7 +59,7 @@ export function ContactForm({ services }: { services: string[] }) {
           Website <input type="text" name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <SubmitButton className="w-full sm:w-auto" pendingText="Sending…">
+      <SubmitButton pending={pending} className="w-full sm:w-auto" pendingText="Sending…">
         Send message
       </SubmitButton>
     </form>

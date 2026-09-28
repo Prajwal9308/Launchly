@@ -1,7 +1,7 @@
 "use client";
 
+import { useFormAction } from "@/components/forms/use-form-action";
 import { Trash2 } from "lucide-react";
-import { useActionState } from "react";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,10 @@ function DeleteButton({ onDelete, label }: { onDelete: () => ReturnType<typeof d
 const ICON_OPTIONS = ["palette", "code", "layout", "building", "shopping-cart", "refresh", "search", "wrench", "file-text", "megaphone"];
 
 export function ServiceForm({ service }: { service?: Service }) {
-  const [state, action] = useActionState(saveServiceAction.bind(null, service?.id ?? null), null);
+  const { state, onSubmit, pending } = useFormAction(saveServiceAction.bind(null, service?.id ?? null));
   const err = (n: string) => fieldError(state, n);
   return (
-    <form action={action} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-5">
       <FormStatus state={state} />
       <Field id="name" label="Name" required error={err("name")}>
         {(p) => <Input {...p} name="name" defaultValue={service?.name} />}
@@ -79,17 +79,17 @@ export function ServiceForm({ service }: { service?: Service }) {
       <Toggle name="published" label="Published" description="Shown on the public website and in the questionnaire." defaultChecked={service?.published ?? true} />
       <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
         {service ? <DeleteButton label={service.name} onDelete={() => deleteServiceAction(service.id)} /> : <span />}
-        <SubmitButton>{service ? "Save service" : "Create service"}</SubmitButton>
+        <SubmitButton pending={pending}>{service ? "Save service" : "Create service"}</SubmitButton>
       </div>
     </form>
   );
 }
 
 export function PricingForm({ pkg }: { pkg?: PricingPackage }) {
-  const [state, action] = useActionState(savePricingAction.bind(null, pkg?.id ?? null), null);
+  const { state, onSubmit, pending } = useFormAction(savePricingAction.bind(null, pkg?.id ?? null));
   const err = (n: string) => fieldError(state, n);
   return (
-    <form action={action} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-5">
       <FormStatus state={state} />
       <Field id="name" label="Package name" required error={err("name")}>
         {(p) => <Input {...p} name="name" defaultValue={pkg?.name} />}
@@ -117,17 +117,17 @@ export function PricingForm({ pkg }: { pkg?: PricingPackage }) {
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
         {pkg ? <DeleteButton label={pkg.name} onDelete={() => deletePricingAction(pkg.id)} /> : <span />}
-        <SubmitButton>{pkg ? "Save package" : "Create package"}</SubmitButton>
+        <SubmitButton pending={pending}>{pkg ? "Save package" : "Create package"}</SubmitButton>
       </div>
     </form>
   );
 }
 
 export function PortfolioForm({ item }: { item?: PortfolioItem }) {
-  const [state, action] = useActionState(savePortfolioAction.bind(null, item?.id ?? null), null);
+  const { state, onSubmit, pending } = useFormAction(savePortfolioAction.bind(null, item?.id ?? null));
   const err = (n: string) => fieldError(state, n);
   return (
-    <form action={action} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-5">
       <FormStatus state={state} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="title" label="Title" required error={err("title")}>
@@ -161,17 +161,17 @@ export function PortfolioForm({ item }: { item?: PortfolioItem }) {
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-border pt-5">
         {item ? <DeleteButton label={item.title} onDelete={() => deletePortfolioAction(item.id)} /> : <span />}
-        <SubmitButton>{item ? "Save project" : "Create project"}</SubmitButton>
+        <SubmitButton pending={pending}>{item ? "Save project" : "Create project"}</SubmitButton>
       </div>
     </form>
   );
 }
 
 export function SettingsForm({ settings }: { settings: { businessName: string; tagline: string; contactEmail: string; contactPhone: string | null; serviceArea: string | null } }) {
-  const [state, action] = useActionState(updateSettingsAction, null);
+  const { state, onSubmit, pending } = useFormAction(updateSettingsAction);
   const err = (n: string) => fieldError(state, n);
   return (
-    <form action={action} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-5">
       <FormStatus state={state} />
       <Field id="businessName" label="Business name" required error={err("businessName")}>
         {(p) => <Input {...p} name="businessName" defaultValue={settings.businessName} />}
@@ -190,7 +190,7 @@ export function SettingsForm({ settings }: { settings: { businessName: string; t
       <Field id="serviceArea" label="Service area" optional hint='e.g. "the Portland area" — shown on the About page.' error={err("serviceArea")}>
         {(p) => <Input {...p} name="serviceArea" defaultValue={settings.serviceArea ?? ""} />}
       </Field>
-      <SubmitButton>Save settings</SubmitButton>
+      <SubmitButton pending={pending}>Save settings</SubmitButton>
     </form>
   );
 }

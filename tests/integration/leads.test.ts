@@ -16,7 +16,7 @@ describe("leads", () => {
   });
 
   it("validates contact form input", async () => {
-    await expect(createLead({ name: "", email: "nope", message: "short" })).rejects.toMatchObject({
+    await expect(createLead({ name: "", email: "nope", message: "   " })).rejects.toMatchObject({
       code: "VALIDATION",
       fieldErrors: { name: expect.any(Array), email: expect.any(Array), message: expect.any(Array) },
     });

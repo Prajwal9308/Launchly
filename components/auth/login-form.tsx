@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormAction } from "@/components/forms/use-form-action";
 import { FormStatus } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Field } from "@/components/ui/field";
@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { loginAction } from "@/server/actions/public";
 
 export function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
-  const [state, action] = useActionState(loginAction, null);
+  const { state, onSubmit, pending } = useFormAction(loginAction);
   return (
-    <form action={action} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4">
       <FormStatus state={state} />
       <input type="hidden" name="callbackUrl" value={callbackUrl ?? ""} />
       <Field id="email" label="Email">
@@ -19,7 +19,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
       <Field id="password" label="Password">
         {(p) => <Input {...p} name="password" type="password" autoComplete="current-password" required />}
       </Field>
-      <SubmitButton className="w-full" pendingText="Logging in…">
+      <SubmitButton pending={pending} className="w-full" pendingText="Logging in…">
         Log in
       </SubmitButton>
     </form>

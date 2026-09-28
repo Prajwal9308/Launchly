@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useFormAction } from "@/components/forms/use-form-action";
 import { FormStatus, fieldError } from "@/components/forms/form-status";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { Field } from "@/components/ui/field";
@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { changePasswordAction, updateProfileAction } from "@/server/actions/client";
 
 export function ProfileForm({ firstName, lastName, phone, email, showPhone = true }: { firstName: string; lastName: string; phone: string; email: string; showPhone?: boolean }) {
-  const [state, action] = useActionState(updateProfileAction, null);
+  const { state, onSubmit, pending } = useFormAction(updateProfileAction);
   return (
-    <form action={action} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-4">
       <FormStatus state={state} />
       <div className="grid gap-4 sm:grid-cols-2">
         <Field id="firstName" label="First name" error={fieldError(state, "firstName")}>
@@ -28,15 +28,15 @@ export function ProfileForm({ firstName, lastName, phone, email, showPhone = tru
           {(p) => <Input {...p} name="phone" type="tel" defaultValue={phone} autoComplete="tel" />}
         </Field>
       )}
-      <SubmitButton>Save changes</SubmitButton>
+      <SubmitButton pending={pending}>Save changes</SubmitButton>
     </form>
   );
 }
 
 export function PasswordForm() {
-  const [state, action] = useActionState(changePasswordAction, null);
+  const { state, onSubmit, pending } = useFormAction(changePasswordAction);
   return (
-    <form action={action} className="space-y-4" key={state?.ok ? "reset" : "form"}>
+    <form onSubmit={onSubmit} className="space-y-4" key={state?.ok ? "reset" : "form"}>
       <FormStatus state={state} />
       <Field id="currentPassword" label="Current password" error={fieldError(state, "currentPassword")}>
         {(p) => <Input {...p} name="currentPassword" type="password" autoComplete="current-password" required />}
@@ -47,7 +47,7 @@ export function PasswordForm() {
       <Field id="confirmPassword" label="Confirm new password" error={fieldError(state, "confirmPassword")}>
         {(p) => <Input {...p} name="confirmPassword" type="password" autoComplete="new-password" required />}
       </Field>
-      <SubmitButton variant="secondary">Change password</SubmitButton>
+      <SubmitButton pending={pending} variant="secondary">Change password</SubmitButton>
     </form>
   );
 }

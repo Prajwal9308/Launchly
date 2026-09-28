@@ -23,7 +23,7 @@ export const leadSchema = z.object({
     .default("")
     .refine((v) => !v || /^[+()\-.\s\d]{7,}$/.test(v), "Please enter a valid phone number."),
   service: z.string().trim().max(120).optional().default(""),
-  message: z.string().trim().min(10, "Tell us a little about your project.").max(5000),
+  message: z.string().trim().min(1, "Please enter a message.").max(5000),
 });
 
 export type LeadInput = z.input<typeof leadSchema>;
