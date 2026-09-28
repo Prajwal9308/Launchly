@@ -19,7 +19,8 @@
     "test:e2e": "playwright test",
     "assets": "tsx scripts/generate-assets.ts",
     "vercel-build": "prisma migrate deploy && tsx prisma/bootstrap.ts && next build",
-    "create-admin": "tsx scripts/create-admin.ts"
+    "create-admin": "tsx scripts/create-admin.ts",
+    "review:capture": "tsx scripts/capture-site.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
