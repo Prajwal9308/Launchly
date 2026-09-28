@@ -177,6 +177,14 @@
     @apply bg-canvas text-foreground antialiased;
     font-feature-settings: "cv11", "ss01", "ss03";
   }
+  /* Tailwind v4 no longer gives buttons a pointer cursor; restore it for everything clickable. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  select:not(:disabled),
+  label[for] {
+    cursor: pointer;
+  }
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;

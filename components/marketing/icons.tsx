@@ -82,14 +82,15 @@ const BADGE_SIZES = {
 /**
  * Icon in a soft accent tile — the one container style used for services,
  * solutions, values and process steps. Decorative: the adjacent heading
- * carries the meaning. Inside a `group` link it scales up very slightly on hover.
+ * carries the meaning. Inside a `group` link it fills with the accent colour on
+ * hover — a colour change rather than movement, so nothing shifts.
  */
 export function IconBadge({ name, size = "md", className }: { name: string; size?: keyof typeof BADGE_SIZES; className?: string }) {
   const s = BADGE_SIZES[size];
   return (
     <span
       className={cn(
-        "flex shrink-0 items-center justify-center bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60 transition-transform duration-200 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100",
+        "flex shrink-0 items-center justify-center bg-accent-subtle text-accent ring-1 ring-inset ring-accent-border/60 transition-colors duration-200 ease-out group-hover:bg-accent group-hover:text-accent-foreground group-hover:ring-accent group-focus-visible:bg-accent group-focus-visible:text-accent-foreground group-focus-visible:ring-accent",
         s.box,
         className,
       )}

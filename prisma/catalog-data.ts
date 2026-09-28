@@ -9,7 +9,7 @@ export const SERVICES = [
   { slug: "mobile-app-development", name: "Mobile App Development", icon: "smartphone", summary: "iOS, Android and cross-platform apps for customers or internal teams.", features: ["iOS & Android", "Cross-platform apps", "MVPs & prototypes", "App store release"] },
   { slug: "ui-ux-design", name: "UI/UX Design", icon: "pen-tool", summary: "Clean, intuitive interfaces designed around how people actually use your product.", features: ["User flows & wireframes", "Interface design", "Design systems", "Usability review"] },
   { slug: "ecommerce-development", name: "E-commerce Development", icon: "shopping-cart", summary: "Online stores and commerce experiences with secure checkout and product management.", features: ["Online stores", "Checkout & payments", "Product management"] },
-  { slug: "business-solutions", name: "Custom Business Solutions", icon: "briefcase-business", summary: "Booking systems, internal tools and integrations built around how your business runs.", features: ["Booking & scheduling", "Internal tools", "Integrations & automation"] },
+  { slug: "business-solutions", name: "Custom Business Solutions", icon: "workflow", summary: "Booking systems, internal tools and integrations built around how your business runs.", features: ["Booking & scheduling", "Internal tools", "Integrations & automation"] },
 ];
 
 export const PACKAGES = [

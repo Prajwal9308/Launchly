@@ -38,7 +38,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
               )}
               <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-foreground">
                 Learn more
-                <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden />
+                <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" aria-hidden />
               </span>
             </Link>
           </RevealItem>
@@ -53,7 +53,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
                 <span className="min-w-0">
                   <span className="flex items-center gap-1 font-semibold">
                     {service.name}
-                    <ArrowRight className="size-4 text-faint opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden />
+                    <ArrowRight className="size-4 shrink-0 text-faint transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-accent motion-reduce:group-hover:translate-x-0" aria-hidden />
                   </span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted">{service.summary}</span>
                 </span>
