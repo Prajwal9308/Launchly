@@ -5,7 +5,7 @@ import { Screen } from "./devices";
 
 /**
  * Concept interfaces shown inside the device frames. They illustrate the kinds
- * of products ViperByte builds — they are not client work, so they use a
+ * of products CoreGravity builds — they are not client work, so they use a
  * placeholder brand ("Your Brand") and sample data only. Everything inside is
  * sized in em (see Screen) so it scales with the device.
  */
@@ -731,7 +731,7 @@ export function OrdersScreen() {
 }
 
 /* ------------------------------------------------------------------ */
-/* ViperByte client portal (a real feature, simplified)            */
+/* CoreGravity client portal (a real feature, simplified)            */
 /* ------------------------------------------------------------------ */
 
 export function PortalScreen() {

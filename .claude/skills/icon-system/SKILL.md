@@ -1,9 +1,9 @@
 ---
 name: icon-system
-description: ViperByte icon rules — Lucide only, through the Icons registry, 20/24px, 1.75 stroke, accent colour, one icon per concept, IconTile for containers. Use whenever adding, changing, choosing or reviewing an icon anywhere in this repo (marketing site, client portal, admin), including service icons, activity/notification icons, empty states, buttons and navigation.
+description: CoreGravity icon rules — Lucide only, through the Icons registry, 20/24px, 1.75 stroke, accent colour, one icon per concept, IconTile for containers. Use whenever adding, changing, choosing or reviewing an icon anywhere in this repo (marketing site, client portal, admin), including service icons, activity/notification icons, empty states, buttons and navigation.
 ---
 
-# ViperByte icon system
+# CoreGravity icon system
 
 One library, one registry, one visual language. Follow these rules for every icon in this repo. For general placement and hierarchy advice, `ui-ux-pro-max` applies; where it disagrees with this file (for example its `Home` or `Heroicons` examples), this file wins.
 

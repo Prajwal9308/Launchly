@@ -5,7 +5,7 @@ import { WhatWeBuild } from "@/components/marketing/what-we-build";
 
 export const metadata: Metadata = {
   title: "Solutions",
-  description: "Business websites, web applications, iOS and Android apps, e-commerce stores, dashboards and custom business systems, designed and built by ViperByte for businesses and entrepreneurs.",
+  description: "Business websites, web applications, iOS and Android apps, e-commerce stores, dashboards and custom business systems, designed and built by CoreGravity for businesses and entrepreneurs.",
   alternates: { canonical: "/solutions" },
 };
 

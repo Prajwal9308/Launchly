@@ -3,7 +3,7 @@
 import { m, useReducedMotion } from "framer-motion";
 
 /**
- * The ViperByte curve: one thin serpentine stroke, drawn once under a single
+ * The CoreGravity curve: one thin serpentine stroke, drawn once under a single
  * word of a headline. It's the brand's only decorative flourish — use sparingly.
  */
 export function BrandCurve({ className }: { className?: string }) {

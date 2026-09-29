@@ -63,7 +63,7 @@ export function getEmailProvider(): EmailProvider {
   if (kind === "resend" && process.env.RESEND_API_KEY) {
     provider = new ResendEmailProvider(
       process.env.RESEND_API_KEY,
-      process.env.EMAIL_FROM || "ViperByte <onboarding@resend.dev>",
+      process.env.EMAIL_FROM || "CoreGravity <onboarding@resend.dev>",
       process.env.EMAIL_REPLY_TO || undefined,
     );
     return provider;

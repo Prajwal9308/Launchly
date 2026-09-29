@@ -1,5 +1,5 @@
 /**
- * "What We Build" — categories of work ViperByte offers. These are
+ * "What We Build" — categories of work CoreGravity offers. These are
  * capabilities, not completed client projects.
  */
 export const SOLUTIONS = [

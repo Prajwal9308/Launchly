@@ -5,7 +5,7 @@ import { isPlaceholderEmail } from "@/lib/site";
 import { getSiteSettings } from "@/services/catalog";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "Privacy", description: "How ViperByte collects, uses and protects your information.", alternates: { canonical: "/privacy" } };
+export const metadata: Metadata = { title: "Privacy", description: "How CoreGravity collects, uses and protects your information.", alternates: { canonical: "/privacy" } };
 
 export default async function PrivacyPage() {
   const settings = await getSiteSettings();

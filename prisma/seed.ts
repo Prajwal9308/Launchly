@@ -203,7 +203,7 @@ async function main() {
   await db.siteSettings.create({
     data: {
       id: "default",
-      businessName: "ViperByte",
+      businessName: "CoreGravity",
       tagline: "Websites and mobile apps for businesses and entrepreneurs.",
       contactEmail: "hello@example.com",
       serviceArea: null,

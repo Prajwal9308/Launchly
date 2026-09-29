@@ -7,7 +7,7 @@ import { getSiteSettings } from "@/services/catalog";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "ViperByte is a web and mobile app development studio helping businesses and entrepreneurs build practical digital products.",
+  description: "CoreGravity is a web and mobile app development studio helping businesses and entrepreneurs build practical digital products.",
   alternates: { canonical: "/about" },
 };
 

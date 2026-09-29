@@ -176,14 +176,14 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
 }
 
 /**
- * The ViperByte client portal — a real feature of the service, shown in a
+ * The CoreGravity client portal — a real feature of the service, shown in a
  * simplified form (sample project, not a client's data).
  */
 export function PortalPreview({ className }: { className?: string }) {
   return (
     <Stage className={cn("@container-size aspect-[16/11] rounded-2xl border border-border", className)}>
       <ConceptVisual
-        label="a simplified view of the ViperByte client portal on a laptop, showing project progress and a design ready for review"
+        label="a simplified view of the CoreGravity client portal on a laptop, showing project progress and a design ready for review"
         className="absolute inset-0 flex items-center justify-center"
       >
         <div className="relative w-[min(86cqw,135cqh)]">
