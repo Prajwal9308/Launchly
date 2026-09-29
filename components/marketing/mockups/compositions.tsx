@@ -89,7 +89,7 @@ function Photo({ kind, sizes }: { kind: Kind; sizes: string }) {
         alt=""
         fill
         sizes={sizes}
-        quality={85}
+        quality={90}
         className="object-cover transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
       />
     </ConceptVisual>
@@ -191,7 +191,7 @@ export function ServicePreview({ icon, className }: { icon: string; className?: 
   return (
     <Stage className={cn("@container-size aspect-[16/10]", className)}>
       {PHOTOS[kind] ? (
-        <Photo kind={kind} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+        <Photo kind={kind} sizes="(min-width: 1024px) 600px, (min-width: 640px) 50vw, 100vw" />
       ) : (
         <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
           <Scene
@@ -210,7 +210,7 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
   return (
     <Stage className={cn("@container-size aspect-[16/11]", className)}>
       {PHOTOS[kind] ? (
-        <Photo kind={kind} sizes="(min-width: 1024px) 50vw, 100vw" />
+        <Photo kind={kind} sizes="(min-width: 1024px) 560px, 100vw" />
       ) : (
         <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
           <Scene kind={kind} />

@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
  * always sits beside it as text.
  */
 export function LogoMark({ className }: { className?: string }) {
-  return <Image src={brandMark} alt="" width={28} height={28} loading="eager" className={cn("size-7", className)} />;
+  // Unoptimized: the 256px source stays sharp on 3x phone screens, where the optimizer's 2x variant blurs.
+  return <Image src={brandMark} alt="" width={28} height={28} loading="eager" unoptimized className={cn("size-7", className)} />;
 }
 
 /** "CoreGravity" → "Core" + "Gravity", so the second word can take the accent. */
