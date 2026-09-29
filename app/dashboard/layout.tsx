@@ -6,7 +6,7 @@ import { getClientBadges, listClientProjects } from "@/services/project-queries"
 import { toNotificationViews } from "@/server/serialize";
 import { requireClientActor } from "@/server/session";
 
-export const metadata: Metadata = { title: { default: "Dashboard", template: "%s · Client portal" }, robots: { index: false } };
+export const metadata: Metadata = { title: { default: "Dashboard", template: "%s · Client Portal" }, robots: { index: false } };
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const actor = await requireClientActor();
@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <AppShell
       variant="client"
       businessName={settings.businessName}
-      subtitle="Client portal"
+      subtitle="Client Portal"
       user={actor}
       notifications={{ items: toNotificationViews(notifications.items), unread: notifications.unread }}
       defaultProjectId={current?.id ?? null}

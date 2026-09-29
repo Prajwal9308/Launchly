@@ -23,10 +23,12 @@ export class AppError extends Error {
   }
 }
 
-export const unauthenticated = () => new AppError("UNAUTHENTICATED", "Please log in to continue.");
-export const forbidden = (message = "You don't have permission to do that.") =>
+export const unauthenticated = () => new AppError("UNAUTHENTICATED", "Please sign in to continue.");
+export const forbidden = (message = "You don't have permission to access this information.") =>
   new AppError("FORBIDDEN", message);
-export const notFound = (message = "This item could not be found.") => new AppError("NOT_FOUND", message);
+export const notFound = (
+  message = "We couldn't find the requested information. It may have been removed or you may no longer have access.",
+) => new AppError("NOT_FOUND", message);
 export const validation = (message = "Please correct the highlighted fields.", fieldErrors?: Record<string, string[]>) =>
   new AppError("VALIDATION", message, fieldErrors);
 export const conflict = (message: string) => new AppError("CONFLICT", message);

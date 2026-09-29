@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { countryName } from "@/domain/country";
 import Link from "next/link";
 import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
@@ -51,7 +52,8 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
               <tr>
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden md:table-cell">Business</TableHead>
-                <TableHead className="hidden lg:table-cell">Project type</TableHead>
+                <TableHead className="hidden lg:table-cell">Looking for</TableHead>
+                <TableHead className="hidden md:table-cell">Country</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="hidden sm:table-cell">Received</TableHead>
               </tr>
@@ -67,6 +69,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                   </TableCell>
                   <TableCell className="hidden text-muted md:table-cell">{lead.businessName ?? "—"}</TableCell>
                   <TableCell className="hidden text-muted lg:table-cell">{lead.service ?? "—"}</TableCell>
+                  <TableCell className="hidden text-muted md:table-cell">{lead.country ? countryName(lead.country) : "—"}</TableCell>
                   <TableCell>
                     <LeadStatusBadge status={lead.status} />
                   </TableCell>

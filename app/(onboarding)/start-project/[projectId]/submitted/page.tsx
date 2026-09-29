@@ -18,9 +18,9 @@ export default async function SubmittedPage({ params }: { params: Promise<{ proj
     <div className="mx-auto max-w-lg">
       <div className="surface-raised rounded-2xl p-6 text-center shadow-card sm:p-10">
         <IconTile icon={Icons.success} size="lg" tone="success" className="mx-auto" />
-        <h1 className="mt-5 text-2xl font-semibold">Your project is in.</h1>
+        <h1 className="mt-5 text-2xl font-semibold">We&apos;ve received your project request.</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted">
-          Your project has been submitted. We&apos;ve received your information and will review the project details before the next step.
+          Thank you for providing your project details. We&apos;ll review your requirements and contact you with the next steps.
         </p>
         <dl className="mt-8 divide-y divide-border rounded-lg border border-border text-left text-sm">
           <div className="flex justify-between gap-4 px-4 py-3">
@@ -39,7 +39,7 @@ export default async function SubmittedPage({ params }: { params: Promise<{ proj
           </div>
           <div className="flex justify-between gap-4 px-4 py-3">
             <dt className="text-muted">Next step</dt>
-            <dd className="text-right font-medium">We review your requirements and assets</dd>
+            <dd className="text-right font-medium">Our team will review your requirements and submitted materials.</dd>
           </div>
         </dl>
         <Button asChild className="mt-8 w-full sm:w-auto">

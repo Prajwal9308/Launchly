@@ -99,7 +99,7 @@ const CLIENTS: DemoClient[] = [
     services: ["web-development", "ui-ux-design"],
     accent: "#1d3b5c",
     draft: {
-      goals: { primaryGoal: "CALLS", primaryGoalOther: "", idealCustomers: "Homeowners and property managers in the local area.", differentiators: "Upfront pricing and same-day appointments when available.", keyOfferings: "Emergency repairs, water heaters, drain cleaning." },
+      goals: { primaryGoal: "CALLS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Homeowners and property managers in the local area.", differentiators: "Upfront pricing and same-day appointments when available.", keyOfferings: "Emergency repairs, water heaters, drain cleaning." },
       website: { pages: ["HOME", "ABOUT", "SERVICES", "TESTIMONIALS", "CONTACT"], pagesOther: "Service areas", services: [] },
       features: { features: ["CONTACT_FORM", "MAPS", "REVIEWS"], featuresOther: "" },
     },
@@ -117,7 +117,7 @@ const CLIENTS: DemoClient[] = [
     services: ["web-development", "ui-ux-design"],
     accent: "#7a8b3f",
     draft: {
-      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Local diners, families and people planning small events.", differentiators: "Seasonal menu and a private dining room.", keyOfferings: "Dinner menu, private events, takeout." },
+      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Local diners, families and people planning small events.", differentiators: "Seasonal menu and a private dining room.", keyOfferings: "Dinner menu, private events, takeout." },
       website: { pages: ["HOME", "ABOUT", "GALLERY", "CONTACT", "BOOKING"], pagesOther: "Menu", services: [] },
       features: { features: ["BOOKING", "MAPS", "GALLERY", "SOCIAL"], featuresOther: "" },
     },
@@ -135,7 +135,7 @@ const CLIENTS: DemoClient[] = [
     services: ["web-development", "business-solutions"],
     accent: "#3f6b3a",
     draft: {
-      goals: { primaryGoal: "LEADS", primaryGoalOther: "", idealCustomers: "Homeowners planning garden projects.", differentiators: "Design and maintenance from the same team.", keyOfferings: "Garden design, planting, seasonal maintenance." },
+      goals: { primaryGoal: "LEADS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Homeowners planning garden projects.", differentiators: "Design and maintenance from the same team.", keyOfferings: "Garden design, planting, seasonal maintenance." },
       website: { pages: ["HOME", "SERVICES", "PORTFOLIO", "CONTACT"], pagesOther: "", services: [] },
       features: { features: ["CONTACT_FORM", "GALLERY"], featuresOther: "" },
     },
@@ -153,7 +153,7 @@ const CLIENTS: DemoClient[] = [
     services: ["ui-ux-design", "web-development"],
     accent: "#9b5a6b",
     draft: {
-      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Clients looking for color specialists.", differentiators: "Color-focused stylists.", keyOfferings: "Color, cuts, treatments." },
+      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Clients looking for color specialists.", differentiators: "Color-focused stylists.", keyOfferings: "Color, cuts, treatments." },
       website: { pages: ["HOME", "SERVICES", "PRICING", "GALLERY", "BOOKING", "CONTACT"], pagesOther: "", services: [] },
       features: { features: ["BOOKING", "SOCIAL", "GALLERY"], featuresOther: "" },
     },
@@ -171,7 +171,7 @@ const CLIENTS: DemoClient[] = [
     services: ["web-development", "mobile-app-development"],
     accent: "#1f7a7a",
     draft: {
-      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", idealCustomers: "Families and new patients.", differentiators: "Evening appointments.", keyOfferings: "Checkups, cleanings, family dentistry." },
+      goals: { primaryGoal: "BOOKINGS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Families and new patients.", differentiators: "Evening appointments.", keyOfferings: "Checkups, cleanings, family dentistry." },
       website: { pages: ["HOME", "ABOUT", "SERVICES", "FAQ", "CONTACT"], pagesOther: "New patients", services: [] },
       features: { features: ["CONTACT_FORM", "MAPS", "BOOKING"], featuresOther: "" },
     },
@@ -204,7 +204,7 @@ async function main() {
     data: {
       id: "default",
       businessName: "CoreGravity",
-      tagline: "Websites and mobile apps for businesses and entrepreneurs.",
+      tagline: "Professional websites and digital solutions for small businesses.",
       contactEmail: "hello@example.com",
       serviceArea: null,
     },
@@ -215,10 +215,10 @@ async function main() {
   });
 
   const services = await Promise.all(
-    SERVICES.map((s, i) => db.service.create({ data: { ...s, sortOrder: i, description: null, pricingText: null } })),
+    SERVICES.map((s, i) => db.service.create({ data: { ...s, sortOrder: i, pricingText: null } })),
   );
   const serviceBySlug = Object.fromEntries(services.map((s) => [s.slug, s]));
-  await db.pricingPackage.createMany({ data: PACKAGES.map((p, i) => ({ ...p, sortOrder: i, priceCents: null })) });
+  await db.pricingPackage.createMany({ data: PACKAGES.map((p, i) => ({ ...p, sortOrder: i })) });
   await db.portfolioItem.createMany({
     data: PORTFOLIO.map((p, i) => ({
       slug: p.slug,
@@ -249,7 +249,7 @@ async function main() {
       },
     });
     const org = await db.organization.create({
-      data: { name: c.business, createdAt: user.createdAt, members: { create: { userId: user.id, role: "OWNER" } } },
+      data: { name: c.business, country: "CA", createdAt: user.createdAt, members: { create: { userId: user.id, role: "OWNER" } } },
     });
     const business = await db.business.create({
       data: {
@@ -265,6 +265,7 @@ async function main() {
     const draft: QuestionnaireDraft = {
       business: {
         businessName: c.business,
+        country: "CA",
         businessType: "Small business",
         industry: c.industry as NonNullable<QuestionnaireDraft["business"]>["industry"],
         description: c.description,
@@ -277,7 +278,7 @@ async function main() {
       },
       brand: { brandColors: "", preferredFonts: "", hasBrandGuidelines: false, brandDescription: "", styles: ["MODERN", "PROFESSIONAL"] },
       content: { hasContent: "PARTIAL", contentNotes: "We have photos; need help with service descriptions." },
-      final: { budgetRange: "$3,000 – $6,000", timeframe: "1–3 months", comments: "" },
+      final: { budgetRange: "CA$5,000 – CA$10,000", timeframe: "1–3 months", comments: "" },
       ...c.draft,
     } as QuestionnaireDraft;
     draft.website = { ...draft.website!, services: c.services };
@@ -293,6 +294,7 @@ async function main() {
         createdById: user.id,
         name: `${c.business} website`,
         status: c.status,
+        country: "CA",
         questionnaire: draft as Prisma.InputJsonValue,
         questionnaireStep: "review",
         budgetRange: draft.final?.budgetRange,
@@ -412,9 +414,9 @@ async function main() {
 
   await db.lead.createMany({
     data: [
-      { name: "Priya Shah", businessName: "Shah Family Bakery", email: "priya@example.com", phone: "(555) 010-5521", service: "Business Websites", message: "We're opening a second location and need a website that shows both, with our menu and hours.", status: "NEW", createdAt: daysAgo(0.5) },
-      { name: "Marcus Hill", businessName: "Hill Roofing", email: "marcus@example.com", service: "Website Redesign", message: "Our current site is about 8 years old and doesn't work well on phones.", status: "CONTACTED", createdAt: daysAgo(4) },
-      { name: "Elena Park", businessName: null, email: "elena@example.com", service: "Landing Pages", message: "Looking for a landing page for a new coaching offer.", status: "QUALIFIED", createdAt: daysAgo(9) },
+      { name: "Priya Shah", businessName: "Shah Family Bakery", email: "priya@example.com", phone: "+91 98200 10552", country: "IN", service: "Business Website", budgetRange: "₹75,000 – ₹1,50,000", message: "We're opening a second location and need a website that shows both, with our menu and hours.", status: "NEW", createdAt: daysAgo(0.5) },
+      { name: "Marcus Hill", businessName: "Hill Roofing", email: "marcus@example.com", country: "CA", service: "Website Redesign", message: "Our current site is about 8 years old and doesn't work well on phones.", status: "CONTACTED", createdAt: daysAgo(4) },
+      { name: "Elena Park", businessName: "Park Coaching", email: "elena@example.com", country: "CA", service: "Booking & Appointment System", message: "Looking for online booking for coaching sessions.", status: "QUALIFIED", createdAt: daysAgo(9) },
     ],
   });
   await db.notification.create({

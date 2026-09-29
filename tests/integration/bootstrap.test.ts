@@ -8,10 +8,11 @@ beforeEach(resetDb);
 describe("production bootstrap", () => {
   it("adds default settings, services, unpriced packages and labelled samples to a new database", async () => {
     expect(await bootstrapCatalog(db)).toEqual({ bootstrapped: true });
-    expect(await db.service.count()).toBe(5);
+    expect(await db.service.count()).toBe(6);
     const packages = await db.pricingPackage.findMany();
-    expect(packages).toHaveLength(4);
-    expect(packages.every((p) => p.priceCents === null)).toBe(true);
+    expect(packages).toHaveLength(6);
+    expect(packages.some((p) => p.highlighted)).toBe(false);
+    expect(packages.every((p) => p.priceCad === null && p.priceInr === null)).toBe(true);
     const portfolio = await db.portfolioItem.findMany();
     expect(portfolio.length).toBeGreaterThan(0);
     expect(portfolio.every((p) => p.isDemo)).toBe(true);
@@ -25,6 +26,6 @@ describe("production bootstrap", () => {
     await db.service.deleteMany({ where: { slug: "business-solutions" } });
     expect(await bootstrapCatalog(db)).toEqual({ bootstrapped: false });
     expect(await db.portfolioItem.count()).toBe(0);
-    expect(await db.service.count()).toBe(4);
+    expect(await db.service.count()).toBe(5);
   });
 });

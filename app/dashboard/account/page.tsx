@@ -18,18 +18,24 @@ export default async function AccountPage() {
       <PageHeader icon={Icons.account} title="Account" description={`Member since ${formatDate(account.createdAt)}`} />
       <Card>
         <CardContent className="divide-y divide-border">
-          <FormSection title="Profile" description="Your contact details for this project.">
-            <ProfileForm firstName={account.firstName} lastName={account.lastName} email={account.email} phone={account.clientProfile?.phone ?? ""} />
+          <FormSection title="Profile" description="Your contact details and country.">
+            <ProfileForm
+              firstName={account.firstName}
+              lastName={account.lastName}
+              email={account.email}
+              phone={account.clientProfile?.phone ?? ""}
+              country={account.memberships[0]?.organization.country ?? null}
+            />
           </FormSection>
           <FormSection title="Business" description="The business linked to your account.">
             <p className="text-sm">{account.memberships.map((m) => m.organization.name).join(", ") || "—"}</p>
           </FormSection>
-          <FormSection title="Sign-in" description="How you log in to your account.">
+          <FormSection title="Sign-in" description="How you sign in to your client portal.">
             {account.providers.includes("google") && <p className="text-sm">Connected to Google ({account.email}).</p>}
             {account.hasPassword ? (
               <PasswordForm />
             ) : (
-              <p className="text-sm text-muted">You sign in with Google, so there&apos;s no password to manage here.</p>
+              <p className="text-sm text-muted">You sign in with Google, so there is no password to manage here.</p>
             )}
           </FormSection>
         </CardContent>

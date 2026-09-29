@@ -16,7 +16,7 @@ describe("file validation", () => {
 
   it("rejects content that doesn't match the extension", () => {
     const fake = new TextEncoder().encode("<script>alert(1)</script>");
-    expect(validateUpload({ name: "photo.png", size: fake.length, bytes: fake })).toEqual({ ok: false, error: "The file contents don't match its type." });
+    expect(validateUpload({ name: "photo.png", size: fake.length, bytes: fake })).toEqual({ ok: false, error: "The file could not be verified. Please upload the original file again." });
   });
 
   it("rejects unsupported types", () => {

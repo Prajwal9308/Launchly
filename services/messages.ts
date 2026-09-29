@@ -40,7 +40,7 @@ export async function sendMessage(actor: Actor, projectId: string, input: z.inpu
       type: "MESSAGE_SENT",
       projectId,
       actorId: actor.id,
-      message: isAdmin(actor) ? "Studio sent a message" : `${actor.firstName} sent a message`,
+      message: isAdmin(actor) ? "CoreGravity sent a message" : `${actor.firstName} sent a message`,
     });
 
     const clientHref = `/dashboard/project/${projectId}/messages`;

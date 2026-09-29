@@ -23,7 +23,7 @@ export function NoteForm({ projectId }: { projectId: string }) {
       <Textarea id="note-body" rows={3} value={body} onChange={(e) => setBody(e.target.value)} placeholder="Record a call summary, decision or reminder. Never visible to the client." />
       <div className="flex justify-end">
         <Button type="submit" size="sm" loading={pending} disabled={!body.trim()}>
-          Save note
+          Save Note
         </Button>
       </div>
     </form>

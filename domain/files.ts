@@ -111,17 +111,17 @@ export function validateUpload(input: {
   const name = sanitizeFileName(input.name);
   const extension = fileExtension(name);
 
-  if (input.size <= 0 || input.bytes.length === 0) return { ok: false, error: "The file is empty." };
+  if (input.size <= 0 || input.bytes.length === 0) return { ok: false, error: "This file is empty." };
   if (input.size > maxBytes) {
-    return { ok: false, error: `Files must be ${Math.round(maxBytes / (1024 * 1024))} MB or smaller.` };
+    return { ok: false, error: `File size must be ${Math.round(maxBytes / (1024 * 1024))} MB or smaller.` };
   }
 
   const allowed = ALLOWED_TYPES[extension];
   if (!allowed || (input.allowedExtensions && !input.allowedExtensions.includes(extension))) {
-    return { ok: false, error: "This file type isn't supported." };
+    return { ok: false, error: "This file type is not supported." };
   }
   if (!allowed.check(input.bytes)) {
-    return { ok: false, error: "The file contents don't match its type." };
+    return { ok: false, error: "The file could not be verified. Please upload the original file again." };
   }
 
   return { ok: true, mimeType: allowed.mime, extension, isImage: allowed.image, name };
@@ -140,7 +140,21 @@ export const FILE_CATEGORY_LABELS: Record<FileCategory, string> = {
   DESIGN: "Design",
   ATTACHMENT: "Message attachment",
   OTHER: "Other",
+  PROPOSAL: "Proposal",
+  AGREEMENT: "Project Agreement",
+  INVOICE: "Invoice",
+  MAINTENANCE_AGREEMENT: "Maintenance Agreement",
 };
 
-/** Categories a client may choose when uploading. DESIGN is studio-only. */
+/**
+ * Commercial documents the studio shares with a client. They are listed
+ * separately in the client portal and kept apart from the website Terms of Use.
+ */
+export const PROJECT_DOCUMENT_CATEGORIES: FileCategory[] = ["PROPOSAL", "AGREEMENT", "INVOICE", "MAINTENANCE_AGREEMENT"];
+
+export function isProjectDocument(category: FileCategory) {
+  return PROJECT_DOCUMENT_CATEGORIES.includes(category);
+}
+
+/** Categories a client may choose when uploading. DESIGN and project documents are studio-only. */
 export const CLIENT_FILE_CATEGORIES: FileCategory[] = ["LOGO", "PHOTO", "DOCUMENT", "BRAND", "CONTENT", "ATTACHMENT", "OTHER"];

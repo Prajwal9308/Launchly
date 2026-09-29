@@ -14,7 +14,7 @@ const SECTION_TO_STEP: Record<string, DataStepKey> = {
   Content: "content",
   Inspiration: "inspiration",
   Features: "features",
-  "Final details": "final",
+  "Budget and timeline": "final",
 };
 
 /** Summary of all answers before submission, grouped by step, with edit links. */
@@ -41,21 +41,21 @@ export function ReviewStep({
   return (
     <div className="space-y-6">
       {issues.length > 0 ? (
-        <Alert tone="warning" title="A few required answers are missing">
+        <Alert tone="warning" title="Some required information is missing">
           <ul className="mt-1 space-y-1">
             {issues.map((issue) => (
               <li key={`${issue.step}.${issue.field}`}>
                 {issue.message}{" "}
                 <button type="button" className="font-medium text-accent underline-offset-2 hover:underline" onClick={() => onEdit(issue.step)}>
-                  Fix
+                  Complete<span className="sr-only"> {issue.message}</span>
                 </button>
               </li>
             ))}
           </ul>
         </Alert>
       ) : (
-        <Alert tone="success" title="Everything we need is here">
-          Review your answers below, then submit your project.
+        <Alert tone="success" title="Everything looks good.">
+          We have the information needed to review your requirements.
         </Alert>
       )}
 
@@ -77,7 +77,7 @@ export function ReviewStep({
               ))}
             </dl>
           ) : (
-            <p className="px-4 py-3 text-sm text-faint">No answers yet</p>
+            <p className="px-4 py-3 text-sm text-faint">No answers provided yet.</p>
           )}
         </section>
       ))}
@@ -93,7 +93,7 @@ export function ReviewStep({
             ))}
           </ul>
         ) : (
-          <p className="px-4 py-3 text-sm text-faint">No files uploaded. You can also add files after submitting.</p>
+          <p className="px-4 py-3 text-sm text-faint">No files uploaded. You can also add files after you submit your project request.</p>
         )}
       </section>
     </div>

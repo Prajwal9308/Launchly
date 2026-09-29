@@ -39,11 +39,11 @@ export function DesignUploadDialog({ projectId, existingTitles }: { projectId: s
   return (
     <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) reset(); }}>
       <DialogTrigger asChild>
-        <Button>Upload design</Button>
+        <Button>Upload Design</Button>
       </DialogTrigger>
       <DialogContent className="max-w-xl">
         <DialogHeader>
-          <DialogTitle>Upload design</DialogTitle>
+          <DialogTitle>Upload Design</DialogTitle>
           <DialogDescription>Uploading a design with an existing name creates the next version (e.g. Homepage v2).</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -69,7 +69,7 @@ export function DesignUploadDialog({ projectId, existingTitles }: { projectId: s
               <FileUploader
                 projectId={projectId}
                 category="DESIGN"
-                label="Upload image or PDF"
+                label="Upload Image or PDF"
                 hint={`PNG, JPG, WebP, GIF or PDF. Up to ${formatFileSize(MAX_DESIGN_UPLOAD_BYTES)}.`}
                 accept={DESIGN_ACCEPT_ATTRIBUTE}
                 multiple={false}
@@ -114,7 +114,7 @@ export function DesignUploadDialog({ projectId, existingTitles }: { projectId: s
               })
             }
           >
-            {requestReview ? "Upload & request review" : "Save draft"}
+            {requestReview ? "Upload and Request Review" : "Save Draft"}
           </Button>
         </DialogFooter>
       </DialogContent>

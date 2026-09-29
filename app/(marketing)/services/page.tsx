@@ -6,7 +6,8 @@ import { listPublishedServices } from "@/services/catalog";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "Web development, mobile app development for iOS and Android, UI/UX design, e-commerce and custom business software.",
+  description:
+    "Website development, e-commerce, booking and appointment systems, business applications, mobile apps and UI/UX design for small businesses in Canada and India.",
   alternates: { canonical: "/services" },
 };
 
@@ -16,8 +17,8 @@ export default async function ServicesPage() {
     <>
       <PageHero
         eyebrow="Services"
-        title="Web and mobile development, end to end"
-        description="Design, development and launch for websites, web applications and mobile apps — scoped around what your business actually needs."
+        title="Professional digital services for small businesses"
+        description="From business websites and online stores to booking systems and custom applications, we build practical digital solutions around your business needs."
       />
       <Section>
         <ServiceGrid services={services} />

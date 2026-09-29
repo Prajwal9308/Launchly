@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "CoreGravity — Web & Mobile App Development";
+export const alt = "CoreGravity — Websites & Digital Solutions for Small Businesses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -19,11 +19,11 @@ export default async function OpengraphImage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           <div style={{ fontSize: 66, fontWeight: 600, color: "#16181d", lineHeight: 1.08, letterSpacing: -2 }}>
-            Websites, apps and digital products, built with precision.
+            Websites and digital solutions built for your business.
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 28, color: "#4a4f5c" }}>
             <div style={{ width: 44, height: 4, borderRadius: 4, background: "#ea6a1f" }} />
-            Web &amp; mobile app development
+            For small businesses in Canada and India
           </div>
         </div>
       </div>

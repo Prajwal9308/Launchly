@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/db";
+import { COUNTRIES } from "@/domain/country";
 import { conflict, validation } from "@/lib/errors";
 import { fieldErrorsOf } from "@/lib/validation";
 import { sendEmail } from "@/providers/email";
@@ -13,9 +14,9 @@ const BCRYPT_COST = 12;
 
 export const passwordSchema = z
   .string()
-  .min(10, "Use at least 10 characters.")
-  .max(128, "Use 128 characters or fewer.")
-  .refine((v) => /[a-zA-Z]/.test(v) && /\d/.test(v), "Include at least one letter and one number.");
+  .min(10, "Your password must be at least 10 characters.")
+  .max(128, "Your password must be 128 characters or fewer.")
+  .refine((v) => /[a-zA-Z]/.test(v) && /\d/.test(v), "Your password must include at least one letter and one number.");
 
 const phoneSchema = z
   .string()
@@ -24,11 +25,12 @@ const phoneSchema = z
   .refine((v) => !v || /^[+()\-.\s\d]{7,}$/.test(v), "Please enter a valid phone number.");
 
 export const signupSchema = z.object({
-  firstName: z.string().trim().min(1, "First name is required.").max(60),
-  lastName: z.string().trim().min(1, "Last name is required.").max(60),
+  firstName: z.string().trim().min(1, "Please enter your first name.").max(60),
+  lastName: z.string().trim().min(1, "Please enter your last name.").max(60),
   email: z.email("Please enter a valid email address.").trim().toLowerCase().max(254),
   password: passwordSchema,
-  businessName: z.string().trim().min(1, "Business name is required.").max(120),
+  businessName: z.string().trim().min(1, "Please enter your business name.").max(120),
+  country: z.enum(COUNTRIES, "Please select your country."),
   phone: phoneSchema.optional().default(""),
 });
 
@@ -57,7 +59,7 @@ export async function registerClient(input: SignupInput) {
   const data = parsed.data;
 
   const existing = await db.user.findUnique({ where: { email: data.email }, select: { id: true } });
-  if (existing) throw conflict("An account with this email already exists. Try logging in instead.");
+  if (existing) throw conflict("An account with this email address already exists. Please sign in instead.");
 
   const passwordHash = await hashPassword(data.password);
 
@@ -80,11 +82,15 @@ export async function registerClient(input: SignupInput) {
 
     if (invitedOrg) {
       await tx.organizationMember.create({ data: { organizationId: invitedOrg.id, userId: user.id, role: "OWNER" } });
-      await tx.organization.update({ where: { id: invitedOrg.id }, data: { inviteEmail: null } });
+      await tx.organization.update({
+        where: { id: invitedOrg.id },
+        data: { inviteEmail: null, country: invitedOrg.country ?? data.country },
+      });
     } else {
       await tx.organization.create({
         data: {
           name: data.businessName,
+          country: data.country,
           members: { create: { userId: user.id, role: "OWNER" } },
           businesses: { create: { name: data.businessName, phone: data.phone || null, email: data.email } },
         },
@@ -137,9 +143,11 @@ export async function verifyCredentials(email: string, password: string) {
 }
 
 export const profileSchema = z.object({
-  firstName: z.string().trim().min(1, "First name is required.").max(60),
-  lastName: z.string().trim().min(1, "Last name is required.").max(60),
+  firstName: z.string().trim().min(1, "Please enter your first name.").max(60),
+  lastName: z.string().trim().min(1, "Please enter your last name.").max(60),
   phone: phoneSchema.optional().default(""),
+  /** Clients only: the country of their business account (sets their currency). */
+  country: z.enum(COUNTRIES, "Please select your country.").optional(),
 });
 
 export async function updateProfile(actor: Actor, input: z.input<typeof profileSchema>) {
@@ -156,26 +164,32 @@ export async function updateProfile(actor: Actor, input: z.input<typeof profileS
           : undefined,
     },
   });
+  if (actor.role === "CLIENT" && parsed.data.country) {
+    await db.organization.updateMany({
+      where: { members: { some: { userId: actor.id } } },
+      data: { country: parsed.data.country },
+    });
+  }
 }
 
 export const changePasswordSchema = z
   .object({
-    currentPassword: z.string().min(1, "Enter your current password.").max(128),
+    currentPassword: z.string().min(1, "Please enter your current password.").max(128),
     newPassword: passwordSchema,
     confirmPassword: z.string(),
   })
   .refine((v) => v.newPassword === v.confirmPassword, {
     path: ["confirmPassword"],
-    message: "Passwords don't match.",
+    message: "The passwords do not match.",
   });
 
 export async function changePassword(actor: Actor, input: z.input<typeof changePasswordSchema>) {
   const parsed = changePasswordSchema.safeParse(input);
   if (!parsed.success) throw validation(undefined, fieldErrorsOf(parsed.error));
   const user = await db.user.findUniqueOrThrow({ where: { id: actor.id } });
-  if (!user.passwordHash) throw validation("Your account signs in with Google, so there is no password to change.");
+  if (!user.passwordHash) throw validation("Your account uses Google sign-in, so there is no password to change.");
   const valid = user.passwordHash && (await bcrypt.compare(parsed.data.currentPassword, user.passwordHash));
-  if (!valid) throw validation("Your current password is incorrect.", { currentPassword: ["Incorrect password."] });
+  if (!valid) throw validation("Your current password is incorrect.", { currentPassword: ["This password is incorrect."] });
   await db.user.update({ where: { id: actor.id }, data: { passwordHash: await hashPassword(parsed.data.newPassword) } });
 }
 
@@ -190,7 +204,7 @@ export async function getAccount(actor: Actor) {
       role: true,
       createdAt: true,
       clientProfile: { select: { phone: true } },
-      memberships: { select: { organization: { select: { id: true, name: true } } } },
+      memberships: { select: { organization: { select: { id: true, name: true, country: true } } } },
       passwordHash: true,
       accounts: { select: { provider: true } },
     },

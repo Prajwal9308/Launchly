@@ -4,6 +4,7 @@ import {
   PAGES,
   PRIMARY_GOALS,
   STYLES,
+  countryOptionLabel,
   optionLabel,
   splitLines,
   type QuestionnaireDraft,
@@ -34,6 +35,7 @@ export function buildRequirementRows(
 
   const b = draft.business;
   add("Business", "Business name", b?.businessName);
+  add("Business", "Country", countryOptionLabel(b?.country));
   add("Business", "Business type", b?.businessType);
   add("Business", "Industry", b?.industry);
   add("Business", "Description", b?.description);
@@ -52,6 +54,7 @@ export function buildRequirementRows(
       g.primaryGoal === "OTHER" ? `Other: ${g.primaryGoalOther}` : optionLabel(PRIMARY_GOALS, g.primaryGoal),
     );
   }
+  add("Goals", "Main goals", g?.mainGoals);
   add("Goals", "Ideal customers", g?.idealCustomers);
   add("Goals", "What makes the business different", g?.differentiators);
   add("Goals", "Most important services or products", g?.keyOfferings);
@@ -83,9 +86,9 @@ export function buildRequirementRows(
   add("Features", "Other features", f?.featuresOther);
 
   const fi = draft.final;
-  add("Final details", "Budget range", fi?.budgetRange);
-  add("Final details", "Launch timeframe", fi?.timeframe);
-  add("Final details", "Additional comments", fi?.comments);
+  add("Budget and timeline", "Budget range", fi?.budgetRange);
+  add("Budget and timeline", "Preferred timeline", fi?.timeframe);
+  add("Budget and timeline", "Additional comments", fi?.comments);
 
   return rows;
 }

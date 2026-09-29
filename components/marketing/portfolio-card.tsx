@@ -20,7 +20,7 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-sm text-faint">
             <Icons.imageMissing className="size-6" aria-hidden />
-            No preview
+            No preview available
           </div>
         )}
       </div>
@@ -46,7 +46,7 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
             rel="noopener noreferrer"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
           >
-            Visit website <Icons.external aria-hidden />
+            Visit Website <span className="sr-only">for {item.title}</span> <Icons.external aria-hidden />
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         )}

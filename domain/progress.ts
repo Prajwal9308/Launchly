@@ -5,9 +5,9 @@ import type { ProjectStatus, TaskStatus } from "@/db/enums";
  * and the completion of its tasks — never hard-coded.
  */
 export const PHASES = [
-  { key: "submitted", label: "Project submitted" },
+  { key: "submitted", label: "Project request" },
   { key: "requirements", label: "Requirements" },
-  { key: "discovery", label: "Discovery" },
+  { key: "discovery", label: "Planning" },
   { key: "design", label: "Design" },
   { key: "review", label: "Client review" },
   { key: "development", label: "Development" },

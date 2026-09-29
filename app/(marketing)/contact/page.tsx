@@ -2,20 +2,31 @@ import type { Metadata } from "next";
 import { ContactSection } from "@/components/marketing/contact-section";
 import { PageHero, Section } from "@/components/marketing/section";
 import { getSiteSettings } from "@/services/catalog";
+import { getVisitorCountry } from "@/server/country";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Tell us about the website, web application or mobile app you want to build. We'll reply with next steps.",
+  description:
+    "Tell us about your business and the website, online store, booking system or business application you need. We'll review your request and contact you with the next steps.",
   alternates: { canonical: "/contact" },
 };
 
 export default async function ContactPage() {
-  const settings = await getSiteSettings();
+  const [settings, country] = await Promise.all([getSiteSettings(), getVisitorCountry()]);
   return (
     <>
-      <PageHero eyebrow="Contact" title="Start a project" description="Share a few details about what you want to build. There's no obligation — we'll reply with next steps." />
+      <PageHero
+        eyebrow="Contact"
+        title="Tell us about your business"
+        description="Share a few details about what you need. We'll review your request and contact you with the appropriate next steps."
+      />
       <Section>
-        <ContactSection contactEmail={settings.contactEmail} heading={false} />
+        <ContactSection
+          contactEmail={settings.contactEmail}
+          heading={false}
+          country={country}
+          budgetRanges={{ CA: settings.budgetRangesCa, IN: settings.budgetRangesIn }}
+        />
       </Section>
     </>
   );

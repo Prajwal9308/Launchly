@@ -21,7 +21,7 @@ export async function runAction<T>(fn: () => Promise<T>, message?: string): Prom
     unstable_rethrow(error);
     if (isAppError(error)) return { ok: false, error: error.message, fieldErrors: error.fieldErrors };
     console.error("[action] unexpected error", error instanceof Error ? error.message : error);
-    return { ok: false, error: "Something went wrong. Please try again." };
+    return { ok: false, error: "Something went wrong. We couldn't complete your request. Please try again." };
   }
 }
 

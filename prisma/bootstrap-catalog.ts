@@ -16,11 +16,11 @@ export async function bootstrapCatalog(db: PrismaClient) {
   await db.$transaction(async (tx) => {
     if ((await tx.service.count()) === 0) {
       await tx.service.createMany({
-        data: SERVICES.map((s, i) => ({ ...s, sortOrder: i, description: null, pricingText: null })),
+        data: SERVICES.map((s, i) => ({ ...s, sortOrder: i, pricingText: null })),
       });
     }
     if ((await tx.pricingPackage.count()) === 0) {
-      await tx.pricingPackage.createMany({ data: PACKAGES.map((p, i) => ({ ...p, sortOrder: i, priceCents: null })) });
+      await tx.pricingPackage.createMany({ data: PACKAGES.map((p, i) => ({ ...p, sortOrder: i })) });
     }
     if ((await tx.portfolioItem.count()) === 0) {
       await tx.portfolioItem.createMany({

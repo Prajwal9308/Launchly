@@ -25,6 +25,8 @@ export const CONTENT_ICONS: Record<string, LucideIcon> = {
   wrench: Icons.maintenance,
   "file-text": Icons.document,
   megaphone: Icons.marketing,
+  "calendar-check": Icons.booking,
+  "user-lock": Icons.customerPortal,
   // Solutions, values and process steps
   "list-checks": Icons.checklist,
   target: Icons.goals,

@@ -36,7 +36,7 @@ export default async function ClientDashboardPage() {
           <EmptyState
             icon={Icons.newProject}
             title="No projects yet"
-            description="Your projects will appear here once you start one. The questionnaire takes about 10 minutes, and your progress is saved as you go."
+            description="Your projects will appear here when you submit a project request."
             action={
               <Button asChild>
                 <Link href="/start-project">
@@ -103,7 +103,7 @@ export default async function ClientDashboardPage() {
                 {complete.length ? (
                   <ProjectProgress phases={complete} />
                 ) : (
-                  <p className="text-sm text-faint">Nothing yet</p>
+                  <p className="text-sm text-faint">None yet</p>
                 )}
               </div>
               <div>
@@ -147,7 +147,7 @@ export default async function ClientDashboardPage() {
                   <li key={m.id} className="rounded-xl border border-border bg-canvas/60 p-3 transition-colors hover:border-accent-border">
                     <p className="flex items-center justify-between gap-2 text-xs text-faint">
                       <span className="font-medium text-muted">
-                        {m.sender ? `${m.sender.firstName} ${m.sender.lastName}` : "Studio"}
+                        {m.sender ? `${m.sender.firstName} ${m.sender.lastName}` : "CoreGravity"}
                       </span>
                       <span>{formatRelative(m.createdAt)}</span>
                     </p>
@@ -206,7 +206,7 @@ export default async function ClientDashboardPage() {
               <EmptyState
                 icon={Icons.files}
                 title="No files yet"
-                description="Upload your logo, photos and documents so we can use them in your website."
+                description="Upload your logo, photos and documents so we can use them in your project."
                 compact
                 action={
                   <Button asChild size="sm" variant="secondary">

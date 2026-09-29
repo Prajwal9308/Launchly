@@ -30,7 +30,7 @@ export async function createAdmin(): Promise<Actor> {
 export const TEST_PASSWORD = "correct-horse-42";
 
 export async function createClient(businessName = "Test Plumbing", email = `client-${unique()}@example.test`): Promise<Actor> {
-  const { id } = await registerClient({ firstName: "Casey", lastName: "Client", email, password: TEST_PASSWORD, businessName, phone: "555-010-1234" });
+  const { id } = await registerClient({ firstName: "Casey", lastName: "Client", email, password: TEST_PASSWORD, businessName, country: "CA", phone: "555-010-1234" });
   return toActor(await db.user.findUniqueOrThrow({ where: { id } }));
 }
 
@@ -48,6 +48,7 @@ export async function seedServices() {
 export const COMPLETE_ANSWERS: Required<Pick<QuestionnaireDraft, "business" | "goals" | "website" | "content" | "features" | "final">> = {
   business: {
     businessName: "Test Plumbing",
+    country: "CA",
     businessType: "Family business",
     industry: "Plumbing",
     description: "We fix leaks, install water heaters and clear drains for homeowners.",
@@ -58,11 +59,11 @@ export const COMPLETE_ANSWERS: Required<Pick<QuestionnaireDraft, "business" | "g
     domain: "",
     socialLinks: "",
   },
-  goals: { primaryGoal: "CALLS", primaryGoalOther: "", idealCustomers: "Homeowners", differentiators: "", keyOfferings: "" },
+  goals: { primaryGoal: "CALLS", primaryGoalOther: "", mainGoals: "", idealCustomers: "Homeowners", differentiators: "", keyOfferings: "" },
   website: { pages: ["HOME", "SERVICES", "CONTACT"], pagesOther: "", services: ["business-websites"] },
   content: { hasContent: "PARTIAL", contentNotes: "" },
   features: { features: ["CONTACT_FORM"], featuresOther: "" },
-  final: { budgetRange: "$3,000 – $6,000", timeframe: "1–3 months", comments: "" },
+  final: { budgetRange: "CA$5,000 – CA$10,000", timeframe: "1–3 months", comments: "" },
 };
 
 /** Creates and submits a complete project for the given client. */

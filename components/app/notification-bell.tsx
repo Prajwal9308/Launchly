@@ -77,7 +77,7 @@ export function NotificationBell({ items, unread }: { items: NotificationView[];
         </div>
         <div className="max-h-96 overflow-y-auto p-1">
           {items.length === 0 ? (
-            <p className="px-4 py-8 text-center text-sm text-muted">You&apos;re all caught up.</p>
+            <p className="px-4 py-8 text-center text-sm text-muted">You have no new notifications.</p>
           ) : (
             items.map((item) => (
               <DropdownMenuItem key={item.id} onSelect={() => open(item)} className="items-start gap-3 px-3 py-2.5">

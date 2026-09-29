@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { COUNTRIES, COUNTRY_INFO } from "./country";
 
 /**
  * The project questionnaire. Drafts are saved per step with lenient
@@ -28,13 +29,14 @@ export const INDUSTRIES = [
 ] as const;
 
 export const PRIMARY_GOALS = [
-  { value: "LEADS", label: "Generate leads" },
-  { value: "CALLS", label: "Get phone calls" },
-  { value: "BOOKINGS", label: "Get bookings" },
-  { value: "SELL", label: "Sell products" },
+  { value: "LEADS", label: "Generate enquiries" },
+  { value: "CALLS", label: "Increase phone calls" },
+  { value: "BOOKINGS", label: "Accept bookings" },
+  { value: "SELL", label: "Sell products or services" },
   { value: "CREDIBILITY", label: "Build credibility" },
   { value: "SHOWCASE", label: "Showcase services" },
   { value: "INFORMATION", label: "Provide information" },
+  { value: "IMPROVE", label: "Improve an existing website" },
   { value: "OTHER", label: "Other" },
 ] as const;
 
@@ -51,6 +53,8 @@ export const PAGES = [
   { value: "BLOG", label: "Blog" },
   { value: "CONTACT", label: "Contact" },
   { value: "BOOKING", label: "Booking" },
+  { value: "CAREERS", label: "Careers" },
+  { value: "SERVICE_AREAS", label: "Service Areas" },
   { value: "OTHER", label: "Other" },
 ] as const;
 
@@ -67,9 +71,9 @@ export const STYLES = [
 ] as const;
 
 export const CONTENT_READINESS = [
-  { value: "YES", label: "Yes", description: "I have text and images ready to use." },
-  { value: "PARTIAL", label: "Partially", description: "I have some content but need help with the rest." },
-  { value: "NO", label: "No", description: "I'll need help creating the content." },
+  { value: "YES", label: "Mostly ready", description: "I have most of the content ready." },
+  { value: "PARTIAL", label: "Partly ready", description: "I have some content and need help with the rest." },
+  { value: "NO", label: "Not yet", description: "I need help creating the content." },
 ] as const;
 
 export const FEATURES = [
@@ -84,16 +88,9 @@ export const FEATURES = [
   { value: "ECOMMERCE", label: "E-commerce" },
   { value: "PAYMENTS", label: "Payments" },
   { value: "CUSTOMER_PORTAL", label: "Customer portal" },
+  { value: "ONLINE_ORDERING", label: "Online ordering" },
+  { value: "APPOINTMENTS", label: "Appointment scheduling" },
   { value: "OTHER", label: "Other" },
-] as const;
-
-export const BUDGET_RANGES = [
-  "Under $1,500",
-  "$1,500 – $3,000",
-  "$3,000 – $6,000",
-  "$6,000 – $10,000",
-  "$10,000+",
-  "Not sure yet",
 ] as const;
 
 export const TIMEFRAMES = ["As soon as possible", "Within 1 month", "1–3 months", "3+ months", "Flexible"] as const;
@@ -111,7 +108,7 @@ export function optionLabel(list: OptionList, value: string) {
 // Field helpers
 // ---------------------------------------------------------------------------
 
-const text = (max = 2000) => z.string().trim().max(max, `Please keep this under ${max} characters.`);
+const text = (max = 2000) => z.string().trim().max(max, `Please keep this to ${max} characters or fewer.`);
 const optionalText = (max = 2000) => text(max).optional().default("");
 
 /** Accepts "example.com" or a full URL; normalizes to https://. Empty is allowed. */
@@ -122,7 +119,7 @@ const optionalUrl = z
   .optional()
   .default("")
   .transform((v) => (v && !/^https?:\/\//i.test(v) ? `https://${v}` : v))
-  .refine((v) => !v || z.url({ protocol: /^https?$/ }).safeParse(v).success, "Please enter a valid web address.");
+  .refine((v) => !v || z.url({ protocol: /^https?$/ }).safeParse(v).success, "Please enter a valid website address.");
 
 const optionalEmail = z
   .string()
@@ -153,7 +150,7 @@ const urlList = z
         .map((s) => s.trim())
         .filter(Boolean)
         .every((s) => z.url().safeParse(/^https?:\/\//i.test(s) ? s : `https://${s}`).success),
-    "Enter one valid web address per line.",
+    "Please enter one valid website address per line.",
   );
 
 // ---------------------------------------------------------------------------
@@ -162,6 +159,8 @@ const urlList = z
 
 export const businessStep = z.object({
   businessName: optionalText(120),
+  /** Sets the currency of the budget options (Canada: CAD, India: INR). */
+  country: z.enum(COUNTRIES).optional(),
   businessType: optionalText(120),
   industry: z.enum(INDUSTRIES).optional(),
   description: optionalText(2000),
@@ -176,6 +175,7 @@ export const businessStep = z.object({
 export const goalsStep = z.object({
   primaryGoal: z.enum(valuesOf(PRIMARY_GOALS)).optional(),
   primaryGoalOther: optionalText(300),
+  mainGoals: optionalText(),
   idealCustomers: optionalText(),
   differentiators: optionalText(),
   keyOfferings: optionalText(),
@@ -214,7 +214,8 @@ export const featuresStep = z.object({
 });
 
 export const finalStep = z.object({
-  budgetRange: z.enum(BUDGET_RANGES).optional(),
+  /** One of the country's budget options from Admin → Settings (stored as shown, e.g. "CA$2,000 – CA$5,000"). */
+  budgetRange: z.string().trim().max(60).optional(),
   timeframe: z.enum(TIMEFRAMES).optional(),
   comments: optionalText(),
 });
@@ -223,55 +224,64 @@ export const STEPS = [
   {
     key: "business",
     title: "Business",
-    description: "Tell us about your business. We'll use this information to plan your website.",
+    heading: "Tell us about your business",
+    description: "Help us understand your business, customers and current online presence.",
     schema: businessStep,
   },
   {
     key: "goals",
     title: "Goals",
-    description: "What should your new website help you achieve?",
+    heading: "What would you like your website to accomplish?",
+    description: "Your goals help us plan the right structure and features.",
     schema: goalsStep,
   },
   {
     key: "website",
     title: "Website",
-    description: "Choose the pages you need and what you'd like help with.",
+    heading: "What does your website need?",
+    description: "Choose the pages and sections you would like, and the services you need help with.",
     schema: websiteStep,
   },
   {
     key: "brand",
     title: "Brand",
-    description: "Share your logo and any existing brand direction.",
+    heading: "Tell us about your brand",
+    description: "Share your existing logo, colors, fonts and brand guidelines so we can create a consistent visual experience.",
     schema: brandStep,
   },
   {
     key: "content",
     title: "Content",
-    description: "Let us know what content you already have. Upload anything useful.",
+    heading: "What content do you already have?",
+    description: "Let us know what text, photos and documents you have. You can upload files here.",
     schema: contentStep,
   },
   {
     key: "inspiration",
     title: "Inspiration",
-    description: "Websites you compete with or admire help us understand your expectations.",
+    heading: "Show us what you like",
+    description: "Websites you admire can help us understand your visual preferences and expectations.",
     schema: inspirationStep,
   },
   {
     key: "features",
     title: "Features",
-    description: "Select the functionality your website needs.",
+    heading: "What functionality do you need?",
+    description: "Select the features your website should include.",
     schema: featuresStep,
   },
   {
     key: "final",
-    title: "Final details",
-    description: "Budget and timing help us propose the right scope.",
+    title: "Budget and timeline",
+    heading: "Budget and timeline",
+    description: "Your budget and preferred timeline help us recommend an appropriate scope.",
     schema: finalStep,
   },
   {
     key: "review",
     title: "Review",
-    description: "Check your answers before submitting your project.",
+    heading: "Review your project information",
+    description: "Please review your information before submitting your project request.",
     schema: null,
   },
 ] as const;
@@ -341,32 +351,37 @@ export interface SubmissionIssue {
 export function validateForSubmission(draft: QuestionnaireDraft): SubmissionIssue[] {
   const issues: SubmissionIssue[] = [];
   const b = draft.business;
-  if (!b?.businessName) issues.push({ step: "business", field: "businessName", message: "Business name is required." });
-  if (!b?.industry) issues.push({ step: "business", field: "industry", message: "Please choose an industry." });
+  if (!b?.businessName) issues.push({ step: "business", field: "businessName", message: "Please enter your business name." });
+  if (!b?.country) issues.push({ step: "business", field: "country", message: "Please select your country." });
+  if (!b?.industry) issues.push({ step: "business", field: "industry", message: "Please select an industry." });
   if (!b?.description || b.description.length < 20)
     issues.push({
       step: "business",
       field: "description",
-      message: "Please describe your business in at least a sentence or two.",
+      message: "Please describe your business in a sentence or two.",
     });
 
   const g = draft.goals;
-  if (!g?.primaryGoal) issues.push({ step: "goals", field: "primaryGoal", message: "Please choose a primary goal." });
+  if (!g?.primaryGoal) issues.push({ step: "goals", field: "primaryGoal", message: "Please select a primary goal." });
   if (g?.primaryGoal === "OTHER" && !g.primaryGoalOther)
     issues.push({ step: "goals", field: "primaryGoalOther", message: "Please describe your goal." });
 
   if (!draft.website?.pages?.length)
-    issues.push({ step: "website", field: "pages", message: "Select at least one page." });
+    issues.push({ step: "website", field: "pages", message: "Please select at least one page." });
 
   if (!draft.content?.hasContent)
-    issues.push({ step: "content", field: "hasContent", message: "Let us know whether you have content." });
+    issues.push({ step: "content", field: "hasContent", message: "Please tell us what content you already have." });
 
   if (!draft.final?.budgetRange)
-    issues.push({ step: "final", field: "budgetRange", message: "Please choose a budget range." });
+    issues.push({ step: "final", field: "budgetRange", message: "Please select a budget range." });
   if (!draft.final?.timeframe)
-    issues.push({ step: "final", field: "timeframe", message: "Please choose a timeframe." });
+    issues.push({ step: "final", field: "timeframe", message: "Please select a timeline." });
 
   return issues;
+}
+
+export function countryOptionLabel(country: string | undefined) {
+  return country && country in COUNTRY_INFO ? COUNTRY_INFO[country as keyof typeof COUNTRY_INFO].name : "";
 }
 
 export function splitLines(value: string | undefined) {

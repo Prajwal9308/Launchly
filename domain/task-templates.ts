@@ -17,14 +17,14 @@ export interface TaskTemplate {
 
 export const BASE_TASKS: TaskTemplate[] = [
   { key: "review-requirements", title: "Review requirements", priority: "HIGH", dueInDays: 2 },
-  { key: "review-assets", title: "Review assets", description: "Check uploaded logos, photos and documents.", priority: "MEDIUM", dueInDays: 3 },
+  { key: "review-assets", title: "Review submitted materials", description: "Review uploaded logos, photos and documents.", priority: "MEDIUM", dueInDays: 3 },
   { key: "create-sitemap", title: "Create sitemap", priority: "MEDIUM", dueInDays: 5 },
   { key: "homepage-design", title: "Homepage design", priority: "HIGH", dueInDays: 10 },
-  { key: "client-review", title: "Client review", priority: "MEDIUM", dueInDays: 14 },
+  { key: "client-review", title: "Design review", priority: "MEDIUM", dueInDays: 14 },
   { key: "revisions", title: "Revisions", priority: "MEDIUM", dueInDays: 18 },
   { key: "development", title: "Development", priority: "HIGH", dueInDays: 28 },
-  { key: "testing", title: "Testing", description: "Cross-browser, mobile, forms and performance checks.", priority: "MEDIUM", dueInDays: 32 },
-  { key: "client-approval", title: "Client approval", priority: "MEDIUM", dueInDays: 35 },
+  { key: "testing", title: "Testing", description: "Browser, mobile, form and performance checks.", priority: "MEDIUM", dueInDays: 32 },
+  { key: "client-approval", title: "Final approval", priority: "MEDIUM", dueInDays: 35 },
   { key: "launch", title: "Launch", priority: "HIGH", dueInDays: 38 },
 ];
 
@@ -50,6 +50,7 @@ export const BLOG_TASKS: TaskTemplate[] = [
 
 /** Service slugs that trigger additional task templates (current and legacy slugs). */
 export const ECOMMERCE_SERVICES = ["ecommerce-development", "ecommerce-websites"];
+export const BOOKING_SERVICE = "booking-systems";
 export const SEO_SERVICE = "seo-foundations";
 
 /** Picks templates based on the client's answers. Order is preserved in `sortOrder`. */
@@ -69,10 +70,22 @@ export function selectTaskTemplates(draft: QuestionnaireDraft): TaskTemplate[] {
     insertBefore("launch", SEO_TASKS.filter((t) => t.key !== "seo-search-console"));
     templates.push(...SEO_TASKS.filter((t) => t.key === "seo-search-console"));
   }
-  if (ECOMMERCE_SERVICES.some((s) => services.includes(s)) || features.includes("ECOMMERCE") || features.includes("PAYMENTS")) {
+  if (
+    ECOMMERCE_SERVICES.some((s) => services.includes(s)) ||
+    features.includes("ECOMMERCE") ||
+    features.includes("PAYMENTS") ||
+    features.includes("ONLINE_ORDERING")
+  ) {
     insertBefore("testing", ECOMMERCE_TASKS);
   }
-  if (features.includes("BOOKING") || pages.includes("BOOKING")) insertBefore("testing", BOOKING_TASKS);
+  if (
+    features.includes("BOOKING") ||
+    features.includes("APPOINTMENTS") ||
+    pages.includes("BOOKING") ||
+    services.includes(BOOKING_SERVICE)
+  ) {
+    insertBefore("testing", BOOKING_TASKS);
+  }
   if (features.includes("BLOG") || pages.includes("BLOG")) insertBefore("testing", BLOG_TASKS);
 
   return templates;

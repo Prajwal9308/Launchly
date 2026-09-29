@@ -425,10 +425,10 @@ function ProductArt({ kind, className }: { kind: "bottle" | "jar" | "bag" | "mug
 }
 
 const PRODUCTS = [
-  { kind: "bottle", price: "$24" },
-  { kind: "jar", price: "$18" },
-  { kind: "bag", price: "$36" },
-  { kind: "mug", price: "$16" },
+  { kind: "bottle", price: "CA$24" },
+  { kind: "jar", price: "CA$18" },
+  { kind: "bag", price: "CA$36" },
+  { kind: "mug", price: "CA$16" },
 ] as const;
 
 export function StoreScreen({ columns = 4 }: { columns?: 3 | 4 }) {
@@ -486,7 +486,7 @@ export function ProductScreen() {
             <Bar w="8em" className="bg-foreground/70" />
             <Bar w="5em" className="mt-[0.45em]" />
           </span>
-          <span className="text-[1.15em] font-bold">$24</span>
+          <span className="text-[1.15em] font-bold">CA$24</span>
         </div>
         <div className="mt-[0.9em] flex gap-[0.5em]">
           {["bg-[#8fa4c4]", "bg-[#dccab2]", "bg-[#8fae98]"].map((c, i) => (
@@ -650,12 +650,12 @@ export function OperationsScreen() {
 /* ------------------------------------------------------------------ */
 
 const ORDERS: { id: string; status: "In progress" | "Ready" | "Delivered" | "On hold"; amount: string; w: string }[] = [
-  { id: "#1048", status: "In progress", amount: "$1,240", w: "62%" },
-  { id: "#1047", status: "Ready", amount: "$860", w: "48%" },
-  { id: "#1046", status: "Delivered", amount: "$2,115", w: "56%" },
-  { id: "#1045", status: "On hold", amount: "$430", w: "44%" },
-  { id: "#1044", status: "Delivered", amount: "$975", w: "52%" },
-  { id: "#1043", status: "Ready", amount: "$1,580", w: "58%" },
+  { id: "#1048", status: "In progress", amount: "CA$1,240", w: "62%" },
+  { id: "#1047", status: "Ready", amount: "CA$860", w: "48%" },
+  { id: "#1046", status: "Delivered", amount: "CA$2,115", w: "56%" },
+  { id: "#1045", status: "On hold", amount: "CA$430", w: "44%" },
+  { id: "#1044", status: "Delivered", amount: "CA$975", w: "52%" },
+  { id: "#1043", status: "Ready", amount: "CA$1,580", w: "58%" },
 ];
 
 const ORDER_TONE = {

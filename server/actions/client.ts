@@ -26,7 +26,7 @@ export async function startProjectAction() {
 
 export async function saveQuestionnaireStepAction(projectId: string, step: string, data: unknown): Promise<ActionResult> {
   return withActor(async (actor) => {
-    if (!isStepKey(step) || step === "review") throw validation("Unknown questionnaire step.");
+    if (!isStepKey(step) || step === "review") throw validation("This questionnaire step could not be found.");
     await saveQuestionnaireStep(actor, projectId, step, data);
   });
 }
@@ -44,7 +44,7 @@ export async function submitProjectAction(projectId: string): Promise<ActionResu
 export async function sendMessageAction(projectId: string, body: string, attachmentIds: string[] = []) {
   return withActor(async (actor) => {
     const limit = await rateLimits.message().limit(`message:${actor.id}`);
-    if (!limit.success) throw new AppError("RATE_LIMITED", "You're sending messages too quickly. Please wait a moment.");
+    if (!limit.success) throw new AppError("RATE_LIMITED", "Too many requests were submitted in a short period. Please wait a moment and try again.");
     await sendMessage(actor, projectId, { body, attachmentIds });
     refresh();
   });
@@ -54,21 +54,21 @@ export async function deleteFileAction(fileId: string) {
   return withActor(async (actor) => {
     await deleteFile(actor, fileId);
     refresh();
-  }, "File removed.");
+  }, "The file has been removed.");
 }
 
 export async function requestRevisionAction(reviewId: string, body: string) {
   return withActor(async (actor) => {
     await requestRevision(actor, reviewId, { body });
     refresh();
-  }, "Thanks — your change request has been sent.");
+  }, "Your change request has been submitted.");
 }
 
 export async function approveDesignAction(reviewId: string, confirm: boolean, comment: string) {
   return withActor(async (actor) => {
     await approveDesign(actor, reviewId, { confirm: confirm as true, comment });
     refresh();
-  }, "Design approved.");
+  }, "Your approval has been recorded.");
 }
 
 export async function respondToApprovalAction(
@@ -78,7 +78,7 @@ export async function respondToApprovalAction(
   return withActor(async (actor) => {
     await respondToApproval(actor, approvalId, input as Parameters<typeof respondToApproval>[2]);
     refresh();
-  }, input.decision === "APPROVE" ? "Approved. Thank you." : "Thanks — your feedback has been sent.");
+  }, input.decision === "APPROVE" ? "Your approval has been recorded." : "Your feedback has been submitted.");
 }
 
 export async function updateProfileAction(_prev: ActionResult | null, form: FormData): Promise<ActionResult> {
@@ -87,9 +87,10 @@ export async function updateProfileAction(_prev: ActionResult | null, form: Form
       firstName: String(form.get("firstName") ?? ""),
       lastName: String(form.get("lastName") ?? ""),
       phone: String(form.get("phone") ?? ""),
+      country: (form.get("country") ? String(form.get("country")) : undefined) as never,
     });
     refresh();
-  }, "Profile updated.");
+  }, "Your profile has been updated.");
 }
 
 export async function changePasswordAction(_prev: ActionResult | null, form: FormData): Promise<ActionResult> {
@@ -99,5 +100,5 @@ export async function changePasswordAction(_prev: ActionResult | null, form: For
       newPassword: String(form.get("newPassword") ?? ""),
       confirmPassword: String(form.get("confirmPassword") ?? ""),
     });
-  }, "Password changed.");
+  }, "Your password has been changed.");
 }

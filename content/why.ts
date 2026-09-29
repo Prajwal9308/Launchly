@@ -1,6 +1,22 @@
 export const WHY = [
-  { title: "Designed around your customers", body: "Designed around how you work and what your customers need — not a reused template.", icon: "target" },
-  { title: "Clean, modern products", body: "Fast, accessible and responsive, built with current tools and easy to maintain later.", icon: "gauge" },
-  { title: "Clear from the start", body: "Scope, timeline and cost agreed in writing, with regular updates as we build.", icon: "list-checks" },
-  { title: "Web and mobile together", body: "Your website, web app and mobile app from one team, so everything fits together.", icon: "monitor-smartphone" },
+  {
+    title: "Built around your business",
+    body: "We design around your services, customers and workflow instead of forcing your business into a generic solution.",
+    icon: "target",
+  },
+  {
+    title: "Clear from the beginning",
+    body: "You receive a written scope, timeline and quotation before development begins.",
+    icon: "list-checks",
+  },
+  {
+    title: "Professional execution",
+    body: "We keep the process organized from planning and design through development, testing and launch.",
+    icon: "quality",
+  },
+  {
+    title: "Built to grow with your business",
+    body: "Your website or application can evolve as your business grows and your requirements change.",
+    icon: "gauge",
+  },
 ] as const;

@@ -6,7 +6,9 @@ import { PasswordForm, ProfileForm } from "@/components/client/account-forms";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { FormSection } from "@/components/ui/form-section";
+import { Alert } from "@/components/ui/alert";
 import { getAIProvider } from "@/providers/ai";
+import { googleEnabled } from "@/server/auth";
 import { getAccount } from "@/services/accounts";
 import { getSiteSettings } from "@/services/catalog";
 import { requireAdminActor } from "@/server/session";
@@ -17,22 +19,48 @@ export default async function SettingsPage() {
   const actor = await requireAdminActor();
   const [settings, account] = await Promise.all([getSiteSettings(), getAccount(actor)]);
   const ai = getAIProvider();
+  const emailProvider = process.env.EMAIL_PROVIDER ?? "console";
+  const storageProvider = process.env.STORAGE_PROVIDER ?? "local";
   const integrations = [
-    { name: "Email", value: `${process.env.EMAIL_PROVIDER ?? "console"}`, note: "The console provider logs emails instead of sending them." },
-    { name: "File storage", value: `${process.env.STORAGE_PROVIDER ?? "local"}`, note: "Local disk storage, outside the public folder." },
-    { name: "AI briefs", value: ai ? `${ai.name} (${ai.model})` : "Not configured", note: "Optional. The app works fully without AI." },
-    { name: "Payments", value: "Coming soon", note: "Invoices and payments are planned for a later phase." },
+    {
+      name: "Email",
+      value: emailProvider,
+      note: emailProvider === "console" ? "Emails are written to the server log and not sent." : "Transactional emails are sent through this provider.",
+    },
+    {
+      name: "File storage",
+      value: storageProvider,
+      note: storageProvider === "local" ? "Files are stored on the server's local disk, outside the public folder." : "Files are stored with this provider.",
+    },
+    { name: "Google sign-in", value: googleEnabled ? "Enabled" : "Not configured", note: "Optional. Clients can always sign in with email and password." },
+    {
+      name: "AI briefs",
+      value: ai ? `${ai.name} (${ai.model})` : "Not configured",
+      note: "Optional. The Privacy Policy mentions AI processing only while this is configured.",
+    },
+    { name: "Payments", value: "Not configured", note: "Online payments are not available yet. Share invoices as project documents." },
   ];
+  const legalMissing = [
+    !settings.legalName && "legal business name",
+    !settings.businessAddress && "business address",
+    !settings.governingJurisdiction && "governing jurisdiction",
+    !settings.legalEffectiveDate && "effective date",
+  ].filter(Boolean) as string[];
 
   return (
     <div>
       <PageHeader icon={Icons.settings} title="Settings" />
+      {legalMissing.length > 0 && (
+        <Alert tone="warning" title="Legal details are incomplete" className="mb-6">
+          Add the {legalMissing.join(", ")} before launch. Legal pages should also be reviewed by qualified legal counsel.
+        </Alert>
+      )}
       <Card>
         <CardContent className="divide-y divide-border">
-          <FormSection title="Studio details" description="Shown across the public website.">
+          <FormSection title="Business settings" description="Business details, supported countries, budget ranges, tax wording and legal details.">
             <SettingsForm settings={settings} />
           </FormSection>
-          <FormSection title="Integrations" description="Configured with environment variables (see .env.example).">
+          <FormSection title="Integrations" description="Configured with environment variables (see .env.example). Only configured integrations are active.">
             <dl className="divide-y divide-border rounded-lg border border-border">
               {integrations.map((i) => (
                 <div key={i.name} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
@@ -51,7 +79,7 @@ export default async function SettingsPage() {
             <ProfileForm firstName={account.firstName} lastName={account.lastName} email={account.email} phone="" showPhone={false} />
           </FormSection>
           <FormSection title="Password">
-            {account.hasPassword ? <PasswordForm /> : <p className="text-sm text-muted">You sign in with Google.</p>}
+            {account.hasPassword ? <PasswordForm /> : <p className="text-sm text-muted">You sign in with Google, so there is no password to manage here.</p>}
           </FormSection>
         </CardContent>
       </Card>

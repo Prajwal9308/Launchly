@@ -122,7 +122,7 @@ describe("admin-only operations", () => {
     await expect(listAdminProjects(alice, {})).rejects.toMatchObject({ code: "FORBIDDEN" });
     await expect(getAdminOverview(alice)).rejects.toMatchObject({ code: "FORBIDDEN" });
     await expect(listLeads(alice, {})).rejects.toMatchObject({ code: "FORBIDDEN" });
-    const lead = await createLead({ name: "X", email: "x@example.test", message: "Hello there, need a site." });
+    const lead = await createLead({ name: "X", businessName: "X Co", email: "x@example.test", country: "CA", message: "Hello there, need a site." });
     await expect(convertLead(alice, lead.id)).rejects.toMatchObject({ code: "FORBIDDEN" });
     await expect(saveService(alice, null, { name: "Free stuff", summary: "x" })).rejects.toMatchObject({ code: "FORBIDDEN" });
   });

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { countryLabel } from "@/domain/country";
 import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { GenerateBriefButton } from "@/components/admin/brief-panel";
@@ -135,11 +136,12 @@ export default async function AdminProjectOverview({ params }: { params: Promise
               <dl className="space-y-2.5 text-sm">
                 {[
                   ["Name", project.business?.name],
+                  ["Country", project.country ? countryLabel(project.country) : null],
                   ["Industry", project.business?.industry],
                   ["Website", project.business?.existingWebsite],
                   ["Services", project.services.map((s) => s.service.name).join(", ")],
                   ["Budget", project.budgetRange],
-                  ["Timeframe", project.timeframe],
+                  ["Timeline", project.timeframe],
                   ["Submitted", project.submittedAt ? formatDate(project.submittedAt) : null],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between gap-4">

@@ -64,7 +64,7 @@ export async function requestApproval(actor: Actor, projectId: string, input: z.
     }
     const recipients = await notifyProjectClients(tx, projectId, {
       type: "APPROVAL_REQUESTED",
-      title: `${APPROVAL_LABELS[type]} needed`,
+      title: `${APPROVAL_LABELS[type]} required`,
       body: project.name,
       href: `/dashboard/project/${projectId}/reviews`,
     });
@@ -108,7 +108,7 @@ export async function respondToApproval(actor: Actor, approvalId: string, input:
       projectId: project.id,
       actorId: actor.id,
       message: approved
-        ? `${APPROVAL_LABELS[approval.type]} granted`
+        ? `${APPROVAL_LABELS[approval.type]} recorded`
         : `Changes requested before ${APPROVAL_LABELS[approval.type].toLowerCase()}`,
       metadata: { approvalId: approval.id },
     });

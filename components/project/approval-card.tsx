@@ -21,6 +21,13 @@ export const APPROVAL_TITLES: Record<ApprovalType, string> = {
   LAUNCH_APPROVAL: "Launch approval",
 };
 
+/** The statement the client confirms. It records a decision for this stage only; it does not waive any rights. */
+const APPROVAL_STATEMENTS: Record<ApprovalType, string> = {
+  DESIGN_APPROVAL: "I have reviewed this design and approve this version for development.",
+  FINAL_APPROVAL: "I have reviewed the completed website and approve it for launch.",
+  LAUNCH_APPROVAL: "I have reviewed the website and authorize CoreGravity to proceed with the launch.",
+};
+
 export interface ApprovalView {
   id: string;
   type: ApprovalType;
@@ -65,11 +72,11 @@ function Respond({ approval }: { approval: ApprovalView }) {
       </div>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{mode === "approve" ? `Confirm ${APPROVAL_TITLES[approval.type].toLowerCase()}` : "Request changes"}</DialogTitle>
+          <DialogTitle>{mode === "approve" ? `Confirm ${APPROVAL_TITLES[approval.type].toLowerCase()}` : "Request Changes"}</DialogTitle>
           <DialogDescription>
             {mode === "approve"
-              ? "Your approval is recorded with your name and the date. Only approve once you've reviewed everything."
-              : "Tell us what needs to change before you can approve."}
+              ? "Your approval will be recorded with your name and the date. Please approve only after you have reviewed everything."
+              : "Please tell us what needs to change before you can approve."}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -88,7 +95,7 @@ function Respond({ approval }: { approval: ApprovalView }) {
           {mode === "approve" && (
             <label className="flex items-start gap-3 rounded-lg border border-border bg-canvas p-3 text-sm">
               <Checkbox checked={confirmed} onCheckedChange={(v) => setConfirmed(v === true)} className="mt-0.5" />
-              <span>I have reviewed the website and give my {APPROVAL_TITLES[approval.type].toLowerCase()}.</span>
+              <span>{APPROVAL_STATEMENTS[approval.type]}</span>
             </label>
           )}
           {error && <Alert tone="danger" title={error} />}
@@ -98,7 +105,7 @@ function Respond({ approval }: { approval: ApprovalView }) {
             Cancel
           </Button>
           <Button onClick={submit} loading={pending} disabled={mode === "approve" && !confirmed}>
-            {mode === "approve" ? "Confirm approval" : "Send request"}
+            {mode === "approve" ? "Confirm Approval" : "Submit Change Request"}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -121,7 +128,7 @@ function Withdraw({ id }: { id: string }) {
         })
       }
     >
-      Withdraw request
+      Withdraw Request
     </Button>
   );
 }

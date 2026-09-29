@@ -19,18 +19,18 @@ export default async function AdminPortfolioPage() {
       <PageHeader
         icon={Icons.portfolio}
         title="Portfolio"
-        description="Sample projects are always labelled as samples on the public site."
+        description="Only real, delivered client work is shown on the public Portfolio page. Sample projects are kept here for reference and are never shown publicly."
         actions={
           <Button asChild>
             <Link href="/admin/portfolio/new">
-              <Icons.add /> New project
+              <Icons.add /> New Portfolio Item
             </Link>
           </Button>
         }
       />
       <Card className="overflow-hidden">
         {items.length === 0 ? (
-          <EmptyState icon={Icons.portfolio} title="No portfolio projects" description="Add your first project to show on the website." />
+          <EmptyState icon={Icons.portfolio} title="No portfolio items" description="Add a delivered client project to show it on the website." />
         ) : (
           <ul className="divide-y divide-border">
             {items.map((item) => (
@@ -41,7 +41,7 @@ export default async function AdminPortfolioPage() {
                     <p className="text-xs text-faint">{item.industry}</p>
                   </div>
                   <div className="flex flex-wrap justify-end gap-1.5">
-                    {item.isDemo && <Badge tone="outline">Sample</Badge>}
+                    {item.isDemo && <Badge tone="outline">Sample Project</Badge>}
                     {item.featured && <Badge tone="accent">Featured</Badge>}
                     {!item.published && <Badge>Hidden</Badge>}
                   </div>

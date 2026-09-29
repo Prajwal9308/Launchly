@@ -13,7 +13,7 @@ import { ServicePreview } from "./mockups/compositions";
  */
 export function ServiceGrid({ services }: { services: Service[] }) {
   if (!services.length) {
-    return <p className="text-sm text-muted">Service details are coming soon. Get in touch to discuss your project.</p>;
+    return <p className="text-sm text-muted">Service details will be available soon. Contact us to discuss your project.</p>;
   }
   return (
     <div className="space-y-4">
@@ -52,7 +52,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
                   <span />
                 )}
                 <ArrowLink href="/contact">
-                  Start a project<span className="sr-only">: {service.name}</span>
+                  Discuss Your Project<span className="sr-only">: {service.name}</span>
                 </ArrowLink>
               </div>
             </div>
@@ -65,7 +65,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
       </RevealGroup>
       <p className="flex items-center gap-2 text-xs text-faint">
         <Icons.info aria-hidden />
-        Interfaces shown are concept examples of what we build, not client projects.
+        Images are concept examples of the type of work we build, not client projects.
       </p>
     </div>
   );

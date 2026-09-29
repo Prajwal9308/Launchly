@@ -44,17 +44,12 @@ export function UserMenu({
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/">
-            <Icons.external /> View website
+            <Icons.external /> View Website
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <div className="flex items-center justify-between px-2.5 py-1.5 text-sm">
-          <span className="text-muted">Theme</span>
-          <p>Web design &amp; development for small businesses.</p>
-        </div>
-        <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void logoutAction()}>
-          <Icons.logout /> Log out
+          <Icons.logout /> Sign Out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

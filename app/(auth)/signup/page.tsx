@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getVisitorCountry } from "@/server/country";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { GoogleButton, OrDivider } from "@/components/auth/google-button";
@@ -7,7 +8,7 @@ import { googleEnabled } from "@/server/auth";
 import { safeRedirectPath } from "@/lib/utils";
 import { getActor } from "@/server/session";
 
-export const metadata: Metadata = { title: "Create account", robots: { index: false } };
+export const metadata: Metadata = { title: "Create Account", robots: { index: false } };
 
 export default async function SignupPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string; email?: string }> }) {
   const { callbackUrl, email } = await searchParams;
@@ -18,7 +19,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
     <div className="w-full max-w-md py-6">
       <div className="surface-raised relative rounded-3xl p-6 sm:p-8">
         <h1 className="text-2xl font-semibold">Create your client account</h1>
-        <p className="mt-1 text-sm text-muted">Start your project and track its progress in one place.</p>
+        <p className="mt-1 text-sm text-muted">Manage your project, files, messages, requirements and approvals in one place.</p>
         <div className="mt-6 space-y-4">
           {googleEnabled && (
             <>
@@ -26,13 +27,17 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
               <OrDivider />
             </>
           )}
-          <SignupForm callbackUrl={safeCallback} email={typeof email === "string" ? email.slice(0, 254) : undefined} />
+          <SignupForm
+            callbackUrl={safeCallback}
+            email={typeof email === "string" ? email.slice(0, 254) : undefined}
+            country={await getVisitorCountry()}
+          />
         </div>
       </div>
       <p className="mt-6 text-center text-sm text-muted">
         Already have an account?{" "}
         <Link href={`/login${safeCallback ? `?callbackUrl=${encodeURIComponent(safeCallback)}` : ""}`} className="font-medium text-accent hover:underline">
-          Log in
+          Sign in
         </Link>
       </p>
     </div>

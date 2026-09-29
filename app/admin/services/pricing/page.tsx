@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
-import { formatPrice } from "@/lib/format";
+import { formatMoney } from "@/domain/country";
 import { listAllPricing } from "@/services/catalog";
 import { requireAdminActor } from "@/server/session";
 import { CatalogTabs } from "../tabs";
@@ -20,12 +20,12 @@ export default async function AdminPricingPage() {
     <div>
       <PageHeader
         icon={Icons.pricing}
-        title="Services"
-        description="Packages without a price show “Let's discuss your project” on the website."
+        title="Pricing"
+        description="Set a Canada (CAD) and India (INR) price for each package. A package without a price for a country shows “Quoted per project” to visitors from that country."
         actions={
           <Button asChild>
             <Link href="/admin/services/pricing/new">
-              <Icons.add /> New package
+              <Icons.add /> New Package
             </Link>
           </Button>
         }
@@ -33,7 +33,7 @@ export default async function AdminPricingPage() {
       <CatalogTabs />
       <Card className="overflow-hidden">
         {packages.length === 0 ? (
-          <EmptyState icon={Icons.pricing} title="No pricing packages" description="Add packages to show on the pricing page." />
+          <EmptyState icon={Icons.pricing} title="No pricing packages" description="Add packages to show on the Pricing page." />
         ) : (
           <ul className="divide-y divide-border">
             {packages.map((p) => (
@@ -45,8 +45,9 @@ export default async function AdminPricingPage() {
                   </div>
                   {p.highlighted && <Badge tone="accent">Highlighted</Badge>}
                   {!p.published && <Badge>Hidden</Badge>}
-                  <span className="text-sm tabular-nums text-muted">
-                    {p.priceCents != null ? `${p.pricePrefix ? `${p.pricePrefix} ` : ""}${formatPrice(p.priceCents)}` : "Not priced"}
+                  <span className="grid text-right text-xs tabular-nums text-muted">
+                    <span>Canada: {p.priceCad != null ? formatMoney(p.priceCad, "CA") : "Not priced"}</span>
+                    <span>India: {p.priceInr != null ? formatMoney(p.priceInr, "IN") : "Not priced"}</span>
                   </span>
                 </Link>
               </li>

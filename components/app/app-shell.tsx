@@ -47,7 +47,8 @@ const ADMIN_NAV: NavItem[] = [
   { href: "/admin/tasks", label: "Tasks", icon: Icons.tasks },
   { href: "/admin/messages", label: "Messages", icon: Icons.messages },
   { href: "/admin/portfolio", label: "Portfolio", icon: Icons.portfolio },
-  { href: "/admin/services", label: "Services", icon: Icons.services },
+  { href: "/admin/services", label: "Services", icon: Icons.services, exact: true },
+  { href: "/admin/services/pricing", label: "Pricing", icon: Icons.pricing },
   { href: "/admin/activity", label: "Activity", icon: Icons.activity },
   { href: "/admin/settings", label: "Settings", icon: Icons.settings },
 ];
@@ -134,8 +135,8 @@ export function AppShell({
           { label: "Open tasks assigned to me", href: "/admin/tasks?mine=1", group: "Actions" },
           { label: "New leads", href: "/admin/leads?status=NEW", group: "Actions", keywords: "enquiries contact" },
         ]
-      : [{ label: "Start a new project", href: "/start-project", group: "Actions", keywords: "questionnaire new" }]),
-    { label: "View website", href: "/", group: "Actions", keywords: "home public" },
+      : [{ label: "Start a Project", href: "/start-project", group: "Actions", keywords: "questionnaire new request" }]),
+    { label: "View Website", href: "/", group: "Actions", keywords: "home public" },
   ];
 
   const brand = (
@@ -154,15 +155,15 @@ export function AppShell({
       {/* Desktop sidebar: a floating surface rail */}
       <aside className="surface fixed inset-y-3 left-3 z-30 hidden w-60 flex-col overflow-hidden rounded-2xl lg:flex">
         <div className="flex h-16 items-center border-b border-border px-5">{brand}</div>
-        <nav aria-label={variant === "admin" ? "Studio" : "Client portal"} className="flex-1 overflow-y-auto p-3">
-          <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-faint">{variant === "admin" ? "Studio" : "Workspace"}</p>
+        <nav aria-label={variant === "admin" ? "Studio" : "Client Portal"} className="flex-1 overflow-y-auto p-3">
+          <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-faint">{variant === "admin" ? "Studio" : "Client Portal"}</p>
           <NavList items={items} />
           {variant === "client" && !projectId && (
             <Link
               href="/start-project"
               className="mt-4 flex items-center justify-center gap-1.5 rounded-lg border border-dashed border-border px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-accent/50 hover:bg-accent-subtle hover:text-accent"
             >
-              <Icons.add aria-hidden /> Start a project
+              <Icons.add aria-hidden /> Start a Project
             </Link>
           )}
         </nav>

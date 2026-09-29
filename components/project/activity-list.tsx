@@ -64,7 +64,7 @@ export function ActivityItem({ event, showProject, projectHref, showVisibility }
           )}
         </p>
         <p className="mt-0.5 text-xs text-faint">
-          {event.actor ? `${event.actor.firstName} ${event.actor.lastName}` : "System"} ·{" "}
+          {event.actor ? `${event.actor.firstName} ${event.actor.lastName}` : "CoreGravity"} ·{" "}
           <time dateTime={event.createdAt.toISOString()} title={formatDateTime(event.createdAt)}>
             {formatRelative(event.createdAt)}
           </time>

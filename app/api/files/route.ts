@@ -8,19 +8,19 @@ import { getActor } from "@/server/session";
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) return jsonError(403, "Invalid request origin.");
   const actor = await getActor();
-  if (!actor) return jsonError(401, "Please log in to upload files.");
+  if (!actor) return jsonError(401, "Please sign in to upload files.");
 
   const limit = await rateLimits.upload().limit(`upload:${actor.id}`);
-  if (!limit.success) return jsonError(429, "Too many uploads. Please wait a moment and try again.");
+  if (!limit.success) return jsonError(429, "Too many requests were submitted in a short period. Please wait a moment and try again.");
 
   const declaredLength = Number(request.headers.get("content-length") ?? 0);
-  if (declaredLength > MAX_DESIGN_UPLOAD_BYTES + 64 * 1024) return jsonError(413, "This file is too large.");
+  if (declaredLength > MAX_DESIGN_UPLOAD_BYTES + 64 * 1024) return jsonError(413, "This file is too large to upload.");
 
   try {
     const form = await request.formData();
     const file = form.get("file");
-    if (!(file instanceof File)) return jsonError(400, "Choose a file to upload.");
-    if (file.size > MAX_DESIGN_UPLOAD_BYTES) return jsonError(413, "This file is too large.");
+    if (!(file instanceof File)) return jsonError(400, "Please choose a file to upload.");
+    if (file.size > MAX_DESIGN_UPLOAD_BYTES) return jsonError(413, "This file is too large to upload.");
 
     const uploaded = await uploadFile(actor, {
       projectId: String(form.get("projectId") ?? ""),

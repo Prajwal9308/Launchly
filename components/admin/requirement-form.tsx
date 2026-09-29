@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { addRequirementAction, deleteRequirementAction } from "@/server/actions/admin";
 import { useServerAction } from "./use-action";
 
-const SECTIONS = ["Business", "Goals", "Website", "Brand", "Content", "Inspiration", "Features", "Final details", "Technical", "Other"];
+const SECTIONS = ["Business", "Goals", "Website", "Brand", "Content", "Inspiration", "Features", "Budget and timeline", "Technical", "Other"];
 
 export function AddRequirementDialog({ projectId }: { projectId: string }) {
   const [open, setOpen] = useState(false);
@@ -21,12 +21,12 @@ export function AddRequirementDialog({ projectId }: { projectId: string }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" size="sm">
-          <Icons.add /> Add requirement
+          <Icons.add /> Add Requirement
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add requirement</DialogTitle>
+          <DialogTitle>Add Requirement</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <Field id="req-section" label="Section">

@@ -44,7 +44,7 @@ export function WhatWeBuild() {
               ))}
             </ul>
             <ArrowLink href="/contact" className="mt-7">
-              Discuss your project<span className="sr-only">: {item.title}</span>
+              Discuss Your Project<span className="sr-only">: {item.title}</span>
             </ArrowLink>
           </Reveal>
         </article>
@@ -67,7 +67,7 @@ export function SolutionsOverview() {
             <h3 className="mt-5 text-lg font-semibold">{item.title}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-muted">{item.description}</p>
             <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-foreground transition-colors group-hover:text-accent">
-              See an example
+              View solution<span className="sr-only">: {item.title}</span>
               <Icons.forward className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" aria-hidden />
             </span>
           </Link>

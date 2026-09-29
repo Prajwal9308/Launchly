@@ -64,3 +64,11 @@ Real email goes through **Resend** (`EMAIL_PROVIDER=resend`, `RESEND_API_KEY`):
 
 - Serve over HTTPS so session cookies are `Secure` (Vercel does this automatically).
 - Back up the database (Neon has point-in-time restore) and file storage.
+
+## Before production launch: content and legal
+
+- **Legal review.** The Privacy Policy and Terms of Use are written for the actual app, but they have not been reviewed by a lawyer. Legal pages should be reviewed by qualified legal counsel before production launch.
+- **Legal details.** In Admin → Settings → Legal details, add the legal business name, business address, governing jurisdiction and effective date. The legal pages leave out anything that is blank, and Settings shows a warning until these are filled in.
+- **Prices.** Pricing packages are created without prices. Set a Canada (CAD) and India (INR) price per package in Admin → Pricing, or leave a price blank to show "Quoted per project".
+- **Budgets and tax wording.** Budget ranges and tax wording per country are in Admin → Settings. Do not add a tax rate or registration number unless it applies to you.
+- **Countries.** Only Canada and India are supported. A visitor's manual choice is saved in the `cg_country` cookie; otherwise the `x-vercel-ip-country` header preselects Canada or India, and visitors from anywhere else are asked to choose.

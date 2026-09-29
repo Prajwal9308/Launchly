@@ -28,7 +28,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
     <div className="space-y-8">
       {pendingApprovals.length > 0 && (
         <section>
-          <SectionTitle icon={Icons.approved}>Approvals needed</SectionTitle>
+          <SectionTitle icon={Icons.approved}>Approvals required</SectionTitle>
           <div className="space-y-4">
             {pendingApprovals.map((a) => (
               <ApprovalCard key={a.id} approval={a} viewer="client" />
@@ -47,7 +47,7 @@ export default async function ClientReviewsPage({ params }: { params: Promise<{ 
           </div>
         ) : (
           <Card>
-            <EmptyState icon={Icons.design} title="No designs to review yet" description="When a design is ready, you'll see it here and get a notification." />
+            <EmptyState icon={Icons.design} title="No designs to review yet" description="When a design is ready for your review, it will appear here and we will notify you." />
           </Card>
         )}
       </section>

@@ -8,8 +8,9 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { FileUploader } from "@/components/project/file-uploader";
 import type { UploadedFile } from "@/components/project/use-upload";
+import { Button } from "@/components/ui/button";
+import { COUNTRIES, COUNTRY_INFO, SERVED_COUNTRIES_NOTE, type CountryCode } from "@/domain/country";
 import {
-  BUDGET_RANGES,
   CONTENT_READINESS,
   FEATURES,
   INDUSTRIES,
@@ -65,10 +66,22 @@ export function BusinessStep({ value, onChange, errors }: StepProps<BusinessAnsw
         <Field id="businessName" label="Business name" required error={errors.businessName}>
           {(p) => <Input {...p} value={value.businessName} onChange={(e) => onChange({ businessName: e.target.value })} autoComplete="organization" />}
         </Field>
+        <Field id="country" label="Country" required hint={SERVED_COUNTRIES_NOTE} error={errors.country}>
+          {(p) => (
+            <Select {...p} value={value.country ?? ""} onChange={(e) => onChange({ country: (e.target.value || undefined) as BusinessAnswers["country"] })}>
+              <option value="">Select your country</option>
+              {COUNTRIES.map((c) => (
+                <option key={c} value={c}>
+                  {COUNTRY_INFO[c].name}
+                </option>
+              ))}
+            </Select>
+          )}
+        </Field>
         <Field id="industry" label="Industry" required error={errors.industry}>
           {(p) => (
             <Select {...p} value={value.industry ?? ""} onChange={(e) => onChange({ industry: (e.target.value || undefined) as BusinessAnswers["industry"] })}>
-              <option value="">Choose an industry</option>
+              <option value="">Select an industry</option>
               {INDUSTRIES.map((i) => (
                 <option key={i} value={i}>
                   {i}
@@ -78,13 +91,21 @@ export function BusinessStep({ value, onChange, errors }: StepProps<BusinessAnsw
           )}
         </Field>
       </div>
-      <Field id="businessType" label="Business type" optional hint="For example: family-owned restaurant, solo electrician, multi-location salon." error={errors.businessType}>
+      <Field id="businessType" label="Business type" optional hint="For example: family-owned restaurant, independent electrician or salon with two locations." error={errors.businessType}>
         {(p) => <Input {...p} value={value.businessType} onChange={(e) => onChange({ businessType: e.target.value })} />}
       </Field>
-      <Field id="description" label="Business description" required hint="What does your business do, and for whom? A few sentences is perfect." error={errors.description}>
-        {(p) => <Textarea {...p} rows={4} value={value.description} onChange={(e) => onChange({ description: e.target.value })} />}
+      <Field id="description" label="Business description" required error={errors.description}>
+        {(p) => (
+          <Textarea
+            {...p}
+            rows={4}
+            placeholder="Briefly describe what your business does, who you serve and the products or services you provide."
+            value={value.description}
+            onChange={(e) => onChange({ description: e.target.value })}
+          />
+        )}
       </Field>
-      <Field id="address" label="Address" optional hint="Leave blank if you don't want an address on your website." error={errors.address}>
+      <Field id="address" label="Business address" optional hint="Leave this blank if you do not want an address shown on your website." error={errors.address}>
         {(p) => <Input {...p} value={value.address} onChange={(e) => onChange({ address: e.target.value })} autoComplete="street-address" />}
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
@@ -97,7 +118,7 @@ export function BusinessStep({ value, onChange, errors }: StepProps<BusinessAnsw
         <Field id="existingWebsite" label="Existing website" optional error={errors.existingWebsite}>
           {(p) => <Input {...p} inputMode="url" placeholder="example.com" value={value.existingWebsite} onChange={(e) => onChange({ existingWebsite: e.target.value })} />}
         </Field>
-        <Field id="domain" label="Domain" optional hint="If you already own one." error={errors.domain}>
+        <Field id="domain" label="Domain" optional hint="If you already own a domain name." error={errors.domain}>
           {(p) => <Input {...p} placeholder="yourbusiness.com" value={value.domain} onChange={(e) => onChange({ domain: e.target.value })} />}
         </Field>
       </div>
@@ -111,7 +132,7 @@ export function BusinessStep({ value, onChange, errors }: StepProps<BusinessAnsw
 export function GoalsStep({ value, onChange, errors }: StepProps<GoalsAnswers>) {
   return (
     <div className="space-y-6">
-      <Fieldset legend="What is the primary goal of your new website?" error={errors.primaryGoal}>
+      <Fieldset legend="What is the primary goal of your website?" error={errors.primaryGoal}>
         <div className="grid gap-2 sm:grid-cols-2">
           {PRIMARY_GOALS.map((g) => (
             <OptionCard
@@ -130,6 +151,9 @@ export function GoalsStep({ value, onChange, errors }: StepProps<GoalsAnswers>) 
           {(p) => <Input {...p} value={value.primaryGoalOther} onChange={(e) => onChange({ primaryGoalOther: e.target.value })} />}
         </Field>
       )}
+      <Field id="mainGoals" label="What are your main goals for the new website or digital solution?" optional error={errors.mainGoals}>
+        {(p) => <Textarea {...p} rows={3} value={value.mainGoals} onChange={(e) => onChange({ mainGoals: e.target.value })} />}
+      </Field>
       <Field id="idealCustomers" label="Who are your ideal customers?" optional error={errors.idealCustomers}>
         {(p) => <Textarea {...p} rows={3} value={value.idealCustomers} onChange={(e) => onChange({ idealCustomers: e.target.value })} />}
       </Field>
@@ -151,7 +175,7 @@ export function WebsiteStep({
 }: StepProps<WebsiteAnswers> & { services: { slug: string; name: string; summary: string }[] }) {
   return (
     <div className="space-y-6">
-      <Fieldset legend="Which pages do you need?" hint="Choose all that apply. We'll refine the list together." error={errors.pages}>
+      <Fieldset legend="Which pages or sections would you like to include?" hint="Select all that apply. We will refine the list together." error={errors.pages}>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {PAGES.map((page) => (
             <OptionCard
@@ -166,11 +190,11 @@ export function WebsiteStep({
       </Fieldset>
       {value.pages.includes("OTHER") && (
         <Field id="pagesOther" label="Other pages" error={errors.pagesOther}>
-          {(p) => <Input {...p} placeholder="e.g. Menu, Service areas, Careers" value={value.pagesOther} onChange={(e) => onChange({ pagesOther: e.target.value })} />}
+          {(p) => <Input {...p} placeholder="e.g. Menu, Team, Locations" value={value.pagesOther} onChange={(e) => onChange({ pagesOther: e.target.value })} />}
         </Field>
       )}
       {services.length > 0 && (
-        <Fieldset legend="What would you like help with?" hint="Optional. This helps us plan the right tasks.">
+        <Fieldset legend="Which services do you need?" hint="Optional. This helps us plan your project.">
           <div className="grid gap-2 sm:grid-cols-2">
             {services.map((s) => (
               <OptionCard
@@ -223,12 +247,12 @@ export function BrandStep({ value, onChange, errors, projectId, files, onUploade
     <div className="space-y-6">
       <div className="space-y-2">
         <p className="text-sm font-medium">Logo</p>
-        <p className="-mt-1 text-xs text-faint">Upload the highest quality version you have (SVG, PNG or PDF are ideal).</p>
-        <FileUploader projectId={projectId} category="LOGO" label="Upload logo" onUploaded={onUploaded} refresh={false} compact />
+        <p className="-mt-1 text-xs text-faint">Upload the highest-quality version you have. SVG, PNG or PDF files work best.</p>
+        <FileUploader projectId={projectId} category="LOGO" label="Upload Logo" onUploaded={onUploaded} refresh={false} compact />
         <UploadedList files={logos} onRemove={onRemove} />
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="brandColors" label="Brand colors" optional hint="Names or hex codes, e.g. navy #1D3B5C." error={errors.brandColors}>
+        <Field id="brandColors" label="Brand colors" optional hint="Color names or hex codes, e.g. navy #1D3B5C." error={errors.brandColors}>
           {(p) => <Input {...p} value={value.brandColors} onChange={(e) => onChange({ brandColors: e.target.value })} />}
         </Field>
         <Field id="preferredFonts" label="Preferred fonts" optional error={errors.preferredFonts}>
@@ -245,19 +269,19 @@ export function BrandStep({ value, onChange, errors, projectId, files, onUploade
         />
         {value.hasBrandGuidelines && (
           <>
-            <FileUploader projectId={projectId} category="BRAND" label="Upload brand guidelines" onUploaded={onUploaded} refresh={false} compact />
+            <FileUploader projectId={projectId} category="BRAND" label="Upload Brand Guidelines" onUploaded={onUploaded} refresh={false} compact />
             <UploadedList files={guidelines} onRemove={onRemove} />
           </>
         )}
       </div>
-      <Fieldset legend="Which styles fit your brand?" hint="Choose up to a few.">
+      <Fieldset legend="Which styles fit your brand?" hint="Select up to three.">
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {STYLES.map((s) => (
             <OptionCard key={s.value} type="checkbox" label={s.label} checked={value.styles.includes(s.value)} onChange={() => onChange({ styles: toggle(value.styles, s.value) })} />
           ))}
         </div>
       </Fieldset>
-      <Field id="brandDescription" label="Describe your brand" optional hint="How should your business come across to customers?" error={errors.brandDescription}>
+      <Field id="brandDescription" label="Describe your brand" optional hint="How would you like customers to see your business?" error={errors.brandDescription}>
         {(p) => <Textarea {...p} rows={3} value={value.brandDescription} onChange={(e) => onChange({ brandDescription: e.target.value })} />}
       </Field>
     </div>
@@ -268,15 +292,14 @@ export function ContentStep({ value, onChange, errors, projectId, files, onUploa
   const contentFiles = files.filter((f) => ["CONTENT", "PHOTO", "DOCUMENT"].includes(f.category));
   return (
     <div className="space-y-6">
-      <Fieldset legend="Do you already have website content?" error={errors.hasContent}>
+      <Fieldset legend="How much of your website content is ready?" error={errors.hasContent}>
         <div className="grid gap-2 sm:grid-cols-3">
           {CONTENT_READINESS.map((c) => (
             <OptionCard
               key={c.value}
               type="radio"
               name="hasContent"
-              label={c.label}
-              description={c.description}
+              label={c.description}
               checked={value.hasContent === c.value}
               onChange={() => onChange({ hasContent: c.value })}
             />
@@ -285,7 +308,7 @@ export function ContentStep({ value, onChange, errors, projectId, files, onUploa
       </Fieldset>
       <div className="space-y-2">
         <p className="text-sm font-medium">Upload content</p>
-        <p className="-mt-1 text-xs text-faint">Photos, existing text, brochures, menus, product information — anything useful.</p>
+        <p className="-mt-1 text-xs text-faint">Photos, existing text, brochures, menus, product information or anything else that may be useful.</p>
         <FileUploader projectId={projectId} category="CONTENT" onUploaded={onUploaded} refresh={false} />
         <UploadedList files={contentFiles} onRemove={onRemove} />
       </div>
@@ -308,7 +331,7 @@ export function InspirationStep({ value, onChange, errors }: StepProps<Inspirati
       <Field id="likes" label="What do you like about them?" optional error={errors.likes}>
         {(p) => <Textarea {...p} rows={3} value={value.likes} onChange={(e) => onChange({ likes: e.target.value })} />}
       </Field>
-      <Field id="dislikes" label="Anything you dislike or want to avoid?" optional error={errors.dislikes}>
+      <Field id="dislikes" label="What would you like to avoid?" optional error={errors.dislikes}>
         {(p) => <Textarea {...p} rows={3} value={value.dislikes} onChange={(e) => onChange({ dislikes: e.target.value })} />}
       </Field>
     </div>
@@ -318,7 +341,7 @@ export function InspirationStep({ value, onChange, errors }: StepProps<Inspirati
 export function FeaturesStep({ value, onChange, errors }: StepProps<FeaturesAnswers>) {
   return (
     <div className="space-y-6">
-      <Fieldset legend="Which features does your website need?" hint="Choose all that apply.">
+      <Fieldset legend="Which features does your website need?" hint="Select all that apply.">
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {FEATURES.map((f) => (
             <OptionCard key={f.value} type="checkbox" label={f.label} checked={value.features.includes(f.value)} onChange={() => onChange({ features: toggle(value.features, f.value) })} />
@@ -334,17 +357,37 @@ export function FeaturesStep({ value, onChange, errors }: StepProps<FeaturesAnsw
   );
 }
 
-export function FinalStep({ value, onChange, errors }: StepProps<FinalAnswers>) {
+export function FinalStep({
+  value,
+  onChange,
+  errors,
+  country,
+  budgetRanges,
+  onChooseCountry,
+}: StepProps<FinalAnswers> & { country: CountryCode | undefined; budgetRanges: string[]; onChooseCountry: () => void }) {
   return (
     <div className="space-y-6">
-      <Fieldset legend="Budget range" error={errors.budgetRange}>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {BUDGET_RANGES.map((b) => (
-            <OptionCard key={b} type="radio" name="budgetRange" label={b} checked={value.budgetRange === b} onChange={() => onChange({ budgetRange: b })} />
-          ))}
-        </div>
+      <Fieldset
+        legend="Budget range"
+        hint={country ? `Shown in ${COUNTRY_INFO[country].currency} for ${COUNTRY_INFO[country].name}.` : undefined}
+        error={errors.budgetRange}
+      >
+        {country ? (
+          <div className="grid gap-2 sm:grid-cols-3">
+            {budgetRanges.map((b) => (
+              <OptionCard key={b} type="radio" name="budgetRange" label={b} checked={value.budgetRange === b} onChange={() => onChange({ budgetRange: b })} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-start gap-3 rounded-lg border border-border bg-canvas p-4 text-sm text-muted">
+            <p>Select your country in the Business step to see budget ranges in your currency.</p>
+            <Button type="button" variant="secondary" size="sm" onClick={onChooseCountry}>
+              Select Country
+            </Button>
+          </div>
+        )}
       </Fieldset>
-      <Fieldset legend="Desired launch timeframe" error={errors.timeframe}>
+      <Fieldset legend="Preferred timeline" error={errors.timeframe}>
         <div className="grid gap-2 sm:grid-cols-3">
           {TIMEFRAMES.map((t) => (
             <OptionCard key={t} type="radio" name="timeframe" label={t} checked={value.timeframe === t} onChange={() => onChange({ timeframe: t })} />

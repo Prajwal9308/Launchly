@@ -26,7 +26,7 @@ import {
  * language. All of them are concept examples, never client work.
  */
 
-type Kind = "web" | "mobile" | "design" | "ecommerce" | "operations" | "webapp" | "custom";
+type Kind = "web" | "mobile" | "design" | "ecommerce" | "operations" | "webapp" | "custom" | "booking" | "portal";
 
 /** Service icon keys (stored on Service.icon) → which concept to show. */
 const SERVICE_KIND: Record<string, Kind> = {
@@ -44,16 +44,18 @@ const SERVICE_KIND: Record<string, Kind> = {
   building: "custom",
   "layout-dashboard": "webapp",
   code: "webapp",
+  "calendar-check": "booking",
+  "user-lock": "portal",
 };
 
 /** Solution slugs (content/solutions.ts) → which concept to show. */
 const SOLUTION_KIND: Record<string, Kind> = {
   "business-websites": "web",
-  "web-applications": "operations",
-  "mobile-applications": "mobile",
-  ecommerce: "ecommerce",
-  "business-dashboards": "webapp",
-  "custom-solutions": "custom",
+  "online-stores": "ecommerce",
+  "booking-systems": "booking",
+  "business-applications": "webapp",
+  "customer-portals": "portal",
+  "business-automation": "operations",
 };
 
 const LABELS: Record<Kind, string> = {
@@ -64,6 +66,8 @@ const LABELS: Record<Kind, string> = {
   operations: "an example project management web application on a laptop",
   webapp: "an example business dashboard on a desktop display",
   custom: "an example analytics dashboard on a laptop",
+  booking: "an example appointment booking app on two phones",
+  portal: "an example customer portal on a laptop",
 };
 
 /**
@@ -110,6 +114,8 @@ const SCENE_WIDTH: Record<Kind, string> = {
   ecommerce: "w-[min(86cqw,109cqh)]",
   custom: "w-[min(78cqw,99cqh)]",
   mobile: "w-[min(56cqw,76cqh)]",
+  booking: "w-[min(56cqw,76cqh)]",
+  portal: "w-[min(84cqw,135cqh)]",
 };
 
 /** The shared backdrop: canvas, a faint grid that fades out, and a soft accent glow. */
@@ -168,7 +174,12 @@ function Scene({ kind, className }: { kind: Kind; className?: string }) {
           <OrdersScreen />
         </Tablet>
       )}
-      {kind === "mobile" && (
+      {kind === "portal" && (
+        <Laptop>
+          <PortalScreen />
+        </Laptop>
+      )}
+      {(kind === "mobile" || kind === "booking") && (
         <div className="flex items-end justify-center gap-[8%]">
           <Phone className="mb-[9%] w-[44%]">
             <BookingAppScreen />

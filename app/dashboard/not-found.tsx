@@ -9,11 +9,11 @@ export default function DashboardNotFound() {
     <Card>
       <EmptyState
         icon={Icons.projectMissing}
-        title="This project could not be found."
-        description="It may have been removed, or you don't have permission to view it."
+        title="We couldn't find this project."
+        description="It may have been removed or you may no longer have access."
         action={
           <Button asChild variant="secondary">
-            <Link href="/dashboard">Back to dashboard</Link>
+            <Link href="/dashboard">Back to Dashboard</Link>
           </Button>
         }
       />

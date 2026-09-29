@@ -7,7 +7,7 @@ export function CatalogTabs() {
       className="mb-6"
       tabs={[
         { href: "/admin/services", label: "Services", exact: true, icon: <Icons.services /> },
-        { href: "/admin/services/pricing", label: "Pricing packages", icon: <Icons.pricing /> },
+        { href: "/admin/services/pricing", label: "Pricing", icon: <Icons.pricing /> },
       ]}
     />
   );

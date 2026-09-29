@@ -1,44 +1,63 @@
 export const FAQS = [
   {
-    question: "What do you build?",
+    question: "What services do you provide?",
     answer:
-      "Business websites, custom web applications (such as dashboards, portals and booking systems), mobile apps for iOS and Android, and e-commerce stores.",
+      "We design and develop business websites, online stores, booking systems, custom business applications, customer portals and mobile applications.",
   },
   {
-    question: "Do you build apps for both iOS and Android?",
+    question: "Do you work with small businesses?",
     answer:
-      "Yes. Most projects use a cross-platform approach so a single product serves both platforms; where a project needs it, we can build natively. We'll recommend an approach once we understand your requirements.",
-  },
-  {
-    question: "How long does a project take?",
-    answer:
-      "It depends on scope. A focused website is usually a matter of weeks; web and mobile applications take longer. After we understand your requirements, we'll give you a timeline for your specific project.",
+      "Yes. CoreGravity is specifically focused on helping small businesses, local businesses and independent vendors build professional digital solutions.",
   },
   {
     question: "How much does a project cost?",
     answer:
-      "Cost depends on features, platforms and complexity. Tell us what you'd like to build and we'll prepare a clear, written proposal before any work begins.",
+      "Pricing depends on the scope, features, integrations and requirements. Published starting prices are provided where available, and every project receives a written proposal before development begins.",
+  },
+  {
+    question: "How long does a project take?",
+    answer:
+      "Timelines depend on the scope and complexity of the project. After reviewing your requirements, we'll provide an estimated timeline with your proposal.",
   },
   {
     question: "I only have an idea. Can you help?",
     answer:
-      "Yes. We can help you shape an idea into a defined scope and, if it makes sense, start with a smaller first version (MVP) to test it with real users.",
+      "Yes. You do not need to have everything figured out before contacting us. We can help define the requirements and recommend a practical approach.",
   },
   {
-    question: "How do we communicate during a project?",
+    question: "Do you build websites and mobile apps?",
     answer:
-      "You get a private project portal where you can share files, send messages and review designs, plus regular updates on what's done and what's next.",
+      "Yes. We build business websites, web applications and mobile applications. The appropriate approach depends on your business requirements.",
   },
   {
-    question: "What happens after launch?",
-    answer: "We hand over the finished product and can continue with maintenance, updates and new features if you need them.",
-  },
-  {
-    question: "What do you need from me to get started?",
+    question: "Can you redesign an existing website?",
     answer:
-      "A short description of what you want to build and who it's for. If you have them, send your logo, examples you like and any existing content; we'll help with the rest.",
+      "Yes. We can review your existing website and help improve its design, usability, content structure and functionality.",
+  },
+  {
+    question: "Do you provide ongoing support?",
+    answer:
+      "Yes. Maintenance, updates and additional development can be provided after launch under an applicable support or maintenance arrangement.",
+  },
+  {
+    question: "Which countries do you serve?",
+    answer:
+      "We currently work with businesses in Canada and India. Prices are shown in Canadian dollars (CA$) or Indian rupees (₹), depending on the country you select.",
+  },
+  {
+    question: "What do I need to get started?",
+    answer:
+      "Start by telling us about your business, what you need and what you would like the website or application to accomplish.",
   },
 ] as const;
 
-export const PROJECT_TYPES = ["Website", "Web Application", "Mobile Application", "E-commerce", "Other"] as const;
-export const BUDGET_RANGES = ["Under $5,000", "$5,000 – $15,000", "$15,000 – $40,000", "$40,000+", "Not sure yet"] as const;
+/** "What are you looking for?" options on the contact form. */
+export const PROJECT_TYPES = [
+  "Business Website",
+  "Online Store",
+  "Booking & Appointment System",
+  "Business Application",
+  "Mobile Application",
+  "Website Redesign",
+  "Other",
+] as const;

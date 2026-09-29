@@ -44,7 +44,7 @@ export async function approveRequirementsAction(projectId: string) {
   return withActor(async (actor) => {
     await approveRequirements(actor, projectId);
     refresh();
-  }, "Requirements approved. Project moved to discovery.");
+  }, "Requirements approved. The project has moved to Planning.");
 }
 
 export async function requestInformationAction(projectId: string, message: string) {
@@ -215,7 +215,8 @@ export async function savePricingAction(id: string | null, _prev: ActionResult |
     await savePricingPackage(actor, id, {
       name: str(form, "name"),
       description: str(form, "description"),
-      price: str(form, "price"),
+      priceCad: str(form, "priceCad"),
+      priceInr: str(form, "priceInr"),
       pricePrefix: str(form, "pricePrefix"),
       features: str(form, "features"),
       highlighted: bool(form, "highlighted"),
@@ -274,6 +275,15 @@ export async function updateSettingsAction(_prev: ActionResult | null, form: For
       contactEmail: str(form, "contactEmail"),
       contactPhone: str(form, "contactPhone"),
       serviceArea: str(form, "serviceArea"),
+      budgetRangesCa: str(form, "budgetRangesCa"),
+      budgetRangesIn: str(form, "budgetRangesIn"),
+      taxNoteCa: str(form, "taxNoteCa"),
+      taxNoteIn: str(form, "taxNoteIn"),
+      legalName: str(form, "legalName"),
+      businessAddress: str(form, "businessAddress"),
+      governingJurisdiction: str(form, "governingJurisdiction"),
+      privacyContactEmail: str(form, "privacyContactEmail"),
+      legalEffectiveDate: str(form, "legalEffectiveDate"),
     });
     refresh();
   }, "Settings saved.");

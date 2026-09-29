@@ -8,16 +8,16 @@ export default function NotFound() {
       <IconTile icon={Icons.discover} size="lg" />
       <p className="mt-5 font-mono text-sm text-faint">404</p>
       <h1 className="mt-2 text-2xl font-semibold">Page not found</h1>
-      <p className="mt-2 max-w-sm text-sm text-muted">This page doesn&apos;t exist or may have moved.</p>
+      <p className="mt-2 max-w-sm text-sm text-muted">We couldn&apos;t find this page. It may have been moved or removed.</p>
       <div className="mt-6 flex gap-2">
         <Button asChild>
           <Link href="/">
-            <Icons.home aria-hidden /> Go to homepage
+            <Icons.home aria-hidden /> Go to Home Page
           </Link>
         </Button>
         <Button asChild variant="secondary">
           <Link href="/contact">
-            <Icons.email aria-hidden /> Contact us
+            <Icons.email aria-hidden /> Contact Us
           </Link>
         </Button>
       </div>

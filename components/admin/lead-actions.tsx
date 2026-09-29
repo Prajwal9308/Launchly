@@ -35,7 +35,7 @@ export function ConvertLeadButton({ leadId }: { leadId: string }) {
           run(() => convertLeadAction(leadId));
       }}
     >
-      Convert to project
+      Convert to Project
     </Button>
   );
 }

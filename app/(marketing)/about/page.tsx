@@ -7,15 +7,18 @@ import { getSiteSettings } from "@/services/catalog";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "CoreGravity is a web and mobile app development studio helping businesses and entrepreneurs build practical digital products.",
+  description:
+    "CoreGravity helps small businesses and independent vendors in Canada and India build professional websites, online stores, booking systems and business applications.",
   alternates: { canonical: "/about" },
 };
 
 const PRINCIPLES = [
-  "Plain language, clear scope and honest timelines.",
-  "Products designed around real users and real business requirements.",
-  "Clean, maintainable products that can grow with your business.",
-  "Nothing goes live without your approval.",
+  "Clear communication",
+  "Practical solutions",
+  "Professional execution",
+  "Transparent scope and pricing",
+  "Long-term maintainability",
+  "Customer approval before launch",
 ];
 
 export default async function AboutPage() {
@@ -25,23 +28,27 @@ export default async function AboutPage() {
       <PageHero
         eyebrow="About"
         title={`About ${settings.businessName}`}
-        description="A web and mobile app development studio for businesses and entrepreneurs."
+        description="A digital partner for small businesses, local businesses and independent vendors."
       />
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <SectionHeader title="Practical digital products, built properly" />
+          <SectionHeader title="Practical digital solutions, built properly" />
           <div className="space-y-4 text-[17px] leading-relaxed text-muted">
             <p>
-              {settings.businessName} designs and develops websites, web applications and mobile apps. We work with businesses
-              that need a professional online presence, and with entrepreneurs who have an idea they want to turn into a real
-              product.
+              {settings.businessName} helps small businesses and independent vendors build a stronger online presence and improve
+              the way they operate.
             </p>
+            <p>We design and develop professional websites, online stores, booking systems, business applications and mobile apps.</p>
             <p>
-              We&apos;re a new studio, and we&apos;d rather earn trust through how we work than through big claims: a clear
-              scope before we start, direct communication with the people building your product, and careful execution.
+              Our approach is straightforward: understand the business, define the scope, communicate clearly and build carefully.
             </p>
-            {settings.serviceArea && <p>We work with clients in {settings.serviceArea}.</p>}
-            <ul className="space-y-3 pt-4">
+            <p>We believe good technology should make your business easier to run — not harder.</p>
+            <p>
+              We work with businesses in Canada and India
+              {settings.serviceArea ? `, including ${settings.serviceArea}` : ""}.
+            </p>
+            <h3 className="pt-4 text-base font-semibold text-heading">Our principles</h3>
+            <ul className="grid gap-3 sm:grid-cols-2">
               {PRINCIPLES.map((p) => (
                 <li key={p} className="flex gap-3 text-[15px] text-foreground">
                   <Icons.success className="mt-1 shrink-0 text-accent" aria-hidden /> {p}

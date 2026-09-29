@@ -38,6 +38,6 @@ export async function deleteRequirement(actor: Actor, requirementId: string) {
   requireAdmin(actor);
   const row = isUuid(requirementId) ? await db.projectRequirement.findUnique({ where: { id: requirementId } }) : null;
   if (!row) throw notFound("This requirement could not be found.");
-  if (row.source !== "admin") throw forbidden("Client-provided answers can't be deleted.");
+  if (row.source !== "admin") throw forbidden("Client-provided answers cannot be deleted.");
   await db.projectRequirement.delete({ where: { id: requirementId } });
 }

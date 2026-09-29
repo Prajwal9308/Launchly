@@ -1,3 +1,4 @@
+import type { CountryCode } from "@/domain/country";
 import { db, type ProjectStatus, type Tx } from "@/db";
 import { canTransition, STATUS_LABELS } from "@/domain/project-status";
 import {
@@ -13,6 +14,7 @@ import { AppError, conflict, forbidden, validation } from "@/lib/errors";
 import { fieldErrorsOf } from "@/lib/validation";
 import { sendEmail, type EmailMessage } from "@/providers/email";
 import { emailTemplates } from "@/providers/email/templates";
+import { budgetRangesFor, getSiteSettings } from "./catalog";
 import { z } from "zod";
 import type { Actor } from "./actor";
 import { recordActivity } from "./activity";
@@ -68,7 +70,7 @@ export async function transitionProjectStatus(
   });
   await notifyProjectClients(tx, project.id, {
     type: "STATUS_CHANGED",
-    title: `Project status: ${STATUS_LABELS[to]}`,
+    title: `Project status updated: ${STATUS_LABELS[to]}`,
     body: updated.name,
     href: `/dashboard/project/${project.id}`,
   });
@@ -94,7 +96,7 @@ export async function startDraftProject(actor: Actor) {
     orderBy: { createdAt: "asc" },
     include: { organization: { include: { businesses: { orderBy: { createdAt: "asc" }, take: 1 } } } },
   });
-  if (!membership) throw forbidden("Your account isn't linked to a business yet.");
+  if (!membership) throw forbidden("Your account is not linked to a business yet. Please contact us.");
 
   const existing = await db.project.findFirst({
     where: { organizationId: membership.organizationId, status: "DRAFT" },
@@ -109,6 +111,7 @@ export async function startDraftProject(actor: Actor) {
     business: {
       // Accounts created via Google have no business yet; don't prefill the person's name.
       businessName: business?.name ?? "",
+      country: membership.organization.country ?? undefined,
       businessType: business?.businessType ?? "",
       industry: undefined,
       description: business?.description ?? "",
@@ -137,7 +140,7 @@ export async function startDraftProject(actor: Actor) {
       type: "PROJECT_CREATED",
       projectId: project.id,
       actorId: actor.id,
-      message: "Project started",
+      message: "Project questionnaire started",
     });
     return project;
   });
@@ -158,7 +161,7 @@ async function loadDraft(actor: Actor, projectId: string) {
 
 /** Saves one questionnaire step. Lenient validation — required fields are checked at submission. */
 export async function saveQuestionnaireStep(actor: Actor, projectId: string, step: DataStepKey, data: unknown) {
-  const { draft } = await loadDraft(actor, projectId);
+  const { access, draft } = await loadDraft(actor, projectId);
   const parsed = stepSchema(step).safeParse(data);
   if (!parsed.success) {
     throw validation(undefined, fieldErrorsOf(parsed.error));
@@ -168,6 +171,9 @@ export async function saveQuestionnaireStep(actor: Actor, projectId: string, ste
     where: { id: projectId },
     data: { questionnaire: next, questionnaireStep: step },
   });
+  // The business's country sets the client's currency everywhere in the portal.
+  const country = step === "business" ? (parsed.data as { country?: CountryCode }).country : undefined;
+  if (country) await db.organization.update({ where: { id: access.organizationId }, data: { country } });
   return next;
 }
 
@@ -175,9 +181,14 @@ export async function getQuestionnaire(actor: Actor, projectId: string) {
   const access = await assertProjectAccess(db, actor, projectId);
   const project = await db.project.findUniqueOrThrow({
     where: { id: projectId },
-    select: { questionnaire: true, questionnaireStep: true },
+    select: { questionnaire: true, questionnaireStep: true, organization: { select: { country: true } } },
   });
-  return { project: access, draft: parseDraft(project.questionnaire), step: project.questionnaireStep };
+  return {
+    project: access,
+    draft: parseDraft(project.questionnaire),
+    step: project.questionnaireStep,
+    accountCountry: project.organization.country,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -193,10 +204,15 @@ export async function submitProject(actor: Actor, projectId: string) {
   const { access, draft } = await loadDraft(actor, projectId);
 
   const issues = validateForSubmission(draft);
+  // The budget must be one of the current options for the chosen country, so it is always in the right currency.
+  const country = draft.business?.country;
+  if (country && draft.final?.budgetRange && !budgetRangesFor(await getSiteSettings(), country).includes(draft.final.budgetRange)) {
+    issues.push({ step: "final", field: "budgetRange", message: "Please select a budget range in your currency." });
+  }
   if (issues.length) {
     const fieldErrors: Record<string, string[]> = {};
     for (const issue of issues) fieldErrors[`${issue.step}.${issue.field}`] = [issue.message];
-    throw validation("A few required answers are missing.", fieldErrors);
+    throw validation("Some required information is missing.", fieldErrors);
   }
 
   const requestedSlugs = draft.website?.services ?? [];
@@ -242,6 +258,7 @@ export async function submitProject(actor: Actor, projectId: string) {
       // The account was named after the person until the business was known.
       if (firstBusiness) await tx.organization.update({ where: { id: access.organizationId }, data: { name: b.businessName } });
     }
+    if (b.country) await tx.organization.update({ where: { id: access.organizationId }, data: { country: b.country } });
 
     // Guard against double submission inside the transaction.
     const { count } = await tx.project.updateMany({
@@ -251,6 +268,7 @@ export async function submitProject(actor: Actor, projectId: string) {
         submittedAt: now,
         businessId: business.id,
         name: `${b.businessName} website`,
+        country: b.country ?? null,
         budgetRange: cleanDraft.final?.budgetRange ?? null,
         timeframe: cleanDraft.final?.timeframe ?? null,
         questionnaire: cleanDraft,
@@ -289,7 +307,7 @@ export async function submitProject(actor: Actor, projectId: string) {
       type: "PROJECT_SUBMITTED",
       projectId,
       actorId: actor.id,
-      message: "Project submitted",
+      message: "Project request submitted",
     });
     await recordActivity(tx, {
       type: "TASK_CREATED",
@@ -302,17 +320,17 @@ export async function submitProject(actor: Actor, projectId: string) {
     const admins = await notifyAdmins(tx, {
       type: "PROJECT_SUBMITTED",
       title: "New project request",
-      body: `${b.businessName} submitted a website project`,
+      body: `${b.businessName} submitted a project request`,
       href: `/admin/projects/${projectId}`,
     });
     for (const admin of admins) {
       emails.push({
         to: admin.email,
         subject: `New project request: ${b.businessName}`,
-        text: `${b.businessName} submitted a new website project.\n\n${process.env.APP_URL ?? ""}/admin/projects/${projectId}`,
+        text: `${b.businessName} submitted a new project request.\n\n${process.env.APP_URL ?? ""}/admin/projects/${projectId}`,
       });
     }
-    emails.push(emailTemplates.projectReceived(actor.email, b.businessName, projectId));
+    emails.push(emailTemplates.projectReceived(actor.email, actor.firstName, b.businessName, projectId));
 
     return { id: projectId, number: access.number, businessName: b.businessName };
   });
@@ -341,7 +359,7 @@ export async function approveRequirements(actor: Actor, projectId: string) {
   await db.$transaction(async (tx) => {
     const project = await assertProjectAccess(tx, actor, projectId);
     if (!["NEW", "REQUIREMENTS_REVIEW", "INFORMATION_REQUIRED"].includes(project.status)) {
-      throw conflict("Requirements can only be approved before discovery begins.");
+      throw conflict("Requirements can only be approved before planning begins.");
     }
     await tx.project.update({ where: { id: projectId }, data: { requirementsApprovedAt: new Date() } });
     await completeTemplateTask(tx, projectId, "review-requirements");
@@ -377,7 +395,7 @@ export async function requestInformation(actor: Actor, projectId: string, messag
     });
     await notifyProjectClients(tx, projectId, {
       type: "INFORMATION_REQUESTED",
-      title: "We need a few more details",
+      title: "Additional information required",
       body: project.name,
       href: `/dashboard/project/${projectId}/messages`,
     });
@@ -392,11 +410,23 @@ export async function markLaunched(actor: Actor, projectId: string) {
     await completeTemplateTask(tx, projectId, "launch");
     const members = await tx.organizationMember.findMany({
       where: { organizationId: project.organizationId },
-      select: { user: { select: { email: true } } },
+      select: { user: { select: { email: true, firstName: true } } },
     });
-    return { emails: members.map((m) => m.user.email), name: project.name };
+    const business = project.businessId
+      ? await tx.business.findUnique({ where: { id: project.businessId }, select: { name: true, domain: true, existingWebsite: true } })
+      : null;
+    const domain = business?.domain?.trim();
+    return {
+      members: members.map((m) => m.user),
+      businessName: business?.name ?? project.name,
+      websiteUrl: domain ? (/^https?:\/\//i.test(domain) ? domain : `https://${domain}`) : null,
+    };
   });
-  await Promise.all(recipients.emails.map((to) => sendEmail(emailTemplates.projectLaunched(to, recipients.name, projectId))));
+  await Promise.all(
+    recipients.members.map((m) =>
+      sendEmail(emailTemplates.projectLaunched(m.email, m.firstName, recipients.businessName, projectId, recipients.websiteUrl)),
+    ),
+  );
 }
 
 /** The client's in-progress draft, if any. */

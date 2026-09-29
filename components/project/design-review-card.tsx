@@ -66,9 +66,9 @@ function RequestChanges({ review }: { review: DesignReviewView }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Request changes</DialogTitle>
+          <DialogTitle>Request Changes</DialogTitle>
           <DialogDescription>
-            {review.title} v{review.version}. Be as specific as you can — mention sections, text or images.
+            {review.title} version {review.version}. Please be as specific as possible and mention the sections, text or images you would like changed.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1.5">
@@ -99,7 +99,7 @@ function RequestChanges({ review }: { review: DesignReviewView }) {
               })
             }
           >
-            Send request
+            Submit Change Request
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -121,7 +121,7 @@ function ApproveDesign({ review }: { review: DesignReviewView }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Approve {review.title} v{review.version}</DialogTitle>
-          <DialogDescription>Approving confirms this version as the design we&apos;ll build from. This is recorded on your project.</DialogDescription>
+          <DialogDescription>Approving confirms this version as the design we will use for development. Your approval will be recorded on your project.</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-1.5">
@@ -133,7 +133,7 @@ function ApproveDesign({ review }: { review: DesignReviewView }) {
           <label className="flex items-start gap-3 rounded-lg border border-border bg-canvas p-3 text-sm">
             <Checkbox checked={confirmed} onCheckedChange={(v) => setConfirmed(v === true)} className="mt-0.5" aria-describedby={`approve-help-${review.id}`} />
             <span id={`approve-help-${review.id}`}>
-              I approve <strong>{review.title} version {review.version}</strong>.
+              I have reviewed this design (<strong>{review.title} version {review.version}</strong>) and approve this version for development.
             </span>
           </label>
           {error && <Alert tone="danger" title={error} />}
@@ -155,7 +155,7 @@ function ApproveDesign({ review }: { review: DesignReviewView }) {
               })
             }
           >
-            Confirm approval
+            Confirm Approval
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -177,7 +177,7 @@ function AdminReviewActions({ review }: { review: DesignReviewView }) {
         })
       }
     >
-      Request client review
+      Request Client Review
     </Button>
   );
 }
@@ -197,7 +197,7 @@ function ResolveButton({ id }: { id: string }) {
         })
       }
     >
-      Mark addressed
+      Mark Addressed
     </Button>
   );
 }
@@ -221,18 +221,18 @@ export function DesignReviewCard({ review, viewer, expanded = true }: { review: 
         <div className="space-y-4 p-5">
           {viewer === "client" && awaiting && (
             <Alert tone="warning" title="Your design is ready for review.">
-              Take a look and approve it, or tell us what you&apos;d like changed.
+              Please review the design and either approve it or tell us what changes you would like.
             </Alert>
           )}
           <Preview review={review} />
           {review.previewUrl && (
             <a href={review.previewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
-              Open interactive preview <Icons.external aria-hidden />
+              Open interactive preview <Icons.external aria-hidden /><span className="sr-only">(opens in a new tab)</span>
             </a>
           )}
           {review.notes && (
             <div className="rounded-lg bg-canvas p-3.5 text-sm leading-relaxed text-muted">
-              <p className="mb-1 text-xs font-medium text-faint">Notes from the studio</p>
+              <p className="mb-1 text-xs font-medium text-faint">Notes from CoreGravity</p>
               <p className="whitespace-pre-wrap">{review.notes}</p>
             </div>
           )}

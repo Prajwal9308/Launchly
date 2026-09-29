@@ -6,12 +6,12 @@ const base = { projectId: "p1", reviewsAwaiting: [], approvalsAwaiting: [], unre
 describe("client next action", () => {
   it("prioritizes a design awaiting review", () => {
     const a = clientNextAction({ ...base, status: "CLIENT_REVIEW", reviewsAwaiting: [{ id: "r", title: "Homepage", version: 2 }], unreadMessages: 3 });
-    expect(a).toMatchObject({ required: true, cta: "Review design", href: "/dashboard/project/p1/reviews" });
-    expect(a.title).toContain("homepage");
+    expect(a).toMatchObject({ required: true, cta: "Review Design", href: "/dashboard/project/p1/reviews" });
+    expect(a.description).toContain("Homepage version 2");
   });
 
   it("asks for information when required", () => {
-    expect(clientNextAction({ ...base, status: "INFORMATION_REQUIRED" }).cta).toBe("Provide information");
+    expect(clientNextAction({ ...base, status: "INFORMATION_REQUIRED" }).cta).toBe("Provide Information");
   });
 
   it("sends drafts back to the questionnaire", () => {

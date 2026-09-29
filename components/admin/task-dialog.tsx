@@ -64,7 +64,7 @@ export function TaskDialog({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-xl">
         <DialogHeader>
-          <DialogTitle>{value.id ? "Edit task" : "New task"}</DialogTitle>
+          <DialogTitle>{value.id ? "Edit Task" : "New Task"}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           {error && <Alert tone="danger" title={error} />}
@@ -124,7 +124,7 @@ export function TaskDialog({
             Cancel
           </Button>
           <Button onClick={submit} loading={pending}>
-            {value.id ? "Save task" : "Create task"}
+            {value.id ? "Save Task" : "Create Task"}
           </Button>
         </DialogFooter>
       </DialogContent>

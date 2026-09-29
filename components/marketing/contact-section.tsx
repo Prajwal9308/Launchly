@@ -1,16 +1,27 @@
 import { IconTile, Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import { isPlaceholderEmail } from "@/lib/site";
+import type { CountryCode } from "@/domain/country";
 import { ContactForm } from "./contact-form";
 
 const NEXT_STEPS = [
-  { text: "We read your project details and reply by email, usually with a few questions.", icon: Icons.messages },
-  { text: "We agree on scope, timeline and cost in writing before any work starts.", icon: Icons.scope },
-  { text: "Once we begin, you follow updates, share files and review designs in your project portal.", icon: Icons.dashboard },
+  { text: "We review your enquiry and contact you, usually with a few questions about your requirements.", icon: Icons.messages },
+  { text: "We send a written proposal with the scope, timeline, pricing and payment terms before development begins.", icon: Icons.scope },
+  { text: "Once your project starts, you follow updates, share files and approve designs in your client portal.", icon: Icons.dashboard },
 ];
 
 /** Contact block used on the homepage and the Contact page. */
-export function ContactSection({ contactEmail, heading = true }: { contactEmail: string; heading?: boolean }) {
+export function ContactSection({
+  contactEmail,
+  heading = true,
+  country,
+  budgetRanges,
+}: {
+  contactEmail: string;
+  heading?: boolean;
+  country: CountryCode | null;
+  budgetRanges: Record<CountryCode, string[]>;
+}) {
   const Sub = heading ? "h3" : "h2";
   return (
     // Mobile order: intro → form → what happens next. Desktop: intro and details on the left, form on the right.
@@ -18,14 +29,14 @@ export function ContactSection({ contactEmail, heading = true }: { contactEmail:
       {heading && (
         <div className="lg:col-start-1 lg:row-start-1">
           <p className="eyebrow">Contact</p>
-          <h2 className="mt-3 text-[1.625rem] font-semibold leading-[1.2] sm:text-[2rem]">Start a project</h2>
+          <h2 className="mt-3 text-[1.625rem] font-semibold leading-[1.2] sm:text-[2rem]">Tell us about your business</h2>
           <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
-            Share a few details about what you want to build. There&apos;s no obligation — we&apos;ll reply with next steps.
+            Share a few details about what you need. We&apos;ll review your request and contact you with the appropriate next steps.
           </p>
         </div>
       )}
       <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
-        <ContactForm />
+        <ContactForm defaultCountry={country} budgetRanges={budgetRanges} />
       </div>
       <div className={heading ? "lg:col-start-1 lg:row-start-2 lg:pt-10" : "lg:col-start-1 lg:row-start-1"}>
         <Sub className="text-sm font-semibold">What happens next</Sub>
@@ -51,9 +62,9 @@ export function ContactSection({ contactEmail, heading = true }: { contactEmail:
           <p className="flex items-start gap-2 text-muted">
             <Icons.requirements className="mt-0.5 shrink-0 text-accent" aria-hidden />
             <span>
-              Planning a website?{" "}
+              Ready to share the full details of a website project?{" "}
               <Link href="/start-project" className="font-medium text-accent hover:underline">
-                Use the detailed website questionnaire
+                Complete the project questionnaire
               </Link>
               .
             </span>

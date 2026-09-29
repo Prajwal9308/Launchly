@@ -21,7 +21,7 @@ export default async function AdminProjectTasksPage({ params }: { params: Promis
       team={team}
       trigger={
         <Button size="sm">
-          <Icons.add /> New task
+          <Icons.add /> New Task
         </Button>
       }
     />

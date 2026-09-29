@@ -1,52 +1,110 @@
+import { BRAND } from "@/lib/site";
 import type { EmailMessage } from "./index";
 
 const appUrl = () => process.env.APP_URL ?? "http://localhost:3000";
+
+const SIGN_OFF = `Regards,\n${BRAND}`;
+
+/** Joins paragraphs with a blank line between them. */
+const body = (...paragraphs: (string | null | undefined | false)[]) => paragraphs.filter(Boolean).join("\n\n");
+
+const hello = (firstName?: string | null) => (firstName ? `Hello ${firstName},` : "Hello,");
 
 /** Plain-text transactional email templates. */
 export const emailTemplates = {
   welcome: (to: string, firstName: string): EmailMessage => ({
     to,
-    subject: "Welcome — your client account is ready",
-    text: `Hi ${firstName},\n\nYour account is ready. You can start a project or check on an existing one at any time:\n${appUrl()}/dashboard`,
+    subject: `Welcome to ${BRAND}`,
+    text: body(
+      hello(firstName),
+      `Your ${BRAND} client account is ready.`,
+      "You can use your account to submit a project request, review project information, exchange files and communicate with our team.",
+      `Access your client portal: ${appUrl()}/dashboard`,
+      SIGN_OFF,
+    ),
   }),
-  projectReceived: (to: string, businessName: string, projectId: string): EmailMessage => ({
+  projectReceived: (to: string, firstName: string, businessName: string, projectId: string): EmailMessage => ({
     to,
-    subject: `We've received your project for ${businessName}`,
-    text: `Thanks — we've received your project details and will review them before the next step.\n\nView your project: ${appUrl()}/dashboard/project/${projectId}`,
+    subject: "We've received your project request",
+    text: body(
+      hello(firstName),
+      `Thank you for submitting your project information for ${businessName}.`,
+      "We've received your requirements and will review them before contacting you with the next steps.",
+      `View your project: ${appUrl()}/dashboard/project/${projectId}`,
+      SIGN_OFF,
+    ),
   }),
+  /** Sent to the client or to the studio, whichever side did not write the message. */
   newMessage: (to: string, projectName: string, href: string): EmailMessage => ({
     to,
-    subject: `New message about ${projectName}`,
-    text: `You have a new message about ${projectName}.\n\nRead it here: ${appUrl()}${href}`,
+    subject: `New message regarding ${projectName}`,
+    text: body(
+      `You have received a new message regarding ${projectName}.`,
+      "Please sign in to review and respond.",
+      `${appUrl()}${href}`,
+      SIGN_OFF,
+    ),
   }),
-  designReady: (to: string, title: string, version: number, projectId: string): EmailMessage => ({
+  designReady: (to: string, projectName: string, title: string, version: number, projectId: string): EmailMessage => ({
     to,
-    subject: `Your ${title} design (v${version}) is ready for review`,
-    text: `A new design is ready for your review.\n\nReview it here: ${appUrl()}/dashboard/project/${projectId}/reviews`,
+    subject: "Your design is ready for review",
+    text: body(
+      `A new design version for ${projectName} (${title}, version ${version}) is ready for your review.`,
+      "Please review the design and either approve it or submit any requested changes through your client portal.",
+      `Review design: ${appUrl()}/dashboard/project/${projectId}/reviews`,
+      SIGN_OFF,
+    ),
   }),
   revisionRequested: (to: string, projectName: string, href: string): EmailMessage => ({
     to,
-    subject: `Revision requested on ${projectName}`,
-    text: `The client requested changes.\n\n${appUrl()}${href}`,
+    subject: `Changes requested on ${projectName}`,
+    text: body(`The client has requested changes on ${projectName}.`, `Review the request: ${appUrl()}${href}`),
   }),
   approvalReceived: (to: string, projectName: string, what: string, href: string): EmailMessage => ({
     to,
-    subject: `${what} approved on ${projectName}`,
-    text: `The client approved: ${what}.\n\n${appUrl()}${href}`,
+    subject: `${what} received for ${projectName}`,
+    text: body(`The client has approved: ${what}.`, `View the project: ${appUrl()}${href}`),
   }),
   approvalRequested: (to: string, projectName: string, projectId: string): EmailMessage => ({
     to,
-    subject: `Your approval is needed for ${projectName}`,
-    text: `Please review and approve your project.\n\n${appUrl()}/dashboard/project/${projectId}/reviews`,
+    subject: `Your approval is required for ${projectName}`,
+    text: body(
+      "The next stage of your project requires your review and approval.",
+      "Please sign in to your client portal to review the requested item.",
+      `Review project: ${appUrl()}/dashboard/project/${projectId}/reviews`,
+      SIGN_OFF,
+    ),
   }),
-  projectLaunched: (to: string, projectName: string, projectId: string): EmailMessage => ({
+  projectLaunched: (
+    to: string,
+    firstName: string,
+    businessName: string,
+    projectId: string,
+    websiteUrl?: string | null,
+  ): EmailMessage => ({
     to,
-    subject: `${projectName} is live`,
-    text: `Your website has launched.\n\n${appUrl()}/dashboard/project/${projectId}`,
+    subject: "Your website is now live",
+    text: body(
+      hello(firstName),
+      `Your website for ${businessName} has been successfully launched.`,
+      `Thank you for choosing ${BRAND}.`,
+      websiteUrl ? `View your website: ${websiteUrl}` : null,
+      `Access your client portal: ${appUrl()}/dashboard/project/${projectId}`,
+      SIGN_OFF,
+    ),
   }),
   newLead: (
     to: string,
-    lead: { name: string; businessName?: string; email: string; phone?: string; service?: string; budgetRange?: string; message: string },
+    lead: {
+      name: string;
+      businessName?: string;
+      email: string;
+      phone?: string;
+      country?: string;
+      service?: string;
+      budgetRange?: string;
+      message: string;
+    },
     leadId: string,
   ): EmailMessage => ({
     to,
@@ -56,8 +114,9 @@ export const emailTemplates = {
       lead.businessName ? `Business: ${lead.businessName}` : null,
       `Email: ${lead.email}`,
       lead.phone ? `Phone: ${lead.phone}` : null,
-      lead.service ? `Project type: ${lead.service}` : null,
-      lead.budgetRange ? `Budget: ${lead.budgetRange}` : null,
+      lead.country ? `Country: ${lead.country === "IN" ? "India" : lead.country === "CA" ? "Canada" : lead.country}` : null,
+      lead.service ? `Looking for: ${lead.service}` : null,
+      lead.budgetRange ? `Estimated budget: ${lead.budgetRange}` : null,
       "",
       lead.message,
       "",
@@ -68,7 +127,13 @@ export const emailTemplates = {
   }),
   invite: (to: string, businessName: string): EmailMessage => ({
     to,
-    subject: `Set up your client account for ${businessName}`,
-    text: `We've set up a project for ${businessName}. Create your account with this email address to get started:\n${appUrl()}/signup?email=${encodeURIComponent(to)}`,
+    subject: `Set up your ${BRAND} client account`,
+    text: body(
+      "Hello,",
+      `We've set up a project for ${businessName} in the ${BRAND} client portal.`,
+      "Create your client account with this email address to review your project, share files and communicate with our team:",
+      `${appUrl()}/signup?email=${encodeURIComponent(to)}`,
+      SIGN_OFF,
+    ),
   }),
 };

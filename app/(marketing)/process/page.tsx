@@ -6,23 +6,34 @@ import { PageHero, Section, SectionHeader } from "@/components/marketing/section
 
 export const metadata: Metadata = {
   title: "Process",
-  description: "How we take websites and mobile apps from idea to launch: discover, plan, design, develop and launch.",
+  description:
+    "How CoreGravity plans, designs, builds and launches websites and business applications for small businesses, with written scope and your approval at each key stage.",
   alternates: { canonical: "/process" },
 };
 
 const WORKING_TOGETHER = [
-  { title: "Scope in writing", icon: "file-signature", body: "Features, timeline and cost are agreed before development begins, so there are no surprises." },
-  { title: "Regular updates", icon: "notifications", body: "You'll know what's been done and what's next at every stage of the project." },
-  { title: "One place for your project", icon: "folder-kanban", body: "Share files, send messages and review designs in a private project portal." },
-  { title: "Your approval first", icon: "badge-check", body: "Designs and the finished product go live only after you explicitly approve them." },
+  { title: "Written proposal", icon: "file-signature", body: "Scope, timeline, pricing and payment terms are confirmed in writing before development begins." },
+  { title: "Regular updates", icon: "notifications", body: "You will know what has been completed and what comes next at every stage." },
+  { title: "One client portal", icon: "folder-kanban", body: "Review requirements, exchange files, send messages and approve designs in one private place." },
+  { title: "Your approval first", icon: "badge-check", body: "Designs and the finished website or application go live only after you approve them." },
 ];
 
 export default function ProcessPage() {
   return (
     <>
-      <PageHero eyebrow="Process" title="From idea to launch" description="Five clear steps, whether you're building a website, a web application or a mobile app." />
+      <PageHero
+        eyebrow="Process"
+        title="A straightforward process from idea to launch"
+        description="We keep every project organized with clear stages, regular communication and defined approvals."
+      />
       <Section>
         <ProcessSteps headingLevel="h2" />
+        <div className="mt-12 max-w-2xl border-t border-border pt-8">
+          <h2 className="text-base font-semibold">After launch</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted">
+            We can continue supporting your business with maintenance, improvements and new features when needed.
+          </p>
+        </div>
       </Section>
       <Section tone="muted">
         <SectionHeader eyebrow="Working together" title="How we work with you" />

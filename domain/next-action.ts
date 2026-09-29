@@ -19,16 +19,16 @@ export interface ClientAction {
 
 const APPROVAL_COPY: Record<ApprovalType, { title: string; description: string }> = {
   DESIGN_APPROVAL: {
-    title: "Your approval is needed",
-    description: "Please review and approve the design.",
+    title: "Your approval is required",
+    description: "Your design is ready for review. Please review the design and either approve it or tell us what changes you would like.",
   },
   FINAL_APPROVAL: {
     title: "Your website is ready for final approval",
-    description: "Review the finished website and approve it, or tell us what needs to change.",
+    description: "Please review the completed website and either approve it for launch or tell us what needs to change.",
   },
   LAUNCH_APPROVAL: {
-    title: "Approve your website launch",
-    description: "Confirm you're ready for the website to go live.",
+    title: "Launch approval required",
+    description: "Please confirm that CoreGravity may proceed with launching your website.",
   },
 };
 
@@ -42,10 +42,10 @@ export function clientNextAction(input: ClientActionInput): ClientAction {
   if (input.status === "DRAFT") {
     return {
       required: true,
-      title: "Finish your project questionnaire",
-      description: "Your answers are saved. Complete the remaining steps and submit your project.",
+      title: "Complete your project questionnaire",
+      description: "Your answers have been saved. Complete the remaining steps and submit your project request.",
       href: `/start-project/${input.projectId}`,
-      cta: "Continue questionnaire",
+      cta: "Continue Questionnaire",
     };
   }
 
@@ -53,25 +53,25 @@ export function clientNextAction(input: ClientActionInput): ClientAction {
   if (review) {
     return {
       required: true,
-      title: `Your ${review.title.toLowerCase()} design is ready`,
-      description: `Version ${review.version} is ready for your review. Approve it or request changes.`,
+      title: "Your design is ready for review",
+      description: `${review.title} version ${review.version} is ready. Please review the design and either approve it or tell us what changes you would like.`,
       href: `${base}/reviews`,
-      cta: "Review design",
+      cta: "Review Design",
     };
   }
 
   const approval = input.approvalsAwaiting[0];
   if (approval) {
-    return { required: true, ...APPROVAL_COPY[approval.type], href: `${base}/reviews`, cta: "Review and approve" };
+    return { required: true, ...APPROVAL_COPY[approval.type], href: `${base}/reviews`, cta: "Review and Approve" };
   }
 
   if (input.status === "INFORMATION_REQUIRED") {
     return {
       required: true,
-      title: "We need a few more details",
-      description: "We need a few more details before we can continue. Check your messages for what's needed.",
+      title: "Additional information required",
+      description: "We need some additional information before we can continue. Please check your messages for details.",
       href: `${base}/messages`,
-      cta: "Provide information",
+      cta: "Provide Information",
     };
   }
 
@@ -79,18 +79,18 @@ export function clientNextAction(input: ClientActionInput): ClientAction {
     return {
       required: true,
       title: input.unreadMessages === 1 ? "You have a new message" : `You have ${input.unreadMessages} new messages`,
-      description: "Read and reply to keep your project moving.",
+      description: "Please review and reply to keep your project moving.",
       href: `${base}/messages`,
-      cta: "Read messages",
+      cta: "View Messages",
     };
   }
 
   return {
     required: false,
-    title: "No action needed right now",
-    description: "We'll let you know here as soon as there's something for you to review.",
+    title: "No action required",
+    description: "We will let you know here when there is something for you to review.",
     href: base,
-    cta: "View project",
+    cta: "Review Project",
   };
 }
 
@@ -107,7 +107,7 @@ export interface AdminActionInput {
 export function adminNextAction(input: AdminActionInput): string {
   switch (input.status) {
     case "DRAFT":
-      return "Waiting for client to submit questionnaire";
+      return "Waiting for client to submit the questionnaire";
     case "NEW":
       return "Review new project request";
     case "INFORMATION_REQUIRED":

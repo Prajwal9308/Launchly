@@ -13,14 +13,14 @@ export function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
     <form onSubmit={onSubmit} className="space-y-4">
       <FormStatus state={state} />
       <input type="hidden" name="callbackUrl" value={callbackUrl ?? ""} />
-      <Field id="email" label="Email">
+      <Field id="email" label="Email address">
         {(p) => <Input {...p} name="email" type="email" autoComplete="email" required autoFocus />}
       </Field>
       <Field id="password" label="Password">
         {(p) => <Input {...p} name="password" type="password" autoComplete="current-password" required />}
       </Field>
-      <SubmitButton pending={pending} className="w-full" pendingText="Logging in…">
-        Log in
+      <SubmitButton pending={pending} className="w-full" pendingText="Signing in…">
+        Sign In
       </SubmitButton>
     </form>
   );

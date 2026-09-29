@@ -8,7 +8,7 @@ import { googleEnabled } from "@/server/auth";
 import { safeRedirectPath } from "@/lib/utils";
 import { getActor } from "@/server/session";
 
-export const metadata: Metadata = { title: "Log in", robots: { index: false } };
+export const metadata: Metadata = { title: "Client Login", robots: { index: false } };
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string; error?: string }> }) {
   const { callbackUrl, error } = await searchParams;
@@ -19,12 +19,12 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <div className="w-full max-w-sm">
       <div className="surface-raised relative rounded-3xl p-6 sm:p-8">
-        <h1 className="text-2xl font-semibold">Log in</h1>
-        <p className="mt-1 text-sm text-muted">Access your project dashboard.</p>
+        <h1 className="text-2xl font-semibold">Sign in to your client portal</h1>
+        <p className="mt-1 text-sm text-muted">Access your projects, messages, files and approvals.</p>
         <div className="mt-6 space-y-4">
           {error && (
             <Alert tone="danger" title="We couldn't sign you in.">
-              {error === "AccessDenied" ? "That account couldn't be used. Make sure its email address is verified." : "Please try again."}
+              {error === "AccessDenied" ? "This account could not be used. Please make sure its email address is verified." : "Please try again."}
             </Alert>
           )}
           {googleEnabled && (
@@ -37,9 +37,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         </div>
       </div>
       <p className="mt-6 text-center text-sm text-muted">
-        New here?{" "}
+        Don&apos;t have an account?{" "}
         <Link href={`/signup${safeCallback ? `?callbackUrl=${encodeURIComponent(safeCallback)}` : ""}`} className="font-medium text-accent hover:underline">
-          Create an account
+          Create a client account
         </Link>
       </p>
     </div>

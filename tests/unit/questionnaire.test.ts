@@ -13,6 +13,7 @@ describe("questionnaire validation", () => {
     expect(keys).toEqual(
       expect.arrayContaining([
         "business.businessName",
+        "business.country",
         "business.industry",
         "business.description",
         "goals.primaryGoal",

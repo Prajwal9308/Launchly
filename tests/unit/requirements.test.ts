@@ -22,7 +22,7 @@ describe("requirements and summary", () => {
     expect(summary.businessSummary).toContain(COMPLETE_ANSWERS.business.description);
     expect(summary.targetAudience).toBe("Homeowners");
     expect(summary.brandDirection).toBeNull();
-    expect(summary.primaryGoal).toBe("Get phone calls");
+    expect(summary.primaryGoal).toBe("Increase phone calls");
     for (const page of summary.recommendedPages) expect(["Home", "Services", "Contact"]).toContain(page);
     expect(provided).toContain("Homeowners");
   });

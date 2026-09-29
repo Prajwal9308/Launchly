@@ -13,7 +13,7 @@ export default async function ClientRequirementsPage({ params }: { params: Promi
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted">
-        Everything you told us about your project. Need to change something? Send us a message and we&apos;ll update it.
+        Everything you have told us about your project. If something needs to change, send us a message and we will update it.
       </p>
       <RequirementsList rows={rows} />
     </div>

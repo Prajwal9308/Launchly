@@ -18,4 +18,6 @@ export const SERVICE_ICONS = [
   "wrench",
   "file-text",
   "megaphone",
+  "calendar-check",
+  "user-lock",
 ] as const;

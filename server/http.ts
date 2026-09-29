@@ -24,5 +24,5 @@ export function jsonError(status: number, error: string) {
 export function errorResponse(error: unknown) {
   if (isAppError(error)) return jsonError(HTTP_STATUS[error.code], error.message);
   console.error("[api] unexpected error", error instanceof Error ? error.message : error);
-  return jsonError(500, "Something went wrong.");
+  return jsonError(500, "Something went wrong. We couldn't complete your request. Please try again.");
 }

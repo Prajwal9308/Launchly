@@ -18,7 +18,7 @@ export default async function ClientTasksPage({ params }: { params: Promise<{ pr
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted">
-        {done} of {project.tasks.length} tasks complete. Tasks are managed by the studio and update as work progresses.
+        {done} of {project.tasks.length} tasks complete. Tasks are managed by our team and update as work progresses.
       </p>
       <Card className="overflow-hidden">
         {project.tasks.length ? (
@@ -28,7 +28,7 @@ export default async function ClientTasksPage({ params }: { params: Promise<{ pr
             ))}
           </div>
         ) : (
-          <EmptyState icon={Icons.tasks} title="No tasks yet" description="Tasks appear here once we've reviewed your project." />
+          <EmptyState icon={Icons.tasks} title="No tasks yet" description="Tasks will appear here once we have reviewed your project request." />
         )}
       </Card>
     </div>

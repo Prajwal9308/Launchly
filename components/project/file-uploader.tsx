@@ -24,7 +24,7 @@ interface FileUploaderProps {
 export function FileUploader({
   projectId,
   category,
-  label = "Upload files",
+  label = "Upload Files",
   hint = `PDF, Word, images. Up to ${formatFileSize(MAX_UPLOAD_BYTES)} each.`,
   accept = ACCEPT_ATTRIBUTE,
   multiple = true,

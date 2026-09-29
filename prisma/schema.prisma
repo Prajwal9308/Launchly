@@ -14,6 +14,13 @@ datasource db {
 // Enums
 // ---------------------------------------------------------------------------
 
+/// The only countries CoreGravity serves. Controls currency (CAD / INR),
+/// budget ranges and tax wording.
+enum Country {
+  CA
+  IN
+}
+
 enum Role {
   ADMIN
   CLIENT
@@ -77,6 +84,10 @@ enum FileCategory {
   DESIGN
   ATTACHMENT
   OTHER
+  PROPOSAL
+  AGREEMENT
+  INVOICE
+  MAINTENANCE_AGREEMENT
 }
 
 enum DesignReviewStatus {
@@ -224,6 +235,8 @@ model Organization {
   name        String
   /// Email of a client invited via lead conversion who has not signed up yet.
   inviteEmail String?
+  /// The client's country; sets their currency and budget ranges.
+  country     Country?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -292,6 +305,7 @@ model Lead {
   businessName   String?
   email          String
   phone          String?
+  country        Country?
   /// Project type chosen on the contact form (Website, Mobile Application, …).
   service        String?
   budgetRange    String?
@@ -324,6 +338,8 @@ model Project {
   createdById            String?        @db.Uuid
   name                   String
   status                 ProjectStatus  @default(DRAFT)
+  /// Country captured at submission; fixes the project's currency.
+  country                Country?
   /// Status to resume when a project comes off hold.
   statusBeforeHold       ProjectStatus?
   /// Raw questionnaire answers (validated with Zod in domain/questionnaire.ts).
@@ -610,9 +626,11 @@ model PricingPackage {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
   description String
-  /// Price in whole cents. Null means "Let's discuss your project".
-  priceCents  Int?
-  /// Optional qualifier shown next to the price, e.g. "starting at".
+  /// Price in Canadian dollars (whole dollars). Null means "quoted per project".
+  priceCad    Int?
+  /// Price in Indian rupees (whole rupees). Null means "quoted per project".
+  priceInr    Int?
+  /// Optional qualifier shown before the price, e.g. "Starting at".
   pricePrefix String?
   features    String[] @default([])
   highlighted Boolean  @default(false)
@@ -648,9 +666,25 @@ model PortfolioItem {
 model SiteSettings {
   id           String   @id @default("default")
   businessName String   @default("CoreGravity")
-  tagline      String   @default("Websites and mobile apps for businesses and entrepreneurs.")
+  tagline      String   @default("Professional websites and digital solutions for small businesses.")
   contactEmail String   @default("hello@example.com")
   contactPhone String?
   serviceArea  String?
-  updatedAt    DateTime @updatedAt
+
+  /// Budget options offered on the contact form and questionnaire, per country.
+  budgetRangesCa String[] @default(["Under CA$2,000", "CA$2,000 – CA$5,000", "CA$5,000 – CA$10,000", "CA$10,000 – CA$20,000", "CA$20,000+", "Not sure yet"])
+  budgetRangesIn String[] @default(["Under ₹75,000", "₹75,000 – ₹1,50,000", "₹1,50,000 – ₹3,00,000", "₹3,00,000 – ₹5,00,000", "₹5,00,000+", "Not sure yet"])
+  /// Shown under published prices. Never states a rate.
+  taxNoteCa      String   @default("Plus applicable taxes.")
+  taxNoteIn      String   @default("Plus applicable GST, where applicable.")
+
+  /// Legal details used by the Privacy Policy and Terms of Use. Left empty
+  /// until the owner provides them; the pages read naturally without them.
+  legalName             String?
+  businessAddress       String?
+  governingJurisdiction String?
+  privacyContactEmail   String?
+  legalEffectiveDate    DateTime? @db.Date
+
+  updatedAt DateTime @updatedAt
 }

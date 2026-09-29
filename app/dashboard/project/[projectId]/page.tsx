@@ -1,5 +1,6 @@
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
+import { countryLabel } from "@/domain/country";
 import { SectionTitle } from "@/components/app/page-header";
 import { ActionCenter } from "@/components/project/action-center";
 import { ActivityList } from "@/components/project/activity-list";
@@ -80,8 +81,16 @@ export default async function ClientProjectOverview({ params }: { params: Promis
                   <dd>{project.services.map((s) => s.service.name).join(", ") || "—"}</dd>
                 </div>
                 <div>
-                  <dt className="text-faint">Timeframe</dt>
+                  <dt className="text-faint">Preferred timeline</dt>
                   <dd>{project.timeframe ?? "—"}</dd>
+                </div>
+                <div>
+                  <dt className="text-faint">Estimated budget</dt>
+                  <dd>{project.budgetRange ?? "—"}</dd>
+                </div>
+                <div>
+                  <dt className="text-faint">Country and currency</dt>
+                  <dd>{project.country ? countryLabel(project.country) : "—"}</dd>
                 </div>
                 {project.launchedAt && (
                   <div>

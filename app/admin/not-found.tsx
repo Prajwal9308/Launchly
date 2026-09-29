@@ -13,7 +13,7 @@ export default function AdminNotFound() {
         description="It may have been removed or the link is incorrect."
         action={
           <Button asChild variant="secondary">
-            <Link href="/admin">Back to overview</Link>
+            <Link href="/admin">Back to Overview</Link>
           </Button>
         }
       />

@@ -25,10 +25,10 @@ export interface UploadInput {
 
 export async function uploadFile(actor: Actor, input: UploadInput) {
   const project = await assertProjectAccess(db, actor, input.projectId);
-  if (project.status === "CANCELLED") throw conflict("Files can't be added to a cancelled project.");
+  if (project.status === "CANCELLED") throw conflict("Files cannot be added to a cancelled project.");
 
   const category = input.category as FileCategory;
-  if (!FILE_CATEGORIES.includes(category)) throw validation("Choose a valid file category.");
+  if (!FILE_CATEGORIES.includes(category)) throw validation("Please choose a valid document type.");
   if (!isAdmin(actor) && !CLIENT_FILE_CATEGORIES.includes(category)) throw forbidden();
 
   const isDesign = category === "DESIGN";
@@ -121,7 +121,7 @@ export async function deleteFile(actor: Actor, fileId: string) {
     throw notFound("This file could not be found.");
   });
   if (!isAdmin(actor) && file.uploadedById !== actor.id) throw forbidden("You can only remove files you uploaded.");
-  if (file.designReview) throw conflict("This file is part of a design review and can't be removed.");
+  if (file.designReview) throw conflict("This file is part of a design review and cannot be removed.");
 
   await db.$transaction(async (tx) => {
     await tx.projectFile.delete({ where: { id: fileId } });

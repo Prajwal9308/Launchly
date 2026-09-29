@@ -1,48 +1,50 @@
 /**
- * "What We Build" — categories of work CoreGravity offers. These are
- * capabilities, not completed client projects.
+ * Kinds of solutions CoreGravity builds for small businesses. These are
+ * capabilities, not completed client projects; every visual is labelled as a
+ * concept example.
  */
 export const SOLUTIONS = [
   {
     slug: "business-websites",
     title: "Business Websites",
     icon: "globe",
-    description: "Professional, responsive websites designed to establish credibility and generate inquiries.",
-    examples: ["Company websites", "Landing pages", "Service & booking sites", "Website redesigns"],
+    description:
+      "Professional websites that establish credibility and make it easy for customers to learn about your business and contact you.",
+    examples: ["Company websites", "Service websites", "Landing pages", "Website redesigns"],
   },
   {
-    slug: "web-applications",
-    title: "Web Applications",
-    icon: "layout",
-    description: "Portals, booking systems, internal tools and other browser-based products built around how your team works.",
-    examples: ["Client portals", "Booking systems", "Membership platforms", "Online tools"],
-  },
-  {
-    slug: "mobile-applications",
-    title: "Mobile Applications",
-    icon: "smartphone",
-    description: "iOS and Android apps for customer-facing or internal business use, built cross-platform or native.",
-    examples: ["Customer apps", "Internal team apps", "MVPs & prototypes", "Companion apps"],
-  },
-  {
-    slug: "ecommerce",
-    title: "E-commerce",
+    slug: "online-stores",
+    title: "Online Stores",
     icon: "shopping-cart",
-    description: "Online stores with product management, checkout, payments and a responsive shopping experience.",
-    examples: ["Online stores", "Product catalogs", "Checkout & payments", "Order management"],
+    description: "E-commerce websites with product catalogs, checkout, payments and order management.",
+    examples: ["Product catalogs", "Shopping cart and checkout", "Payment integration", "Order management"],
   },
   {
-    slug: "business-dashboards",
-    title: "Business Dashboards",
+    slug: "booking-systems",
+    title: "Booking & Appointment Systems",
+    icon: "calendar-check",
+    description: "Online scheduling solutions for appointments, consultations, services and reservations.",
+    examples: ["Appointment scheduling", "Service and staff calendars", "Booking reminders", "Reservation management"],
+  },
+  {
+    slug: "business-applications",
+    title: "Business Applications",
     icon: "layout-dashboard",
-    description: "Clear reporting and operations dashboards that bring your sales, bookings and team data into one place.",
-    examples: ["Sales & KPI reporting", "Operations overviews", "Admin panels", "Data integrations"],
+    description: "Custom tools, dashboards and portals designed around your daily operations.",
+    examples: ["Sales and job tracking", "Reporting dashboards", "Inventory management", "Staff tools"],
   },
   {
-    slug: "custom-solutions",
-    title: "Custom Solutions",
-    icon: "briefcase-business",
-    description: "Internal systems, integrations and automation for the parts of your business that off-the-shelf software doesn't fit.",
-    examples: ["Order & job tracking", "Inventory management", "System integrations", "Process automation"],
+    slug: "customer-portals",
+    title: "Customer Portals",
+    icon: "user-lock",
+    description: "Secure areas where customers can access information, documents, appointments or services.",
+    examples: ["Customer accounts", "Document sharing", "Appointment history", "Service requests"],
+  },
+  {
+    slug: "business-automation",
+    title: "Business Automation",
+    icon: "workflow",
+    description: "Integrations and workflows that reduce repetitive administrative work.",
+    examples: ["System integrations", "Automated notifications", "Form and data workflows", "Reporting automation"],
   },
 ] as const;

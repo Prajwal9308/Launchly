@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { db, type LeadStatus, type Prisma } from "@/db";
+import { COUNTRIES } from "@/domain/country";
 import { conflict, notFound, validation } from "@/lib/errors";
 import { fieldErrorsOf } from "@/lib/validation";
 import { sendEmail, type EmailMessage } from "@/providers/email";
@@ -12,8 +13,8 @@ import { notifyAdmins } from "./notifications";
 export const LEAD_STATUSES = ["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "LOST"] as const;
 
 export const leadSchema = z.object({
-  name: z.string().trim().min(1, "Please enter your name.").max(120),
-  businessName: z.string().trim().max(120).optional().default(""),
+  name: z.string().trim().min(1, "Please enter your full name.").max(120),
+  businessName: z.string().trim().min(1, "Please enter your business name.").max(120),
   email: z.email("Please enter a valid email address.").trim().toLowerCase().max(254),
   phone: z
     .string()
@@ -22,10 +23,11 @@ export const leadSchema = z.object({
     .optional()
     .default("")
     .refine((v) => !v || /^[+()\-.\s\d]{7,}$/.test(v), "Please enter a valid phone number."),
-  /** Project type (Website, Mobile Application, …). */
+  country: z.enum(COUNTRIES, "Please select your country."),
+  /** What the customer is looking for (Business Website, Online Store, …). */
   service: z.string().trim().max(120).optional().default(""),
   budgetRange: z.string().trim().max(60).optional().default(""),
-  message: z.string().trim().min(1, "Please enter a message.").max(5000),
+  message: z.string().trim().min(1, "Please tell us a little about your requirements.").max(5000),
 });
 
 export type LeadInput = z.input<typeof leadSchema>;
@@ -41,9 +43,10 @@ export async function createLead(input: LeadInput) {
     const lead = await tx.lead.create({
       data: {
         name: data.name,
-        businessName: data.businessName || null,
+        businessName: data.businessName,
         email: data.email,
         phone: data.phone || null,
+        country: data.country,
         service: data.service || null,
         budgetRange: data.budgetRange || null,
         message: data.message,
@@ -130,7 +133,7 @@ export async function convertLead(actor: Actor, leadId: string) {
     where: { email: lead.email },
     select: { id: true, role: true, memberships: { select: { organizationId: true }, take: 1 } },
   });
-  if (existingUser?.role === "ADMIN") throw conflict("This email belongs to a studio account.");
+  if (existingUser?.role === "ADMIN") throw conflict("This email address belongs to a studio account.");
 
   const result = await db.$transaction(async (tx) => {
     const organizationId =
@@ -139,6 +142,7 @@ export async function convertLead(actor: Actor, leadId: string) {
         await tx.organization.create({
           data: {
             name: businessName,
+            country: lead.country,
             inviteEmail: existingUser ? null : lead.email,
             members: existingUser ? { create: { userId: existingUser.id, role: "OWNER" } } : undefined,
           },
@@ -156,7 +160,7 @@ export async function convertLead(actor: Actor, leadId: string) {
         name: `${businessName} website`,
         status: "DRAFT",
         questionnaire: {
-          business: { businessName, phone: lead.phone ?? "", email: lead.email },
+          business: { businessName, phone: lead.phone ?? "", email: lead.email, ...(lead.country ? { country: lead.country } : {}) },
           final: { comments: lead.message },
         },
       },
@@ -170,14 +174,14 @@ export async function convertLead(actor: Actor, leadId: string) {
       projectId: project.id,
       actorId: actor.id,
       visibility: "INTERNAL",
-      message: `Lead converted to project`,
+      message: "Lead converted to a project",
       metadata: { leadId: lead.id },
     });
     await recordActivity(tx, {
       type: "PROJECT_CREATED",
       projectId: project.id,
       actorId: actor.id,
-      message: "Project created — waiting for questionnaire",
+      message: "Project created. Waiting for the project questionnaire.",
     });
     return { projectId: project.id, invited: !existingUser };
   });

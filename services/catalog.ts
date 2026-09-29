@@ -1,6 +1,7 @@
 import { SERVICE_ICONS } from "@/domain/service-icons";
 import { z } from "zod";
-import { db } from "@/db";
+import { db, type SiteSettings } from "@/db";
+import type { CountryCode } from "@/domain/country";
 import { conflict, notFound, validation } from "@/lib/errors";
 import { fieldErrorsOf } from "@/lib/validation";
 import { slugify } from "@/lib/utils";
@@ -39,8 +40,8 @@ function parseOrThrow<T extends z.ZodType>(schema: T, input: unknown): z.infer<T
 export { SERVICE_ICONS };
 
 export const serviceSchema = z.object({
-  name: z.string().trim().min(1, "Name is required.").max(80),
-  summary: z.string().trim().min(1, "A short description is required.").max(300),
+  name: z.string().trim().min(1, "Please enter a service name.").max(80),
+  summary: z.string().trim().min(1, "Please enter a short description.").max(300),
   description: z.string().trim().max(3000).optional().default(""),
   features: lines,
   pricingText: z.string().trim().max(120).optional().default(""),
@@ -88,17 +89,24 @@ export async function deleteService(actor: Actor, id: string) {
 // Pricing packages
 // ---------------------------------------------------------------------------
 
-export const pricingSchema = z.object({
-  name: z.string().trim().min(1, "Name is required.").max(80),
-  description: z.string().trim().min(1, "Description is required.").max(300),
-  /** Dollars as entered by the admin; empty means "Let's discuss your project". */
-  price: z
+/** A whole-unit price as typed by the admin ("1500", "1,50,000"); empty means "quoted per project". */
+const wholePrice = (currency: string) =>
+  z
     .string()
     .trim()
     .optional()
     .default("")
-    .refine((v) => !v || /^\d{1,7}(\.\d{1,2})?$/.test(v.replace(/[$,]/g, "")), "Enter a price like 2500 or leave blank.")
-    .transform((v) => (v ? Math.round(Number(v.replace(/[$,]/g, "")) * 100) : null)),
+    .transform((v) => v.replace(/[,\s]/g, "").replace(/^(CA\$|\$|₹|Rs\.?)/i, ""))
+    .refine((v) => !v || /^\d{1,9}$/.test(v), `Enter a whole ${currency} amount, such as 1500, or leave it blank.`)
+    .transform((v) => (v ? Number(v) : null));
+
+export const pricingSchema = z.object({
+  name: z.string().trim().min(1, "Please enter a package name.").max(80),
+  description: z.string().trim().min(1, "Please enter a description.").max(300),
+  /** Canadian price in whole dollars (CAD). */
+  priceCad: wholePrice("CAD"),
+  /** Indian price in whole rupees (INR). */
+  priceInr: wholePrice("INR"),
   pricePrefix: z.string().trim().max(40).optional().default(""),
   features: lines,
   highlighted: z.boolean().default(false),
@@ -127,7 +135,8 @@ export async function savePricingPackage(actor: Actor, id: string | null, input:
   const payload = {
     name: data.name,
     description: data.description,
-    priceCents: data.price,
+    priceCad: data.priceCad,
+    priceInr: data.priceInr,
     pricePrefix: data.pricePrefix || null,
     features: data.features,
     highlighted: data.highlighted,
@@ -151,9 +160,9 @@ export async function deletePricingPackage(actor: Actor, id: string) {
 // ---------------------------------------------------------------------------
 
 export const portfolioSchema = z.object({
-  title: z.string().trim().min(1, "Title is required.").max(120),
-  description: z.string().trim().min(1, "Description is required.").max(2000),
-  industry: z.string().trim().min(1, "Industry is required.").max(80),
+  title: z.string().trim().min(1, "Please enter a title.").max(120),
+  description: z.string().trim().min(1, "Please enter a description.").max(2000),
+  industry: z.string().trim().min(1, "Please enter an industry.").max(80),
   services: z
     .string()
     .max(500)
@@ -172,14 +181,14 @@ export const portfolioSchema = z.object({
     .max(500)
     .optional()
     .default("")
-    .refine((v) => !v || v.startsWith("/") || z.url({ protocol: /^https$/ }).safeParse(v).success, "Use a /path or https:// URL."),
+    .refine((v) => !v || v.startsWith("/") || z.url({ protocol: /^https$/ }).safeParse(v).success, "Enter a /path or an https:// address."),
   url: z
     .string()
     .trim()
     .max(500)
     .optional()
     .default("")
-    .refine((v) => !v || z.url({ protocol: /^https?$/ }).safeParse(v).success, "Enter a valid URL."),
+    .refine((v) => !v || z.url({ protocol: /^https?$/ }).safeParse(v).success, "Please enter a valid website address."),
   featured: z.boolean().default(false),
   published: z.boolean().default(true),
   isDemo: z.boolean().default(true),
@@ -227,31 +236,97 @@ export async function deletePortfolioItem(actor: Actor, id: string) {
 // Studio settings
 // ---------------------------------------------------------------------------
 
+/** One option per line, trimmed, at most 10. */
+const budgetLines = z
+  .string()
+  .max(1000)
+  .optional()
+  .default("")
+  .transform((v) =>
+    v
+      .split(/\n+/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .slice(0, 10),
+  )
+  .refine((v) => v.length > 0, "Add at least one budget range.")
+  .refine((v) => v.every((line) => line.length <= 60), "Keep each budget range under 60 characters.")
+  .refine((v) => v.every((line) => !/USD|US\$/i.test(line)), "Budget ranges must use CAD or INR, not USD.");
+
+const optionalEmail = z
+  .string()
+  .trim()
+  .max(254)
+  .optional()
+  .default("")
+  .refine((v) => !v || z.email().safeParse(v).success, "Please enter a valid email address.");
+
 export const settingsSchema = z.object({
-  businessName: z.string().trim().min(1, "Business name is required.").max(80),
+  businessName: z.string().trim().min(1, "Please enter the business name.").max(80),
   tagline: z.string().trim().max(160).optional().default(""),
-  contactEmail: z.email("Enter a valid email.").trim().max(254),
+  contactEmail: z.email("Please enter a valid email address.").trim().max(254),
   contactPhone: z.string().trim().max(40).optional().default(""),
   serviceArea: z.string().trim().max(160).optional().default(""),
+  budgetRangesCa: budgetLines,
+  budgetRangesIn: budgetLines,
+  taxNoteCa: z.string().trim().max(160).optional().default(""),
+  taxNoteIn: z.string().trim().max(160).optional().default(""),
+  legalName: z.string().trim().max(160).optional().default(""),
+  businessAddress: z.string().trim().max(300).optional().default(""),
+  governingJurisdiction: z.string().trim().max(120).optional().default(""),
+  privacyContactEmail: optionalEmail,
+  legalEffectiveDate: z
+    .string()
+    .trim()
+    .optional()
+    .default("")
+    .refine((v) => !v || !Number.isNaN(Date.parse(v)), "Please enter a valid date.")
+    .transform((v) => (v ? new Date(v) : null)),
 });
 
-export async function getSiteSettings() {
-  return (
-    (await db.siteSettings.findUnique({ where: { id: "default" } })) ?? {
-      id: "default",
-      businessName: "CoreGravity",
-      tagline: "Websites and mobile apps for businesses and entrepreneurs.",
-      contactEmail: "info.coregravityio@yahoo.com",
-      contactPhone: null,
-      serviceArea: null,
-      updatedAt: new Date(0),
-    }
-  );
+export const DEFAULT_SETTINGS = {
+  id: "default",
+  businessName: "CoreGravity",
+  tagline: "Professional websites and digital solutions for small businesses.",
+  contactEmail: "info.coregravityio@yahoo.com",
+  contactPhone: null,
+  serviceArea: null,
+  budgetRangesCa: ["Under CA$2,000", "CA$2,000 – CA$5,000", "CA$5,000 – CA$10,000", "CA$10,000 – CA$20,000", "CA$20,000+", "Not sure yet"],
+  budgetRangesIn: ["Under ₹75,000", "₹75,000 – ₹1,50,000", "₹1,50,000 – ₹3,00,000", "₹3,00,000 – ₹5,00,000", "₹5,00,000+", "Not sure yet"],
+  taxNoteCa: "Plus applicable taxes.",
+  taxNoteIn: "Plus applicable GST, where applicable.",
+  legalName: null,
+  businessAddress: null,
+  governingJurisdiction: null,
+  privacyContactEmail: null,
+  legalEffectiveDate: null,
+  updatedAt: new Date(0),
+} satisfies SiteSettings;
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  return (await db.siteSettings.findUnique({ where: { id: "default" } })) ?? DEFAULT_SETTINGS;
+}
+
+/** Budget options for one country, as configured in Admin → Settings. */
+export function budgetRangesFor(settings: Pick<SiteSettings, "budgetRangesCa" | "budgetRangesIn">, country: CountryCode) {
+  return country === "CA" ? settings.budgetRangesCa : settings.budgetRangesIn;
+}
+
+export function taxNoteFor(settings: Pick<SiteSettings, "taxNoteCa" | "taxNoteIn">, country: CountryCode) {
+  return country === "CA" ? settings.taxNoteCa : settings.taxNoteIn;
 }
 
 export async function updateSiteSettings(actor: Actor, input: z.input<typeof settingsSchema>) {
   requireAdmin(actor);
   const data = parseOrThrow(settingsSchema, input);
-  const payload = { ...data, contactPhone: data.contactPhone || null, serviceArea: data.serviceArea || null };
+  const payload = {
+    ...data,
+    contactPhone: data.contactPhone || null,
+    serviceArea: data.serviceArea || null,
+    legalName: data.legalName || null,
+    businessAddress: data.businessAddress || null,
+    governingJurisdiction: data.governingJurisdiction || null,
+    privacyContactEmail: data.privacyContactEmail || null,
+  };
   return db.siteSettings.upsert({ where: { id: "default" }, create: { id: "default", ...payload }, update: payload });
 }

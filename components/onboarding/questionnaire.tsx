@@ -13,6 +13,7 @@ import {
   type QuestionnaireDraft,
   type StepKey,
 } from "@/domain/questionnaire";
+import type { CountryCode } from "@/domain/country";
 import { cn } from "@/lib/utils";
 import { deleteFileAction, saveQuestionnaireStepAction, submitProjectAction } from "@/server/actions/client";
 import { ReviewStep } from "./review-step";
@@ -31,8 +32,8 @@ import {
 type FullDraft = Required<{ [K in DataStepKey]: NonNullable<QuestionnaireDraft[K]> }>;
 
 const EMPTY: FullDraft = {
-  business: { businessName: "", businessType: "", industry: undefined, description: "", address: "", phone: "", email: "", existingWebsite: "", domain: "", socialLinks: "" },
-  goals: { primaryGoal: undefined, primaryGoalOther: "", idealCustomers: "", differentiators: "", keyOfferings: "" },
+  business: { businessName: "", country: undefined, businessType: "", industry: undefined, description: "", address: "", phone: "", email: "", existingWebsite: "", domain: "", socialLinks: "" },
+  goals: { primaryGoal: undefined, primaryGoalOther: "", mainGoals: "", idealCustomers: "", differentiators: "", keyOfferings: "" },
   website: { pages: [], pagesOther: "", services: [] },
   brand: { brandColors: "", preferredFonts: "", hasBrandGuidelines: false, brandDescription: "", styles: [] },
   content: { hasContent: undefined, contentNotes: "" },
@@ -57,9 +58,11 @@ interface QuestionnaireProps {
   initialStep: string;
   services: { slug: string; name: string; summary: string }[];
   initialFiles: UploadedFile[];
+  /** Budget options per country, from Admin → Settings. */
+  budgetRanges: Record<CountryCode, string[]>;
 }
 
-export function Questionnaire({ projectId, initialDraft, initialStep, services, initialFiles }: QuestionnaireProps) {
+export function Questionnaire({ projectId, initialDraft, initialStep, services, initialFiles, budgetRanges }: QuestionnaireProps) {
   const startIndex = Math.max(0, STEPS.findIndex((s) => s.key === initialStep));
   const [index, setIndex] = useState(startIndex);
   const [draft, setDraft] = useState<FullDraft>(() => hydrate(initialDraft));
@@ -115,7 +118,15 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
   }, [dirty, saveState]);
 
   const update = <K extends DataStepKey>(key: K) => (patch: Partial<FullDraft[K]>) => {
-    setDraft((prev) => ({ ...prev, [key]: { ...prev[key], ...patch } }));
+    setDraft((prev) => {
+      const next = { ...prev, [key]: { ...prev[key], ...patch } };
+      // A budget chosen in one currency no longer applies after the country changes.
+      const country = next.business.country;
+      if (key === "business" && next.final.budgetRange && (!country || !budgetRanges[country].includes(next.final.budgetRange))) {
+        next.final = { ...next.final, budgetRange: undefined };
+      }
+      return next;
+    });
     setErrors((prev) => {
       const next = { ...prev };
       for (const field of Object.keys(patch)) delete next[field];
@@ -223,7 +234,7 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
           <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-5 sm:px-8">
             <div>
               <h1 ref={headingRef} tabIndex={-1} className="text-lg font-semibold outline-none sm:text-xl">
-                {step.title}
+                {step.heading}
               </h1>
               <p className="mt-1 text-sm text-muted">{step.description}</p>
             </div>
@@ -238,7 +249,16 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
             {stepKey === "content" && <ContentStep value={draft.content} onChange={update("content")} errors={errors} {...fileProps} />}
             {stepKey === "inspiration" && <InspirationStep value={draft.inspiration} onChange={update("inspiration")} errors={errors} />}
             {stepKey === "features" && <FeaturesStep value={draft.features} onChange={update("features")} errors={errors} />}
-            {stepKey === "final" && <FinalStep value={draft.final} onChange={update("final")} errors={errors} />}
+            {stepKey === "final" && (
+              <FinalStep
+                value={draft.final}
+                onChange={update("final")}
+                errors={errors}
+                country={draft.business.country}
+                budgetRanges={draft.business.country ? budgetRanges[draft.business.country] : []}
+                onChooseCountry={() => void goTo(0)}
+              />
+            )}
             {stepKey === "review" && (
               <ReviewStep draft={draft} services={services} files={files} issues={issues} onEdit={(s) => void goTo(STEPS.findIndex((x) => x.key === s))} />
             )}
@@ -251,16 +271,16 @@ export function Questionnaire({ projectId, initialDraft, initialStep, services, 
             </Button>
             {stepKey === "review" ? (
               <Button onClick={submit} loading={submitting} disabled={issues.length > 0}>
-                Submit Project
+                Submit Project Request
               </Button>
             ) : (
               <Button onClick={() => void goTo(index + 1)} disabled={saveState === "saving"}>
-                {STEPS[index + 1]?.key === "review" ? "Review Project" : "Continue"} <Icons.forward aria-hidden />
+                {STEPS[index + 1]?.key === "review" ? "Review Your Information" : "Continue"} <Icons.forward aria-hidden />
               </Button>
             )}
           </div>
         </div>
-        <p className="mt-4 text-center text-xs text-faint">Your answers save automatically. You can leave and come back at any time.</p>
+        <p className="mt-4 text-center text-xs text-faint">Your progress is saved automatically. You can leave and return at any time.</p>
       </div>
     </div>
   );

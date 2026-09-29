@@ -1,7 +1,7 @@
 import { Icons } from "@/components/ui/icons";
 import { SectionTitle } from "@/components/app/page-header";
 import { FileList } from "@/components/project/file-list";
-import { FileUploader } from "@/components/project/file-uploader";
+import { SharedFileUpload } from "@/components/admin/shared-file-upload";
 import { Card, CardContent } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { listProjectFiles } from "@/services/files";
@@ -17,7 +17,7 @@ export default async function AdminFilesPage({ params }: { params: Promise<{ pro
       <Card>
         <CardContent>
           <SectionTitle icon={Icons.upload}>Share a file with the client</SectionTitle>
-          <FileUploader projectId={projectId} category="DOCUMENT" compact />
+          <SharedFileUpload projectId={projectId} />
         </CardContent>
       </Card>
       <Card className="overflow-hidden">
@@ -27,7 +27,7 @@ export default async function AdminFilesPage({ params }: { params: Promise<{ pro
         {files.length ? (
           <FileList files={files} currentUserId={actor.id} canDeleteAll />
         ) : (
-          <EmptyState icon={Icons.files} title="No files yet" description="Files uploaded by the client or studio appear here." />
+          <EmptyState icon={Icons.files} title="No files yet" description="Files uploaded by the client or by CoreGravity appear here." />
         )}
       </Card>
     </div>

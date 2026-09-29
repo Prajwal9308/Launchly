@@ -22,7 +22,7 @@ export function StatusControl({ projectId, current, allowed }: { projectId: stri
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary">Change status</Button>
+        <Button variant="secondary">Change Status</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -54,7 +54,7 @@ export function StatusControl({ projectId, current, allowed }: { projectId: stri
             Cancel
           </Button>
           <Button loading={pending} disabled={!to} onClick={() => run(() => changeStatusAction(projectId, to, note), () => setOpen(false))}>
-            Update status
+            Update Status
           </Button>
         </DialogFooter>
       </DialogContent>

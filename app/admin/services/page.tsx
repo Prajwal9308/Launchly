@@ -25,7 +25,7 @@ export default async function AdminServicesPage() {
         actions={
           <Button asChild>
             <Link href="/admin/services/new">
-              <Icons.add /> New service
+              <Icons.add /> New Service
             </Link>
           </Button>
         }

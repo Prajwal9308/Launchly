@@ -66,27 +66,27 @@ export function WorkflowActions({ projectId, status, hasPendingFinal }: { projec
     <>
       {reviewing && (
         <Button loading={approve.pending} onClick={() => approve.run(() => approveRequirementsAction(projectId))}>
-          Approve requirements
+          Approve Requirements
         </Button>
       )}
       {["NEW", "REQUIREMENTS_REVIEW", "DISCOVERY", "DESIGN"].includes(status) && (
         <TextDialog
-          trigger={<Button variant="secondary">Request information</Button>}
-          title="Request additional information"
-          description="The client receives this as a message, and the project moves to “Information required”."
+          trigger={<Button variant="secondary">Request Information</Button>}
+          title="Request Additional Information"
+          description="The client receives this as a message, and the project moves to “Information Required”."
           label="What do you need from the client?"
-          confirmLabel="Send request"
+          confirmLabel="Send Request"
           required
           onConfirm={(text) => requestInformationAction(projectId, text)}
         />
       )}
       {["DEVELOPMENT", "TESTING"].includes(status) && !hasPendingFinal && (
         <TextDialog
-          trigger={<Button>Request final approval</Button>}
-          title="Request final approval"
+          trigger={<Button>Request Final Approval</Button>}
+          title="Request Final Approval"
           description="The client will be asked to review the finished website and explicitly approve it."
           label="Message to the client"
-          confirmLabel="Request approval"
+          confirmLabel="Request Approval"
           onConfirm={(text) => requestApprovalAction(projectId, { type: "FINAL_APPROVAL", message: text })}
         />
       )}
@@ -97,7 +97,7 @@ export function WorkflowActions({ projectId, status, hasPendingFinal }: { projec
             if (confirm("Mark this project as launched? The client will be notified.")) launch.run(() => markLaunchedAction(projectId));
           }}
         >
-          Mark launched
+          Mark Launched
         </Button>
       )}
     </>

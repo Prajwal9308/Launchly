@@ -13,10 +13,10 @@ import { ServicePreview } from "./mockups/compositions";
  */
 export function ServicesOverview({ services }: { services: Service[] }) {
   if (!services.length) {
-    return <p className="text-sm text-muted">Service details are coming soon. Get in touch to discuss your project.</p>;
+    return <p className="text-sm text-muted">Service details will be available soon. Contact us to discuss your project.</p>;
   }
   const primary = services.slice(0, 2);
-  const secondary = services.slice(2, 5);
+  const secondary = services.slice(2);
   return (
     <div className="space-y-4">
       <RevealGroup className="grid gap-4 md:grid-cols-2">
@@ -27,7 +27,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
         ))}
       </RevealGroup>
       {secondary.length > 0 && (
-        <RevealGroup className="grid gap-4 md:grid-cols-3">
+        <RevealGroup className={cn("grid gap-4 md:grid-cols-2", secondary.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4")}>
           {secondary.map((service) => (
             <RevealItem key={service.id}>
               <ServiceCard service={service} />
@@ -37,7 +37,7 @@ export function ServicesOverview({ services }: { services: Service[] }) {
       )}
       <p className="flex items-center gap-2 text-xs text-faint">
         <Icons.info aria-hidden />
-        Interfaces shown are concept examples of what we build, not client projects.
+        Images are concept examples of the type of work we build, not client projects.
       </p>
     </div>
   );
@@ -64,7 +64,7 @@ function ServiceCard({ service, features }: { service: Service; features?: boole
           </ul>
         )}
         <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-foreground transition-colors group-hover:text-accent">
-          Learn more
+          View service<span className="sr-only">: {service.name}</span>
           <Icons.forward className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" aria-hidden />
         </span>
       </div>

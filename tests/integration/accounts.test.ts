@@ -14,6 +14,7 @@ describe("authentication", () => {
       email: "Jo@Example.test",
       password: TEST_PASSWORD,
       businessName: "Jo's Bakery",
+      country: "IN",
       phone: "555-010-2222",
     });
     const user = await db.user.findUniqueOrThrow({
@@ -33,7 +34,7 @@ describe("authentication", () => {
     await createClient("A", "dup@example.test");
     await expect(createClient("B", "DUP@example.test")).rejects.toMatchObject({ code: "CONFLICT" });
     await expect(
-      registerClient({ firstName: "a", lastName: "b", email: "weak@example.test", password: "short", businessName: "x" }),
+      registerClient({ firstName: "a", lastName: "b", email: "weak@example.test", password: "short", businessName: "x", country: "CA" }),
     ).rejects.toMatchObject({ code: "VALIDATION" });
   });
 
@@ -48,7 +49,7 @@ describe("authentication", () => {
 
   it("links a new signup to the organization created from a converted lead", async () => {
     const admin = await createAdmin();
-    const lead = await createLead({ name: "Lee", businessName: "Lee's Garage", email: "lee@example.test", message: "I need a new website please." });
+    const lead = await createLead({ name: "Lee", businessName: "Lee's Garage", email: "lee@example.test", country: "CA", message: "I need a new website please." });
     const { projectId, invited } = await convertLead(admin, lead.id);
     expect(invited).toBe(true);
 

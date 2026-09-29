@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 
 const POINTS = [
-  { label: "Written scope and quote", icon: Icons.scope },
-  { label: "No obligation", icon: Icons.success },
-  { label: "Reply by email", icon: Icons.email },
+  { label: "Written scope", icon: Icons.scope },
+  { label: "Clear pricing", icon: Icons.pricing },
+  { label: "No obligation to proceed", icon: Icons.success },
 ];
 
 /** Closing call to action. On the homepage it points at the contact form below it. */
@@ -20,9 +20,10 @@ export function CtaSection({ href = "/contact" }: { href?: string }) {
           />
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-xl">
-              <h2 className="text-[1.75rem] font-semibold leading-tight text-inverse-foreground sm:text-[2.25rem]">Tell us what you want to build.</h2>
+              <h2 className="text-[1.75rem] font-semibold leading-tight text-inverse-foreground sm:text-[2.25rem]">Ready to improve your online presence?</h2>
               <p className="mt-4 text-base leading-relaxed text-inverse-foreground/70">
-                Send a few details. We&apos;ll reply with questions, a plan and a written quote.
+                Tell us a little about your business and what you need. We&apos;ll review your requirements and get back to you with
+                the next steps.
               </p>
               <ul className="mt-6 flex flex-col gap-2.5 text-sm text-inverse-foreground/75 sm:flex-row sm:flex-wrap sm:gap-x-6">
                 {POINTS.map(({ label, icon: Icon }) => (
@@ -34,7 +35,7 @@ export function CtaSection({ href = "/contact" }: { href?: string }) {
             </div>
             <Button asChild size="lg" className="w-full shrink-0 bg-white text-foreground shadow-xs hover:bg-white/90 focus-visible:outline-white sm:w-auto">
               <Link href={href}>
-                Start a project <Icons.forward aria-hidden />
+                Start a Project <Icons.forward aria-hidden />
               </Link>
             </Button>
           </div>

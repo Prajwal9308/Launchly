@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { countryLabel } from "@/domain/country";
 import { Icons } from "@/components/ui/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { ConvertLeadButton, LeadStatusSelect } from "@/components/admin/lead-actions";
@@ -50,11 +51,15 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
               <dd>{lead.businessName ?? "—"}</dd>
             </div>
             <div>
-              <dt className="text-faint">Project type</dt>
+              <dt className="text-faint">Country and currency</dt>
+              <dd>{lead.country ? countryLabel(lead.country) : "Not specified"}</dd>
+            </div>
+            <div>
+              <dt className="text-faint">Looking for</dt>
               <dd>{lead.service ?? "Not specified"}</dd>
             </div>
             <div>
-              <dt className="text-faint">Budget</dt>
+              <dt className="text-faint">Estimated budget</dt>
               <dd>{lead.budgetRange ?? "Not specified"}</dd>
             </div>
             <div>

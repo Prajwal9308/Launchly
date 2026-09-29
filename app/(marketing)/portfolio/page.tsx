@@ -5,7 +5,11 @@ import { PortfolioCard } from "@/components/marketing/portfolio-card";
 import { PageHero, Section } from "@/components/marketing/section";
 import { listPublishedPortfolio } from "@/services/catalog";
 
-export const metadata: Metadata = { title: "Recent projects", alternates: { canonical: "/portfolio" } };
+export const metadata: Metadata = {
+  title: "Recent Projects",
+  description: "Websites and business applications CoreGravity has delivered for small businesses.",
+  alternates: { canonical: "/portfolio" },
+};
 
 /**
  * Only real, delivered projects are ever shown. Until at least one exists
@@ -16,7 +20,7 @@ export default async function PortfolioPage() {
   if (!items.length) notFound();
   return (
     <>
-      <PageHero eyebrow="Work" title="Recent projects" />
+      <PageHero eyebrow="Portfolio" title="Recent projects" description="Websites and business applications we have delivered for our clients." />
       <Section>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (

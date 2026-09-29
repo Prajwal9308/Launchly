@@ -97,6 +97,9 @@ import {
   Wrench,
   X,
   type LucideIcon,
+  CalendarCheck,
+  Earth,
+  UserLock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -222,6 +225,11 @@ export const Icons = {
   template: LayoutTemplate,
   marketing: Megaphone,
   maintenance: Wrench,
+  booking: CalendarCheck,
+  customerPortal: UserLock,
+
+  // Country and currency selection (Canada · CAD / India · INR)
+  country: Earth,
 } satisfies Record<string, LucideIcon>;
 
 export type IconKey = keyof typeof Icons;

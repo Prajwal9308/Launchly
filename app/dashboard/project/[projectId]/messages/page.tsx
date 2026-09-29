@@ -47,7 +47,7 @@ export default async function ClientMessagesPage({
         {messages.length ? (
           <MessageThread messages={messages} currentUserId={actor.id} studioName={settings.businessName} />
         ) : (
-          <EmptyState icon={Icons.messages} title="No messages yet" description="Ask a question or share an update about your project." compact />
+          <EmptyState icon={Icons.messages} title="No messages yet" description="Send us a question or an update about your project." compact />
         )}
       </Card>
       <MessageComposer projectId={projectId} />

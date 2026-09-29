@@ -12,7 +12,7 @@ export interface RequirementView {
 /** Requirements grouped by questionnaire section, as a clean definition list. */
 export function RequirementsList({ rows, renderAction }: { rows: RequirementView[]; renderAction?: (row: RequirementView) => React.ReactNode }) {
   if (!rows.length) {
-    return <EmptyState icon={Icons.requirements} title="No requirements yet" description="Requirements appear here once the project questionnaire is submitted." />;
+    return <EmptyState icon={Icons.requirements} title="No requirements yet" description="Requirements will appear here once your project request has been submitted." />;
   }
   const sections = [...new Set(rows.map((r) => r.section))];
   return (
@@ -27,7 +27,7 @@ export function RequirementsList({ rows, renderAction }: { rows: RequirementView
                 <div key={r.id} className="grid gap-1 px-5 py-3 sm:grid-cols-[14rem_1fr_auto] sm:gap-6">
                   <dt className="text-sm text-muted">
                     {r.label}
-                    {r.source === "admin" && <span className="ml-1.5 rounded bg-subtle px-1.5 py-0.5 text-[11px] text-faint">Added by studio</span>}
+                    {r.source === "admin" && <span className="ml-1.5 rounded bg-subtle px-1.5 py-0.5 text-[11px] text-faint">Added by CoreGravity</span>}
                   </dt>
                   <dd className="whitespace-pre-wrap break-words text-sm">{r.value}</dd>
                   {renderAction && <dd className="sm:text-right">{renderAction(r)}</dd>}

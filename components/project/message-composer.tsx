@@ -22,7 +22,7 @@ export function MessageComposer({ projectId, placeholder = "Write a message…" 
 
   const submit = () => {
     if (!body.trim()) {
-      setError("Write a message.");
+      setError("Please enter a message.");
       return;
     }
     setError(null);

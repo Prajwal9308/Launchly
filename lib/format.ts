@@ -28,14 +28,6 @@ export function formatRelative(date: Date | string | null | undefined, now = new
   return formatDate(date);
 }
 
-export function formatPrice(cents: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: cents % 100 === 0 ? 0 : 2,
-  }).format(cents / 100);
-}
-
 export function greeting(date = new Date()) {
   const hour = date.getHours();
   if (hour < 12) return "Good morning";

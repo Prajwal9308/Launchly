@@ -62,7 +62,7 @@ describe("Google sign-in", () => {
 
   it("joins the organization of a converted lead", async () => {
     const admin = await createAdmin();
-    const lead = await createLead({ name: "Sam", businessName: "Sam's Salon", email: "sam@example.test", message: "Need a new website soon." });
+    const lead = await createLead({ name: "Sam", businessName: "Sam's Salon", email: "sam@example.test", country: "IN", message: "Need a new website soon." });
     const { projectId } = await convertLead(admin, lead.id);
     const result = await signInWithOAuth(google());
     const project = await db.project.findUniqueOrThrow({ where: { id: projectId } });

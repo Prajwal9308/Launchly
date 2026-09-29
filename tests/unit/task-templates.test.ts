@@ -8,14 +8,14 @@ describe("task templates", () => {
     expect(keys({})).toEqual(BASE_TASKS.map((t) => t.key));
     expect(selectTaskTemplates({}).map((t) => t.title)).toEqual([
       "Review requirements",
-      "Review assets",
+      "Review submitted materials",
       "Create sitemap",
       "Homepage design",
-      "Client review",
+      "Design review",
       "Revisions",
       "Development",
       "Testing",
-      "Client approval",
+      "Final approval",
       "Launch",
     ]);
   });

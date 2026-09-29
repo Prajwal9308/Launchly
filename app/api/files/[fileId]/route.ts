@@ -10,7 +10,7 @@ const INLINE_TYPES = new Set(["image/png", "image/jpeg", "image/gif", "image/web
  */
 export async function GET(request: Request, { params }: { params: Promise<{ fileId: string }> }) {
   const actor = await getActor();
-  if (!actor) return jsonError(401, "Please log in to view this file.");
+  if (!actor) return jsonError(401, "Please sign in to view this file.");
   const { fileId } = await params;
 
   try {

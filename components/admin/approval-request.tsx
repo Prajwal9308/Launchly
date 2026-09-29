@@ -17,11 +17,11 @@ export function ApprovalRequestDialog({ projectId }: { projectId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary">Request approval</Button>
+        <Button variant="secondary">Request Approval</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Request approval</DialogTitle>
+          <DialogTitle>Request Approval</DialogTitle>
           <DialogDescription>The client must explicitly confirm. Design approvals are requested by sharing a design for review.</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -44,7 +44,7 @@ export function ApprovalRequestDialog({ projectId }: { projectId: string }) {
             Cancel
           </Button>
           <Button loading={pending} onClick={() => run(() => requestApprovalAction(projectId, { type, message }), () => { setOpen(false); setMessage(""); })}>
-            Send request
+            Send Request
           </Button>
         </DialogFooter>
       </DialogContent>

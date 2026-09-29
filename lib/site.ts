@@ -8,7 +8,7 @@ export function isPlaceholderEmail(email: string) {
 
 export const siteConfig = {
   url: process.env.APP_URL ?? "http://localhost:3000",
-  defaultTitle: "CoreGravity — Web & Mobile App Development",
+  defaultTitle: "CoreGravity — Websites & Digital Solutions for Small Businesses",
   defaultDescription:
-    "CoreGravity designs and develops professional websites, web applications and mobile apps for businesses and entrepreneurs.",
+    "CoreGravity designs and develops professional websites, online stores, booking systems and business applications for small businesses and independent vendors.",
 };

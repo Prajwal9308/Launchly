@@ -74,7 +74,7 @@ async function requestReviewInTx(tx: Tx, actor: Actor, reviewId: string, emails:
     body: reviewLabel(review),
     href: `/dashboard/project/${project.id}/reviews`,
   });
-  for (const r of recipients) emails.push(emailTemplates.designReady(r.email, review.title, review.version, project.id));
+  for (const r of recipients) emails.push(emailTemplates.designReady(r.email, project.name, review.title, review.version, project.id));
 }
 
 /** Creates a new design version. Earlier unapproved versions of the same design are superseded. */
@@ -175,7 +175,7 @@ export async function requestRevision(actor: Actor, reviewId: string, input: z.i
     const href = `/admin/projects/${project.id}/reviews`;
     const admins = await notifyAdmins(tx, {
       type: "REVISION_REQUESTED",
-      title: "Revision requested",
+      title: "Changes requested",
       body: `${reviewLabel(review)} · ${project.name}`,
       href,
     });
