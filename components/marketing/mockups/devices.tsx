@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 /**
@@ -115,27 +114,6 @@ export function Monitor({ className, children }: { className?: string; children:
       </div>
       <div className="mx-auto h-[7cqw] w-[16%] bg-linear-to-r from-[#b6bac1] via-[#d9dbe0] to-[#b6bac1]" />
       <div className="mx-auto h-[1.2cqw] w-[32%] rounded-t-[0.4cqw] rounded-b-[0.8cqw] bg-linear-to-b from-[#d6d9de] to-[#a9adb5] shadow-[0_1cqw_1.6cqw_-0.6cqw_rgb(15_17_21/0.4)]" />
-    </div>
-  );
-}
-
-/** Desktop browser window: traffic lights and an address bar. */
-export function BrowserWindow({ url = "yourbrand.com", className, children }: { url?: string; className?: string; children: React.ReactNode }) {
-  return (
-    <div className={cn("@container relative w-full overflow-hidden rounded-[1.4cqw] bg-background shadow-[0_0_0_1px_var(--color-border),0_2cqw_5cqw_-2cqw_rgb(15_17_21/0.25)]", className)}>
-      <div className="flex h-[5.2cqw] items-center gap-[2cqw] border-b border-border bg-canvas px-[2cqw]">
-        <span className="flex gap-[0.9cqw]">
-          {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
-            <span key={c} className="size-[1.25cqw] rounded-full" style={{ background: c }} />
-          ))}
-        </span>
-        <span className="mx-auto flex h-[3cqw] w-[46%] items-center justify-center gap-[0.8cqw] rounded-[0.9cqw] bg-subtle text-[1.6cqw] text-faint">
-          <Icons.secure className="size-[1.6cqw]" />
-          {url}
-        </span>
-        <span className="w-[5cqw]" />
-      </div>
-      <div className="aspect-[16/10]">{children}</div>
     </div>
   );
 }

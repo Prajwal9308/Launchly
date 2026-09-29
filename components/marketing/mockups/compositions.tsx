@@ -1,11 +1,12 @@
 import { cn } from "@/lib/utils";
-import { BrowserWindow, ConceptVisual, Laptop, Monitor, Phone, Tablet } from "./devices";
+import { ConceptVisual, Laptop, Monitor, Phone, Tablet } from "./devices";
 import {
   AppInboxScreen,
   BookingAppScreen,
   DashboardScreen,
   DesignScreen,
   OperationsScreen,
+  OrdersScreen,
   PortalScreen,
   ProductScreen,
   StoreScreen,
@@ -19,7 +20,7 @@ import {
  * language. All of them are concept examples, never client work.
  */
 
-type Kind = "web" | "mobile" | "design" | "ecommerce" | "operations" | "webapp";
+type Kind = "web" | "mobile" | "design" | "ecommerce" | "operations" | "webapp" | "custom";
 
 /** Service icon keys (stored on Service.icon) → which concept to show. */
 const SERVICE_KIND: Record<string, Kind> = {
@@ -32,19 +33,46 @@ const SERVICE_KIND: Record<string, Kind> = {
   palette: "design",
   "shopping-cart": "ecommerce",
   workflow: "operations",
-  "briefcase-business": "operations",
-  building: "operations",
+  "briefcase-business": "custom",
+  building: "custom",
   "layout-dashboard": "webapp",
   code: "webapp",
 };
 
+/** Solution slugs (content/solutions.ts) → which concept to show. */
+const SOLUTION_KIND: Record<string, Kind> = {
+  "business-websites": "web",
+  "web-applications": "operations",
+  "mobile-applications": "mobile",
+  ecommerce: "ecommerce",
+  "business-dashboards": "webapp",
+  "custom-solutions": "custom",
+};
+
 const LABELS: Record<Kind, string> = {
-  web: "an example business website shown in a browser and on a phone",
+  web: "an example business website on a laptop and a phone",
   mobile: "an example booking app shown on two phones",
-  design: "an example interface being designed in a design tool",
-  ecommerce: "an example online store shown on a tablet and a phone",
-  operations: "an example scheduling tool for a business team",
-  webapp: "an example web application dashboard",
+  design: "an example interface being designed on a desktop display",
+  ecommerce: "an example online store on a tablet and a phone",
+  operations: "an example scheduling web application on a laptop",
+  webapp: "an example business dashboard on a desktop display",
+  custom: "an example order-tracking system for a business team, on a tablet",
+};
+
+/**
+ * Width of each scene. The stage is a size container, so every scene is capped
+ * by both the stage's width (cqw) and its height (cqh), taking about 80% of the
+ * height: the whole device always fits, whatever the stage's shape, with no
+ * cropped bases or stands.
+ */
+const SCENE_WIDTH: Record<Kind, string> = {
+  web: "w-[min(88cqw,146cqh)]",
+  operations: "w-[min(84cqw,135cqh)]",
+  design: "w-[min(80cqw,126cqh)]",
+  webapp: "w-[min(80cqw,126cqh)]",
+  ecommerce: "w-[min(86cqw,109cqh)]",
+  custom: "w-[min(78cqw,99cqh)]",
+  mobile: "w-[min(56cqw,76cqh)]",
 };
 
 /** The shared backdrop: canvas, a faint grid that fades out, and a soft accent glow. */
@@ -58,111 +86,91 @@ export function Stage({ className, children }: { className?: string; children: R
   );
 }
 
+/** One concept scene: complete devices, resting on a soft floor shadow. */
+function Scene({ kind, className }: { kind: Kind; className?: string }) {
+  return (
+    <div className={cn("relative", SCENE_WIDTH[kind], className)}>
+      <span aria-hidden className="absolute -bottom-[2%] left-[8%] right-[8%] h-[6%] rounded-[50%] bg-black/10 blur-md" />
+      {kind === "web" && (
+        <>
+          <Laptop className="w-[92%]">
+            <WebsiteScreen />
+          </Laptop>
+          <Phone className="absolute bottom-0 right-0 w-[18%]">
+            <WebsiteMobileScreen />
+          </Phone>
+        </>
+      )}
+      {kind === "operations" && (
+        <Laptop>
+          <OperationsScreen />
+        </Laptop>
+      )}
+      {kind === "design" && (
+        <Monitor>
+          <DesignScreen />
+        </Monitor>
+      )}
+      {kind === "webapp" && (
+        <Monitor>
+          <DashboardScreen />
+        </Monitor>
+      )}
+      {kind === "ecommerce" && (
+        <>
+          <Tablet className="mb-[4%] w-[86%]">
+            <StoreScreen columns={3} />
+          </Tablet>
+          <Phone className="absolute bottom-0 right-0 w-[22%]">
+            <ProductScreen />
+          </Phone>
+        </>
+      )}
+      {kind === "custom" && (
+        <Tablet>
+          <OrdersScreen />
+        </Tablet>
+      )}
+      {kind === "mobile" && (
+        <div className="flex items-end justify-center gap-[8%]">
+          <Phone className="mb-[9%] w-[44%]">
+            <BookingAppScreen />
+          </Phone>
+          <Phone className="w-[44%]">
+            <AppInboxScreen />
+          </Phone>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /**
- * Miniature preview for a service card. Devices sit low in the stage and bleed
- * off the bottom edge, and rise slightly when the card (a `group`) is hovered.
+ * Preview for a service card. The devices rise slightly when the card (a
+ * `group`) is hovered or focused; nothing moves for reduced-motion visitors.
  */
 export function ServicePreview({ icon, className }: { icon: string; className?: string }) {
   const kind = SERVICE_KIND[icon] ?? "web";
-  const rise = "transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0";
   return (
-    <Stage className={cn("h-52 sm:h-56", className)}>
-      <ConceptVisual label={LABELS[kind]} className="absolute inset-0">
-        {kind === "web" && (
-          <div className={cn("absolute inset-x-[9%] top-[14%]", rise)}>
-            <BrowserWindow>
-              <WebsiteScreen />
-            </BrowserWindow>
-            <Phone className="absolute right-[-5%] top-[24%] w-[19%]">
-              <WebsiteMobileScreen />
-            </Phone>
-          </div>
-        )}
-        {kind === "mobile" && (
-          <div className={cn("absolute inset-x-0 top-[12%] flex justify-center gap-[5%]", rise)}>
-            <Phone className="w-[26%] max-w-[9.5rem]">
-              <BookingAppScreen />
-            </Phone>
-            <Phone className="mt-[6%] w-[26%] max-w-[9.5rem]">
-              <AppInboxScreen />
-            </Phone>
-          </div>
-        )}
-        {kind === "design" && (
-          <div className={cn("absolute inset-x-[9%] top-[14%]", rise)}>
-            <BrowserWindow url="Homepage · Design">
-              <DesignScreen />
-            </BrowserWindow>
-          </div>
-        )}
-        {kind === "ecommerce" && (
-          <div className={cn("absolute inset-x-[7%] top-[13%]", rise)}>
-            <Tablet className="w-[84%]">
-              <StoreScreen columns={3} />
-            </Tablet>
-            <Phone className="absolute -bottom-[20%] right-0 w-[24%]">
-              <ProductScreen />
-            </Phone>
-          </div>
-        )}
-        {(kind === "operations" || kind === "webapp") && (
-          <div className={cn("absolute inset-x-[9%] top-[14%]", rise)}>
-            <BrowserWindow url="app.yourbrand.com">{kind === "operations" ? <OperationsScreen /> : <DashboardScreen />}</BrowserWindow>
-          </div>
-        )}
+    <Stage className={cn("@container-size aspect-[16/10]", className)}>
+      <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
+        <Scene
+          kind={kind}
+          className="transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
+        />
       </ConceptVisual>
     </Stage>
   );
 }
 
-/** Larger compositions for the "What we build" categories. */
+/** Larger showcase for a "What we build" category. */
 export function SolutionShowcase({ slug, className }: { slug: string; className?: string }) {
+  const kind = SOLUTION_KIND[slug] ?? "web";
   return (
-    <Stage className={cn("flex aspect-[16/11] items-end justify-center px-[6%] pt-[8%]", className)}>
-      {slug === "business-websites" && (
-        <ConceptVisual label="an example business website on a laptop and a phone" className="relative w-full max-w-[34rem]">
-          <Laptop>
-            <WebsiteScreen />
-          </Laptop>
-          <Phone className="absolute bottom-[4%] right-[-2%] w-[19%]">
-            <WebsiteMobileScreen />
-          </Phone>
-        </ConceptVisual>
-      )}
-      {slug === "web-applications" && (
-        <ConceptVisual label="an example scheduling web application in a browser" className="mb-[6%] w-full max-w-[32rem]">
-          <BrowserWindow url="app.yourbrand.com">
-            <OperationsScreen />
-          </BrowserWindow>
-        </ConceptVisual>
-      )}
-      {slug === "business-dashboards" && (
-        <ConceptVisual label="an example business dashboard on a desktop display" className="w-full max-w-[30rem]">
-          <Monitor>
-            <DashboardScreen />
-          </Monitor>
-        </ConceptVisual>
-      )}
-      {slug === "mobile-applications" && (
-        <ConceptVisual label="an example booking app shown on two phones" className="flex w-full items-end justify-center gap-[6%] pb-[4%]">
-          <Phone className="w-[27%] max-w-[10rem]">
-            <BookingAppScreen />
-          </Phone>
-          <Phone className="mb-[5%] w-[27%] max-w-[10rem]">
-            <AppInboxScreen />
-          </Phone>
-        </ConceptVisual>
-      )}
-      {slug === "ecommerce" && (
-        <ConceptVisual label="ShopNext, an example online store, on a tablet and a phone" className="relative mb-[5%] w-full max-w-[32rem]">
-          <Tablet className="w-[86%]">
-            <StoreScreen columns={3} />
-          </Tablet>
-          <Phone className="absolute -bottom-[3%] right-0 w-[22%]">
-            <ProductScreen />
-          </Phone>
-        </ConceptVisual>
-      )}
+    <Stage className={cn("@container-size aspect-[16/11]", className)}>
+      <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
+        <Scene kind={kind} />
+      </ConceptVisual>
     </Stage>
   );
 }
@@ -173,11 +181,17 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
  */
 export function PortalPreview({ className }: { className?: string }) {
   return (
-    <Stage className={cn("rounded-2xl border border-border px-[7%] py-[7%]", className)}>
-      <ConceptVisual label="a simplified view of the ViperByte client portal, showing project progress and a design ready for review">
-        <BrowserWindow url="Your project portal">
-          <PortalScreen />
-        </BrowserWindow>
+    <Stage className={cn("@container-size aspect-[16/11] rounded-2xl border border-border", className)}>
+      <ConceptVisual
+        label="a simplified view of the ViperByte client portal on a laptop, showing project progress and a design ready for review"
+        className="absolute inset-0 flex items-center justify-center"
+      >
+        <div className="relative w-[min(86cqw,135cqh)]">
+          <span aria-hidden className="absolute -bottom-[2%] left-[8%] right-[8%] h-[6%] rounded-[50%] bg-black/10 blur-md" />
+          <Laptop>
+            <PortalScreen />
+          </Laptop>
+        </div>
       </ConceptVisual>
     </Stage>
   );

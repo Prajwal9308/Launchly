@@ -3,7 +3,7 @@
 import { m } from "framer-motion";
 import { fadeUp, REVEAL_VIEWPORT, staggerChildren } from "@/lib/motion";
 
-const TAGS = { div: m.div, ul: m.ul, ol: m.ol, li: m.li, article: m.article } as const;
+const TAGS = { div: m.div, ul: m.ul, ol: m.ol, li: m.li, article: m.article, figure: m.figure } as const;
 type Tag = keyof typeof TAGS;
 
 interface RevealProps {

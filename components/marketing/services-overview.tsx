@@ -2,12 +2,13 @@ import Link from "next/link";
 import type { Service } from "@/db/types";
 import { Icons } from "@/components/ui/icons";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { NamedIcon } from "./icons";
+import { IconBadge } from "./icons";
+import { cn } from "@/lib/utils";
 import { ServicePreview } from "./mockups/compositions";
 
 /**
- * Homepage services as a product-style bento: each card pairs a small icon,
- * the service name and summary with a miniature concept interface. The first
+ * Homepage services as a product-style bento: each card leads with a concept
+ * interface on a device, then a small icon, the service name and summary. The first
  * two services (web and mobile) get wide cards with their key features.
  */
 export function ServicesOverview({ services }: { services: Service[] }) {
@@ -46,14 +47,12 @@ function ServiceCard({ service, features }: { service: Service; features?: boole
   return (
     <Link
       href={`/services#${service.slug}`}
-      className="surface group flex h-full flex-col overflow-hidden rounded-2xl transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-accent-border hover:shadow-popover motion-reduce:hover:translate-y-0"
+      className="surface group flex h-full flex-col overflow-hidden rounded-xl transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-accent-border hover:shadow-popover motion-reduce:hover:translate-y-0"
     >
-      <ServicePreview icon={service.icon} className="border-b border-border" />
+      <ServicePreview icon={service.icon} className={cn("border-b border-border", !features && "aspect-[4/3]")} />
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="flex items-center gap-2.5 text-lg font-semibold">
-          <NamedIcon name={service.icon} className="text-accent" />
-          {service.name}
-        </h3>
+        <IconBadge name={service.icon} size="md" />
+        <h3 className="mt-4 text-lg font-semibold">{service.name}</h3>
         <p className="mt-2 text-[15px] leading-relaxed text-muted">{service.summary}</p>
         {features && service.features.length > 0 && (
           <ul className="mt-4 grid gap-x-4 gap-y-2 sm:grid-cols-2">

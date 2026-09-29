@@ -457,8 +457,9 @@ export function StoreScreen({ columns = 4 }: { columns?: 3 | 4 }) {
           </span>
         </div>
         <div className={cn("mt-[1.2em] grid gap-[1.1em]", columns === 4 ? "grid-cols-4" : "grid-cols-3")}>
-          {PRODUCTS.slice(0, columns).map((p) => (
-            <div key={p.kind}>
+          {/* Four columns fill a wide screen; three columns continue into a second row, as a scrolling store would. */}
+          {(columns === 4 ? PRODUCTS : [...PRODUCTS.slice(0, 3), PRODUCTS[3], PRODUCTS[0], PRODUCTS[1]]).map((p, i) => (
+            <div key={i}>
               <ProductArt kind={p.kind} className="rounded-[0.8em]" />
               <Bar w="70%" className="mt-[0.8em] bg-foreground/70" />
               <div className="mt-[0.5em] flex items-center justify-between">
@@ -639,6 +640,91 @@ export function OperationsScreen() {
             })}
           </div>
         ))}
+      </div>
+    </Screen>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Custom solution: internal order tracking                              */
+/* ------------------------------------------------------------------ */
+
+const ORDERS: { id: string; status: "In progress" | "Ready" | "Delivered" | "On hold"; amount: string; w: string }[] = [
+  { id: "#1048", status: "In progress", amount: "$1,240", w: "62%" },
+  { id: "#1047", status: "Ready", amount: "$860", w: "48%" },
+  { id: "#1046", status: "Delivered", amount: "$2,115", w: "56%" },
+  { id: "#1045", status: "On hold", amount: "$430", w: "44%" },
+  { id: "#1044", status: "Delivered", amount: "$975", w: "52%" },
+  { id: "#1043", status: "Ready", amount: "$1,580", w: "58%" },
+];
+
+const ORDER_TONE = {
+  "In progress": "bg-info-subtle text-info",
+  Ready: "bg-accent-subtle text-accent",
+  Delivered: "bg-success-subtle text-success",
+  "On hold": "bg-warning-subtle text-warning",
+} as const;
+
+export function OrdersScreen() {
+  return (
+    <Screen unit={2.1} className="flex flex-col bg-canvas">
+      <div className="flex h-[3.8em] items-center justify-between border-b border-border bg-background px-[1.6em]">
+        <span className="flex items-center gap-[1.6em]">
+          <Wordmark />
+          <span className="flex gap-[1.2em] text-[0.85em] text-muted">
+            <span className="font-medium text-foreground">Orders</span>
+            <span>Stock</span>
+            <span>Customers</span>
+          </span>
+        </span>
+        <span className="flex items-center gap-[0.6em]">
+          <span className="flex h-[2.1em] w-[9em] items-center gap-[0.4em] rounded-[0.5em] border border-border px-[0.6em] text-faint">
+            <Icons.search className="size-[1.05em]" />
+            <span className="text-[0.8em]">Search orders</span>
+          </span>
+          <span className="flex items-center gap-[0.35em] rounded-[0.5em] bg-foreground px-[0.8em] py-[0.45em] text-[0.8em] font-medium text-background">
+            <Icons.add className="size-[1.05em]" /> New order
+          </span>
+        </span>
+      </div>
+      <div className="flex-1 p-[1.6em]">
+        <div className="grid grid-cols-3 gap-[0.9em]">
+          {[
+            { label: "Open orders", value: "24", tone: "text-foreground" },
+            { label: "Ready to ship", value: "7", tone: "text-accent" },
+            { label: "Delivered this week", value: "41", tone: "text-success" },
+          ].map((k) => (
+            <div key={k.label} className="rounded-[0.8em] border border-border bg-background px-[1em] py-[0.8em]">
+              <span className="text-[0.8em] text-muted">{k.label}</span>
+              <span className={cn("mt-[0.2em] block font-display text-[1.7em] font-bold tracking-tight", k.tone)}>{k.value}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-[1em] overflow-hidden rounded-[0.8em] border border-border bg-background">
+          <div className="flex items-center justify-between border-b border-border px-[1em] py-[0.7em]">
+            <span className="flex gap-[0.4em] text-[0.75em]">
+              {["All", "In progress", "Ready", "Delivered"].map((t, i) => (
+                <span key={t} className={cn("rounded-full px-[0.8em] py-[0.25em]", i === 0 ? "bg-foreground text-background" : "border border-border text-muted")}>
+                  {t}
+                </span>
+              ))}
+            </span>
+            <span className="flex items-center gap-[0.3em] text-[0.75em] text-muted">
+              <Icons.date className="size-[1.1em]" /> This week
+            </span>
+          </div>
+          {ORDERS.map((o) => (
+            <div key={o.id} className="grid grid-cols-[4.5em_1fr_7em_4.5em] items-center gap-[0.8em] border-b border-border px-[1em] py-[0.62em] text-[0.8em] last:border-0">
+              <span className="font-medium tabular-nums">{o.id}</span>
+              <span className="flex items-center gap-[0.6em]">
+                <span className="size-[1.7em] shrink-0 rounded-full bg-linear-to-br from-accent/35 to-accent-2/20" />
+                <Bar w={o.w} className="bg-foreground/60" />
+              </span>
+              <span className={cn("justify-self-start rounded-full px-[0.7em] py-[0.15em] text-[0.9em] font-medium", ORDER_TONE[o.status])}>{o.status}</span>
+              <span className="text-right font-medium tabular-nums">{o.amount}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </Screen>
   );

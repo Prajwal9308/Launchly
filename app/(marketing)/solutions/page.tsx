@@ -5,7 +5,7 @@ import { WhatWeBuild } from "@/components/marketing/what-we-build";
 
 export const metadata: Metadata = {
   title: "Solutions",
-  description: "Business websites, web applications, iOS and Android apps and e-commerce stores, designed and built by ViperByte for businesses and entrepreneurs.",
+  description: "Business websites, web applications, iOS and Android apps, e-commerce stores, dashboards and custom business systems, designed and built by ViperByte for businesses and entrepreneurs.",
   alternates: { canonical: "/solutions" },
 };
 
@@ -18,7 +18,7 @@ export default function SolutionsPage() {
         description="Websites, web applications and mobile apps for businesses and entrepreneurs. Here are the kinds of products we design and develop."
       />
       <Section>
-        <WhatWeBuild detailed />
+        <WhatWeBuild />
         <p className="mt-8 text-sm text-muted">
           Not sure which category your idea fits? Describe it in plain language on the contact form and we&apos;ll help you work out the right approach.
         </p>

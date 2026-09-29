@@ -9,6 +9,7 @@ import { PortalPreview } from "@/components/marketing/mockups/compositions";
 import { ProcessSteps } from "@/components/marketing/process-steps";
 import { Section, SectionHeader } from "@/components/marketing/section";
 import { ServicesOverview } from "@/components/marketing/services-overview";
+import { SolutionsOverview } from "@/components/marketing/what-we-build";
 import { WhyGrid } from "@/components/marketing/why-grid";
 import { Reveal } from "@/components/motion/reveal";
 import { ArrowLink } from "@/components/marketing/arrow-link";
@@ -91,11 +92,48 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* Why */}
-      <Section>
-        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="What you can expect from us" />
+      {/* Product showcase: the client portal is a real part of every project */}
+      <Section id="about" tone="muted">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+          <Reveal>
+            <PortalPreview />
+            <p className="mt-3 flex items-center gap-2 text-xs text-faint">
+              <Icons.info aria-hidden /> A simplified view of your project portal, with a sample project.
+            </p>
+          </Reveal>
+          <div>
+            <SectionHeader
+              eyebrow="Working with us"
+              title="Follow your product from brief to launch"
+              description={`Every ${settings.businessName} project comes with a private portal for status updates, files, messages and design reviews, so you always know what's being built and why.`}
+            />
+            <Reveal>
+              <ul className="mt-8 divide-y divide-border border-y border-border">
+                {ABOUT_POINTS.map(({ text, icon: Icon }) => (
+                  <li key={text} className="flex items-start gap-3.5 py-4 text-[15px] font-medium text-heading">
+                    <Icon className="mt-0.5 text-accent" aria-hidden />
+                    {text}
+                  </li>
+                ))}
+              </ul>
+              <ArrowLink href="/about" className="mt-6">
+                More about us
+              </ArrowLink>
+            </Reveal>
+          </div>
+        </div>
+      </Section>
+
+      {/* Solutions */}
+      <Section id="solutions">
+        <SectionHeader
+          eyebrow="What we build"
+          title="Digital products for how your business works"
+          description="Six kinds of product we design and build, each shown as a concept example on the Solutions page."
+          action={{ href: "/solutions", label: "All solutions" }}
+        />
         <div className="mt-10 sm:mt-12">
-          <WhyGrid />
+          <SolutionsOverview />
         </div>
       </Section>
 
@@ -112,36 +150,11 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* About */}
-      <Section id="about">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          <div>
-            <SectionHeader eyebrow="About" title="A small studio, focused on doing it properly" />
-            <Reveal className="mt-10 hidden lg:block">
-              <PortalPreview />
-              <p className="mt-3 flex items-center gap-2 text-xs text-faint">
-                <Icons.info aria-hidden /> Your project portal: status updates, files, messages and design reviews in one place.
-              </p>
-            </Reveal>
-          </div>
-          <Reveal>
-            <p className="text-base leading-relaxed text-muted sm:text-[17px]">
-              {settings.businessName} helps businesses and entrepreneurs turn ideas into practical digital products — from a
-              professional website to a custom web application or mobile app. We care about clean design, solid engineering and
-              keeping you informed, so you always know what&apos;s being built and why.
-            </p>
-            <ul className="mt-7 divide-y divide-border border-y border-border">
-              {ABOUT_POINTS.map(({ text, icon: Icon }) => (
-                <li key={text} className="flex items-start gap-3.5 py-4 text-[15px] font-medium text-heading">
-                  <Icon className="mt-0.5 text-accent" aria-hidden />
-                  {text}
-                </li>
-              ))}
-            </ul>
-            <ArrowLink href="/about" className="mt-6">
-              More about us
-            </ArrowLink>
-          </Reveal>
+      {/* Why */}
+      <Section>
+        <SectionHeader eyebrow={`Why ${settings.businessName}`} title="What you can expect from us" />
+        <div className="mt-10 sm:mt-12">
+          <WhyGrid />
         </div>
       </Section>
 

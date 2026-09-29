@@ -13,7 +13,7 @@ import { Logo } from "./logo";
 export const MAIN_NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/services", label: "Services", icon: Icons.services },
   { href: "/process", label: "Process", icon: Icons.process },
-  { href: "/solutions", label: "Solutions", icon: Icons.dashboard },
+  { href: "/solutions", label: "Solutions", icon: Icons.solutions },
   { href: "/about", label: "About", icon: Icons.info },
   { href: "/faq", label: "FAQ", icon: Icons.help },
   { href: "/contact", label: "Contact", icon: Icons.email },

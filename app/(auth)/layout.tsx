@@ -11,7 +11,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
     <div className="flex min-h-dvh flex-col">
       <header className="container-page flex h-16 items-center justify-between">
         <Logo name={settings.businessName} />
-        <Link href="/" className="text-sm text-muted hover:text-foreground">
+        <Link href="/" className="inline-flex min-h-11 items-center text-sm text-muted hover:text-foreground sm:min-h-0">
           Back to website
         </Link>
       </header>

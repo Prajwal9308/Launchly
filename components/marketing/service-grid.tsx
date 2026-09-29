@@ -23,7 +23,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
             as="article"
             key={service.id}
             id={service.slug}
-            className="surface group grid scroll-mt-24 overflow-hidden rounded-2xl md:grid-cols-2"
+            className="surface group grid scroll-mt-24 overflow-hidden rounded-xl md:grid-cols-2"
           >
             <div className={cn("flex flex-col p-6 sm:p-8", i % 2 === 1 && "md:order-2")}>
               <h2 className="flex items-center gap-4 text-xl font-semibold sm:text-2xl">
@@ -58,7 +58,7 @@ export function ServiceGrid({ services }: { services: Service[] }) {
             </div>
             <ServicePreview
               icon={service.icon}
-              className={cn("h-60 border-t border-border sm:h-72 md:h-full md:min-h-80 md:border-t-0", i % 2 === 1 ? "md:order-1 md:border-r" : "md:border-l")}
+              className={cn("border-t border-border md:aspect-auto md:h-full md:border-t-0", i % 2 === 1 ? "md:order-1 md:border-r" : "md:border-l")}
             />
           </RevealItem>
         ))}

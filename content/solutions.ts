@@ -13,9 +13,9 @@ export const SOLUTIONS = [
   {
     slug: "web-applications",
     title: "Web Applications",
-    icon: "workflow",
+    icon: "layout",
     description: "Portals, booking systems, internal tools and other browser-based products built around how your team works.",
-    examples: ["Client portals", "Booking systems", "Internal tools", "Workflow automation"],
+    examples: ["Client portals", "Booking systems", "Membership platforms", "Online tools"],
   },
   {
     slug: "mobile-applications",
@@ -37,5 +37,12 @@ export const SOLUTIONS = [
     icon: "layout-dashboard",
     description: "Clear reporting and operations dashboards that bring your sales, bookings and team data into one place.",
     examples: ["Sales & KPI reporting", "Operations overviews", "Admin panels", "Data integrations"],
+  },
+  {
+    slug: "custom-solutions",
+    title: "Custom Solutions",
+    icon: "briefcase-business",
+    description: "Internal systems, integrations and automation for the parts of your business that off-the-shelf software doesn't fit.",
+    examples: ["Order & job tracking", "Inventory management", "System integrations", "Process automation"],
   },
 ] as const;
