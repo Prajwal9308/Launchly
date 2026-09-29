@@ -59,11 +59,11 @@ const SOLUTION_KIND: Record<string, Kind> = {
 const LABELS: Record<Kind, string> = {
   web: "an example business website on a laptop and a phone",
   mobile: "an example fitness app shown on two phones on a desk",
-  design: "an example travel booking website on a desktop display",
+  design: "an example project dashboard interface on a desktop display",
   ecommerce: "an example online store on a laptop and a phone",
-  operations: "an example scheduling web application on a laptop",
+  operations: "an example project management web application on a laptop",
   webapp: "an example business dashboard on a desktop display",
-  custom: "an example analytics dashboard on a tablet",
+  custom: "an example analytics dashboard on a laptop",
 };
 
 /**
@@ -89,6 +89,7 @@ function Photo({ kind, sizes }: { kind: Kind; sizes: string }) {
         alt=""
         fill
         sizes={sizes}
+        quality={85}
         className="object-cover transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
       />
     </ConceptVisual>
