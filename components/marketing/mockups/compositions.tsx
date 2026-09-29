@@ -1,3 +1,9 @@
+import Image, { type StaticImageData } from "next/image";
+import customSolutionsPhoto from "@/public/images/solutions/custom-solutions.webp";
+import ecommercePhoto from "@/public/images/solutions/ecommerce.webp";
+import mobileApplicationsPhoto from "@/public/images/solutions/mobile-applications.webp";
+import uiUxDesignPhoto from "@/public/images/solutions/ui-ux-design.webp";
+import webApplicationsPhoto from "@/public/images/solutions/web-applications.webp";
 import { cn } from "@/lib/utils";
 import { ConceptVisual, Laptop, Monitor, Phone, Tablet } from "./devices";
 import {
@@ -24,7 +30,8 @@ type Kind = "web" | "mobile" | "design" | "ecommerce" | "operations" | "webapp" 
 
 /** Service icon keys (stored on Service.icon) → which concept to show. */
 const SERVICE_KIND: Record<string, Kind> = {
-  monitor: "web",
+  // Web Development: its features are web apps, portals and dashboards.
+  monitor: "operations",
   globe: "web",
   layout: "web",
   smartphone: "mobile",
@@ -51,13 +58,42 @@ const SOLUTION_KIND: Record<string, Kind> = {
 
 const LABELS: Record<Kind, string> = {
   web: "an example business website on a laptop and a phone",
-  mobile: "an example booking app shown on two phones",
-  design: "an example interface being designed on a desktop display",
-  ecommerce: "an example online store on a tablet and a phone",
+  mobile: "an example fitness app shown on two phones on a desk",
+  design: "an example travel booking website on a desktop display",
+  ecommerce: "an example online store on a laptop and a phone",
   operations: "an example scheduling web application on a laptop",
   webapp: "an example business dashboard on a desktop display",
-  custom: "an example order-tracking system for a business team, on a tablet",
+  custom: "an example analytics dashboard on a tablet",
 };
+
+/**
+ * Photographed concept scenes. Kinds listed here show the photo; the others
+ * fall back to the drawn device scene.
+ */
+const PHOTOS: Partial<Record<Kind, StaticImageData>> = {
+  operations: webApplicationsPhoto,
+  mobile: mobileApplicationsPhoto,
+  design: uiUxDesignPhoto,
+  ecommerce: ecommercePhoto,
+  custom: customSolutionsPhoto,
+};
+
+/** Fills the stage with the kind's photo, rising slightly on card hover like the drawn scenes. */
+function Photo({ kind, sizes }: { kind: Kind; sizes: string }) {
+  const photo = PHOTOS[kind];
+  if (!photo) return null;
+  return (
+    <ConceptVisual label={LABELS[kind]} className="absolute inset-0">
+      <Image
+        src={photo}
+        alt=""
+        fill
+        sizes={sizes}
+        className="object-cover transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+      />
+    </ConceptVisual>
+  );
+}
 
 /**
  * Width of each scene. The stage is a size container, so every scene is capped
@@ -153,12 +189,16 @@ export function ServicePreview({ icon, className }: { icon: string; className?: 
   const kind = SERVICE_KIND[icon] ?? "web";
   return (
     <Stage className={cn("@container-size aspect-[16/10]", className)}>
-      <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
-        <Scene
-          kind={kind}
-          className="transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
-        />
-      </ConceptVisual>
+      {PHOTOS[kind] ? (
+        <Photo kind={kind} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+      ) : (
+        <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
+          <Scene
+            kind={kind}
+            className="transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
+          />
+        </ConceptVisual>
+      )}
     </Stage>
   );
 }
@@ -168,9 +208,13 @@ export function SolutionShowcase({ slug, className }: { slug: string; className?
   const kind = SOLUTION_KIND[slug] ?? "web";
   return (
     <Stage className={cn("@container-size aspect-[16/11]", className)}>
-      <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
-        <Scene kind={kind} />
-      </ConceptVisual>
+      {PHOTOS[kind] ? (
+        <Photo kind={kind} sizes="(min-width: 1024px) 50vw, 100vw" />
+      ) : (
+        <ConceptVisual label={LABELS[kind]} className="absolute inset-0 flex items-center justify-center">
+          <Scene kind={kind} />
+        </ConceptVisual>
+      )}
     </Stage>
   );
 }

@@ -241,7 +241,7 @@ export async function getSiteSettings() {
       id: "default",
       businessName: "CoreGravity",
       tagline: "Websites and mobile apps for businesses and entrepreneurs.",
-      contactEmail: "info.viperbyte@yahoo.com",
+      contactEmail: "info.coregravityio@yahoo.com",
       contactPhone: null,
       serviceArea: null,
       updatedAt: new Date(0),
