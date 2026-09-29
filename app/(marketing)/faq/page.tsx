@@ -7,7 +7,7 @@ import { FAQS } from "@/content/faq";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about CoreGravity's services for small businesses, pricing in CAD and INR, timelines, website redesigns and ongoing support.",
+    "Answers to common questions about CoreGravity's services for small businesses, pricing in your local currency, timelines, website redesigns and ongoing support.",
   alternates: { canonical: "/faq" },
 };
 

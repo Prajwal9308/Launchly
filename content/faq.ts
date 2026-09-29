@@ -42,7 +42,7 @@ export const FAQS = [
   {
     question: "Which countries do you serve?",
     answer:
-      "We currently work with businesses in Canada and India. Prices are shown in Canadian dollars (CA$) or Indian rupees (₹), depending on the country you select.",
+      "We currently work with businesses in Canada and India. Prices are shown in the currency of the country you select.",
   },
   {
     question: "What do I need to get started?",

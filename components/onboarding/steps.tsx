@@ -369,7 +369,7 @@ export function FinalStep({
     <div className="space-y-6">
       <Fieldset
         legend="Budget range"
-        hint={country ? `Shown in ${COUNTRY_INFO[country].currency} for ${COUNTRY_INFO[country].name}.` : undefined}
+        hint={country ? `Shown in the currency for ${COUNTRY_INFO[country].name}.` : undefined}
         error={errors.budgetRange}
       >
         {country ? (

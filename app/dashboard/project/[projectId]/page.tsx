@@ -1,6 +1,6 @@
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
-import { countryLabel } from "@/domain/country";
+import { countryName } from "@/domain/country";
 import { SectionTitle } from "@/components/app/page-header";
 import { ActionCenter } from "@/components/project/action-center";
 import { ActivityList } from "@/components/project/activity-list";
@@ -89,8 +89,8 @@ export default async function ClientProjectOverview({ params }: { params: Promis
                   <dd>{project.budgetRange ?? "—"}</dd>
                 </div>
                 <div>
-                  <dt className="text-faint">Country and currency</dt>
-                  <dd>{project.country ? countryLabel(project.country) : "—"}</dd>
+                  <dt className="text-faint">Country</dt>
+                  <dd>{project.country ? countryName(project.country) : "—"}</dd>
                 </div>
                 {project.launchedAt && (
                   <div>

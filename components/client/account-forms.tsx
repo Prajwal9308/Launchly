@@ -54,7 +54,7 @@ export function ProfileForm({
               </option>
               {COUNTRIES.map((c) => (
                 <option key={c} value={c}>
-                  {COUNTRY_INFO[c].name} · {COUNTRY_INFO[c].currency}
+                  {COUNTRY_INFO[c].name}
                 </option>
               ))}
             </Select>

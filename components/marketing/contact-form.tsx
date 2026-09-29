@@ -88,7 +88,7 @@ export function ContactForm({
           id="budgetRange"
           label="Estimated budget"
           optional
-          hint={country ? `Shown in ${COUNTRY_INFO[country].currency}.` : "Select your country to see budget ranges in your currency."}
+          hint={country ? "Shown in your country's currency." : "Select your country to see budget ranges in your currency."}
           error={fieldError(state, "budgetRange")}
         >
           {(p) => (

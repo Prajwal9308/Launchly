@@ -12,7 +12,7 @@ import { getVisitorCountry } from "@/server/country";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Starting prices for small business websites, online stores, booking systems, business applications and mobile apps, in Canadian dollars or Indian rupees. Every project receives a written proposal.",
+    "Starting prices for small business websites, online stores, booking systems, business applications and mobile apps, shown in your country's currency. Every project receives a written proposal.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -29,7 +29,7 @@ export default async function PricingPage() {
           <CountrySelect country={country} showLabel className="max-w-64" />
           <p className="text-sm text-muted">
             {country
-              ? `Prices are shown in ${country === "CA" ? "Canadian dollars (CA$)" : "Indian rupees (₹)"}. ${SERVED_COUNTRIES_NOTE}`
+              ? `Prices are shown in the currency of the country you select. ${SERVED_COUNTRIES_NOTE}`
               : `Select your country to see prices in your currency. ${SERVED_COUNTRIES_NOTE}`}
           </p>
         </div>

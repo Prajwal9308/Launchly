@@ -66,8 +66,7 @@ export default async function TermsPage() {
 
           <h2>7. Pricing and currencies</h2>
           <p>
-            Prices on this website are shown in Canadian dollars (CA$) for customers in Canada and in Indian rupees (₹) for
-            customers in India, based on the country you select. Published prices are starting prices for general guidance.
+            Prices on this website are shown in the currency of the country you select. Published prices are starting prices for general guidance.
             The price for your project is the price stated in your Proposal and Project Agreement.
           </p>
 
