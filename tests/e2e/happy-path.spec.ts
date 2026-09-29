@@ -104,7 +104,7 @@ test("public site → sign up → questionnaire → upload → submit", async ({
 
   // Budget and timeline — budgets are in the country chosen at sign-up (Canada, CA$)
   await expect(page.getByRole("heading", { name: "Budget and timeline" })).toBeVisible();
-  await page.getByText("CA$5,000 – CA$10,000").click();
+  await page.getByText("CA$2,000 – CA$3,500").click();
   await page.getByText("1–3 months").click();
   await page.getByRole("button", { name: "Review Your Information" }).click();
 

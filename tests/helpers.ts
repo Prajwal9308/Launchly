@@ -63,7 +63,7 @@ export const COMPLETE_ANSWERS: Required<Pick<QuestionnaireDraft, "business" | "g
   website: { pages: ["HOME", "SERVICES", "CONTACT"], pagesOther: "", services: ["business-websites"] },
   content: { hasContent: "PARTIAL", contentNotes: "" },
   features: { features: ["CONTACT_FORM"], featuresOther: "" },
-  final: { budgetRange: "CA$5,000 – CA$10,000", timeframe: "1–3 months", comments: "" },
+  final: { budgetRange: "CA$2,000 – CA$3,500", timeframe: "1–3 months", comments: "" },
 };
 
 /** Creates and submits a complete project for the given client. */

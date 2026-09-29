@@ -672,8 +672,8 @@ model SiteSettings {
   serviceArea  String?
 
   /// Budget options offered on the contact form and questionnaire, per country.
-  budgetRangesCa String[] @default(["Under CA$2,000", "CA$2,000 – CA$5,000", "CA$5,000 – CA$10,000", "CA$10,000 – CA$20,000", "CA$20,000+", "Not sure yet"])
-  budgetRangesIn String[] @default(["Under ₹75,000", "₹75,000 – ₹1,50,000", "₹1,50,000 – ₹3,00,000", "₹3,00,000 – ₹5,00,000", "₹5,00,000+", "Not sure yet"])
+  budgetRangesCa String[] @default(["CA$500 – CA$1,000", "CA$1,000 – CA$2,000", "CA$2,000 – CA$3,500", "CA$3,500 – CA$5,000", "CA$5,000+", "Not sure yet"])
+  budgetRangesIn String[] @default(["₹30,000 – ₹60,000", "₹60,000 – ₹1,20,000", "₹1,20,000 – ₹2,10,000", "₹2,10,000 – ₹3,00,000", "₹3,00,000+", "Not sure yet"])
   /// Shown under published prices. Never states a rate.
   taxNoteCa      String   @default("Plus applicable taxes.")
   taxNoteIn      String   @default("Plus applicable GST, where applicable.")

@@ -278,7 +278,7 @@ async function main() {
       },
       brand: { brandColors: "", preferredFonts: "", hasBrandGuidelines: false, brandDescription: "", styles: ["MODERN", "PROFESSIONAL"] },
       content: { hasContent: "PARTIAL", contentNotes: "We have photos; need help with service descriptions." },
-      final: { budgetRange: "CA$5,000 – CA$10,000", timeframe: "1–3 months", comments: "" },
+      final: { budgetRange: "CA$2,000 – CA$3,500", timeframe: "1–3 months", comments: "" },
       ...c.draft,
     } as QuestionnaireDraft;
     draft.website = { ...draft.website!, services: c.services };
@@ -414,7 +414,7 @@ async function main() {
 
   await db.lead.createMany({
     data: [
-      { name: "Priya Shah", businessName: "Shah Family Bakery", email: "priya@example.com", phone: "+91 98200 10552", country: "IN", service: "Business Website", budgetRange: "₹75,000 – ₹1,50,000", message: "We're opening a second location and need a website that shows both, with our menu and hours.", status: "NEW", createdAt: daysAgo(0.5) },
+      { name: "Priya Shah", businessName: "Shah Family Bakery", email: "priya@example.com", phone: "+91 98200 10552", country: "IN", service: "Business Website", budgetRange: "₹60,000 – ₹1,20,000", message: "We're opening a second location and need a website that shows both, with our menu and hours.", status: "NEW", createdAt: daysAgo(0.5) },
       { name: "Marcus Hill", businessName: "Hill Roofing", email: "marcus@example.com", country: "CA", service: "Website Redesign", message: "Our current site is about 8 years old and doesn't work well on phones.", status: "CONTACTED", createdAt: daysAgo(4) },
       { name: "Elena Park", businessName: "Park Coaching", email: "elena@example.com", country: "CA", service: "Booking & Appointment System", message: "Looking for online booking for coaching sessions.", status: "QUALIFIED", createdAt: daysAgo(9) },
     ],

@@ -8,7 +8,7 @@ test("contact form keeps input on error and accepts a short message", async ({ p
   await form.getByLabel("Business name").fill("Jamie's Café");
   await form.getByLabel("Email address").fill("not-an-email");
   await form.getByLabel("Country").selectOption("CA");
-  await expect(form.getByLabel("Estimated budget")).toContainText("CA$2,000 – CA$5,000");
+  await expect(form.getByLabel("Estimated budget")).toContainText("CA$2,000 – CA$3,500");
   await form.getByLabel("Project requirements").fill("Hi there");
   await page.getByRole("button", { name: "Submit Enquiry" }).click();
 

@@ -39,13 +39,13 @@ describe("country pricing", () => {
   it("saves the business country to the client's account and the submitted project", async () => {
     const client = await createClient();
     const { id } = await startDraftProject(client);
-    const answers = { ...COMPLETE_ANSWERS, business: { ...COMPLETE_ANSWERS.business, country: "IN" as const }, final: { ...COMPLETE_ANSWERS.final, budgetRange: "₹1,50,000 – ₹3,00,000" } };
+    const answers = { ...COMPLETE_ANSWERS, business: { ...COMPLETE_ANSWERS.business, country: "IN" as const }, final: { ...COMPLETE_ANSWERS.final, budgetRange: "₹1,20,000 – ₹2,10,000" } };
     for (const [step, data] of Object.entries(answers)) await saveQuestionnaireStep(client, id, step as keyof typeof answers, data);
     await submitProject(client, id);
     const project = await db.project.findUniqueOrThrow({ where: { id }, include: { organization: true } });
     expect(project.country).toBe("IN");
     expect(project.organization.country).toBe("IN");
-    expect(project.budgetRange).toBe("₹1,50,000 – ₹3,00,000");
+    expect(project.budgetRange).toBe("₹1,20,000 – ₹2,10,000");
   });
 
   it("rejects a budget from the other country's currency at submission", async () => {
