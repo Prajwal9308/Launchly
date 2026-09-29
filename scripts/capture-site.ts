@@ -13,7 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { chromium, type Page } from "@playwright/test";
 
-const BASE = (process.argv[2] ?? "https://launchly-rose.vercel.app").replace(/\/$/, "");
+const BASE = (process.argv[2] ?? "https://viperbyte.org").replace(/\/$/, "");
 const PAGES = ["/", "/services", "/solutions", "/portfolio", "/process", "/pricing", "/about", "/faq", "/contact", "/start-project", "/privacy", "/terms", "/login", "/signup"];
 const WIDTHS = { mobile: 390, desktop: 1440 } as const;
 

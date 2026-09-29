@@ -241,7 +241,7 @@ export async function getSiteSettings() {
       id: "default",
       businessName: "ViperByte",
       tagline: "Websites and mobile apps for businesses and entrepreneurs.",
-      contactEmail: "hello@example.com",
+      contactEmail: "info.viperbyte@yahoo.com",
       contactPhone: null,
       serviceArea: null,
       updatedAt: new Date(0),
