@@ -288,7 +288,7 @@ export const DEFAULT_SETTINGS = {
   id: "default",
   businessName: "CoreGravity",
   tagline: "Professional websites and digital solutions for small businesses.",
-  contactEmail: "info.coregravityio@yahoo.com",
+  contactEmail: "info@coregravity.io",
   contactPhone: null,
   serviceArea: null,
   budgetRangesCa: ["CA$500 – CA$1,000", "CA$1,000 – CA$2,000", "CA$2,000 – CA$3,500", "CA$3,500 – CA$5,000", "CA$5,000+", "Not sure yet"],
